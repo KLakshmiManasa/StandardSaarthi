@@ -1,0 +1,85 @@
+{
+  "evaluation_summary": {
+    "BM25": {
+      "K=1": {
+        "precision": 0.9,
+        "recall": 0.2458,
+        "hit_rate": 0.85,
+        "mrr": 0.85
+      },
+      "K=3": {
+        "precision": 0.65,
+        "recall": 0.5208,
+        "hit_rate": 1.0,
+        "mrr": 0.925
+      },
+      "K=5": {
+        "precision": 0.47,
+        "recall": 0.625,
+        "hit_rate": 1.0,
+        "mrr": 0.925
+      },
+      "K=10": {
+        "precision": 0.27,
+        "recall": 0.7167,
+        "hit_rate": 1.0,
+        "mrr": 0.925
+      }
+    },
+    "Semantic": {
+      "K=1": {
+        "precision": 0.95,
+        "recall": 0.2583,
+        "hit_rate": 0.8,
+        "mrr": 0.8
+      },
+      "K=3": {
+        "precision": 0.6667,
+        "recall": 0.5375,
+        "hit_rate": 1.0,
+        "mrr": 0.9
+      },
+      "K=5": {
+        "precision": 0.54,
+        "recall": 0.7208,
+        "hit_rate": 1.0,
+        "mrr": 0.9
+      },
+      "K=10": {
+        "precision": 0.3,
+        "recall": 0.8,
+        "hit_rate": 1.0,
+        "mrr": 0.9
+      }
+    },
+    "Hybrid": {
+      "K=1": {
+        "precision": 0.95,
+        "recall": 0.2583,
+        "hit_rate": 0.9,
+        "mrr": 0.9
+      },
+      "K=3": {
+        "precision": 0.6833,
+        "recall": 0.5458,
+        "hit_rate": 1.0,
+        "mrr": 0.95
+      },
+      "K=5": {
+        "precision": 0.52,
+        "recall": 0.6917,
+        "hit_rate": 1.0,
+        "mrr": 0.95
+      },
+      "K=10": {
+        "precision": 0.3,
+        "recall": 0.8,
+        "hit_rate": 1.0,
+        "mrr": 0.95
+      }
+    }
+  },
+  "query_count": 20,
+  "failed_query_count": 0,
+  "failed_cases": []
+}

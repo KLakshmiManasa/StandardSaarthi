@@ -1,0 +1,24 @@
+# SIH 26108 — Phase 5/6 Configuration File
+# Optimized Weights & Thresholds for Hybrid Recommendation Engine
+
+retrieval:
+  top_k_vector: 20
+  top_k_bm25: 20
+  rrf_k: 60
+  candidate_pool_limit: 30
+
+ranking_weights:
+  vector_semantic: 0.45
+  entity_match: 0.30
+  graph_relevance: 0.15
+  application_match: 0.10
+  qco_regulatory: 0.00  # QCO information preserved as mandatory compliance metadata without distorting ranking
+
+relevance_thresholds:
+  high_confidence: 0.70
+  medium_confidence: 0.45
+  minimum_cutoff: 0.20
+
+qco_settings:
+  strict_verification_required: true
+  unverified_message: "No verified QCO mapping found in the available knowledge base."

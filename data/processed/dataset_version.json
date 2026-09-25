@@ -1,0 +1,8 @@
+{
+  "dataset_version": "v0.2-phase8",
+  "total_standards": 120,
+  "sectors": ["Electrical", "Civil", "Mechanical", "Construction", "Water", "Plumbing", "Safety", "Textiles", "Packaging", "Automotive", "Agriculture", "Medical", "Industrial Equipment"],
+  "last_updated": "2026-09-22",
+  "status": "VALIDATED",
+  "provenance": "BIS Official Standards Catalog & Gazette Notifications"
+}

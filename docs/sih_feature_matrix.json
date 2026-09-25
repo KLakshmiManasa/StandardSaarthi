@@ -1,0 +1,122 @@
+{
+  "product_description_input": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "services/tender_parser.py",
+      "api/routes.py",
+      "tests/test_phase11_product.py"
+    ]
+  },
+  "technical_specification_input": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "services/tender_parser.py",
+      "integration/pipeline.py",
+      "tests/test_phase12_integration.py"
+    ]
+  },
+  "tender_document_input": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "services/tender_parser.py",
+      "api/routes.py",
+      "tests/e2e/test_end_to_end.py"
+    ]
+  },
+  "semantic_recommendation": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "integration/pipeline.py",
+      "phase5/retrieval/graph_rag.py",
+      "phase5/ranking/hybrid_ranker.py"
+    ]
+  },
+  "allied_standards": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "services/standards_service.py",
+      "frontend/app.js",
+      "tests/test_bis_source_urls.py"
+    ]
+  },
+  "lifecycle_and_amendments": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "services/standards_service.py",
+      "frontend/app.js",
+      "data/processed/standards_clean.json"
+    ]
+  },
+  "regulatory_compliance": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "phase5/qco/qco_engine.py",
+      "api/routes.py",
+      "tests/test_phase11_product.py"
+    ]
+  },
+  "multilingual_input": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "services/multilingual.py",
+      "data/evaluation/multilingual_queries.json",
+      "tests/test_phase11_product.py"
+    ]
+  },
+  "natural_language_queries": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "services/tender_parser.py",
+      "integration/pipeline.py",
+      "tests/test_phase12_integration.py"
+    ]
+  },
+  "evidence": {
+    "status": "IMPLEMENTED",
+    "backend": true,
+    "frontend": true,
+    "data": true,
+    "tested": true,
+    "evidence": [
+      "phase5/evidence/evidence_system.py",
+      "services/standards_service.py",
+      "tests/test_bis_source_urls.py"
+    ]
+  }
+}

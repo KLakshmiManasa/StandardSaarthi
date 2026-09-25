@@ -1,0 +1,214 @@
+[
+  {
+    "queryId": "en_01",
+    "language": "en",
+    "text": "PVC insulated copper cable for internal building wiring 1100V",
+    "expectedProduct": "Cable",
+    "expectedStandards": ["IS 694", "IS 8130"]
+  },
+  {
+    "queryId": "en_02",
+    "language": "en",
+    "text": "PVC insulated heavy duty armored electric cable for working voltages up to 1100V",
+    "expectedProduct": "Heavy Duty Cable",
+    "expectedStandards": ["IS 1554:Part 1", "IS 8130"]
+  },
+  {
+    "queryId": "en_03",
+    "language": "en",
+    "text": "M30 grade ready mixed concrete for structural building slabs",
+    "expectedProduct": "Ready Mixed Concrete",
+    "expectedStandards": ["IS 4926", "IS 456"]
+  },
+  {
+    "queryId": "en_04",
+    "language": "en",
+    "text": "500 kVA 11kV/433V outdoor oil immersed distribution transformer",
+    "expectedProduct": "Distribution Transformer",
+    "expectedStandards": ["IS 1180:Part 1", "IS 2026:Part 1"]
+  },
+  {
+    "queryId": "en_05",
+    "language": "en",
+    "text": "Code of practice for electrical wiring installations and earthing",
+    "expectedProduct": "Electrical Installation",
+    "expectedStandards": ["IS 732", "IS 3043"]
+  },
+  {
+    "queryId": "en_06",
+    "language": "en",
+    "text": "Coarse and fine aggregates from natural sources for concrete",
+    "expectedProduct": "Aggregates",
+    "expectedStandards": ["IS 383", "IS 456"]
+  },
+  {
+    "queryId": "en_07",
+    "language": "en",
+    "text": "Conductors for insulated electric cables specification",
+    "expectedProduct": "Cable Conductors",
+    "expectedStandards": ["IS 8130"]
+  },
+  {
+    "queryId": "en_08",
+    "language": "en",
+    "text": "Self-ballasted LED lamps for general lighting services",
+    "expectedProduct": "LED Lamp",
+    "expectedStandards": ["IS 16102:Part 1"]
+  },
+  {
+    "queryId": "en_09",
+    "language": "en",
+    "text": "Methods of test for cables annealing test for copper conductors",
+    "expectedProduct": "Cable Testing",
+    "expectedStandards": ["IS 10810:Part 1"]
+  },
+  {
+    "queryId": "en_10",
+    "language": "en",
+    "text": "Ordinary Portland cement 43 grade specification",
+    "expectedProduct": "Cement",
+    "expectedStandards": ["IS 8112", "IS 269"]
+  },
+
+  {
+    "queryId": "hi_01",
+    "language": "hi",
+    "text": "आंतरिक भवन वायरिंग के लिए पीवीसी इंसुलेटेड तांबे का केबल",
+    "expectedProduct": "Cable",
+    "expectedStandards": ["IS 694", "IS 8130"]
+  },
+  {
+    "queryId": "hi_02",
+    "language": "hi",
+    "text": "1100V तक वोल्टेज के लिए पीवीसी इंसुलेटेड हैवी ड्यूटी आर्मर्ड इलेक्ट्रिकल केबल",
+    "expectedProduct": "Heavy Duty Cable",
+    "expectedStandards": ["IS 1554:Part 1", "IS 8130"]
+  },
+  {
+    "queryId": "hi_03",
+    "language": "hi",
+    "text": "भवन निर्माण स्लैब के लिए M30 ग्रेड रेडी मिक्स कंक्रीट",
+    "expectedProduct": "Ready Mixed Concrete",
+    "expectedStandards": ["IS 4926", "IS 456"]
+  },
+  {
+    "queryId": "hi_04",
+    "language": "hi",
+    "text": "500 kVA आउटडोर ऑयल इमर्स्ड डिस्ट्रीब्यूशन ट्रांसफार्मर",
+    "expectedProduct": "Distribution Transformer",
+    "expectedStandards": ["IS 1180:Part 1"]
+  },
+  {
+    "queryId": "hi_05",
+    "language": "hi",
+    "text": "बिजली की वायरिंग और अर्थिंग के लिए कोड ऑफ प्रैक्टिस",
+    "expectedProduct": "Electrical Installation",
+    "expectedStandards": ["IS 732", "IS 3043"]
+  },
+  {
+    "queryId": "hi_06",
+    "language": "hi",
+    "text": "कंक्रीट के लिए प्राकृतिक स्रोतों से एग्रीगेट्स",
+    "expectedProduct": "Aggregates",
+    "expectedStandards": ["IS 383", "IS 456"]
+  },
+  {
+    "queryId": "hi_07",
+    "language": "hi",
+    "text": "इंसुलेटेड केबलों के लिए तांबे और एल्यूमीनियम के कंडक्टर्स",
+    "expectedProduct": "Cable Conductors",
+    "expectedStandards": ["IS 8130"]
+  },
+  {
+    "queryId": "hi_08",
+    "language": "hi",
+    "text": "सामान्य प्रकाश सेवाओं के लिए एलईडी लैंप",
+    "expectedProduct": "LED Lamp",
+    "expectedStandards": ["IS 16102:Part 1"]
+  },
+  {
+    "queryId": "hi_09",
+    "language": "hi",
+    "text": "केबलों के परीक्षण की विधियां तांबे के कंडक्टर परीक्षण",
+    "expectedProduct": "Cable Testing",
+    "expectedStandards": ["IS 10810:Part 1"]
+  },
+  {
+    "queryId": "hi_10",
+    "language": "hi",
+    "text": "साधारण पोर्टलैंड सीमेंट 43 ग्रेड विनिर्देश",
+    "expectedProduct": "Cement",
+    "expectedStandards": ["IS 8112", "IS 269"]
+  },
+
+  {
+    "queryId": "ta_01",
+    "language": "ta",
+    "text": "கட்டிட மின்சார வயரிங்கிற்கான பிவிசி இன்சுலேட்டட் செம்பு கேபிள்",
+    "expectedProduct": "Cable",
+    "expectedStandards": ["IS 694", "IS 8130"]
+  },
+  {
+    "queryId": "ta_02",
+    "language": "ta",
+    "text": "1100V மின்சார பயன்பாட்டிற்கான பிவிசி கவசம் கொண்ட ஹெவி டியூட்டி கேபிள்",
+    "expectedProduct": "Heavy Duty Cable",
+    "expectedStandards": ["IS 1554:Part 1", "IS 8130"]
+  },
+  {
+    "queryId": "ta_03",
+    "language": "ta",
+    "text": "கட்டிட கட்டுமானத்திற்கான M30 ரெடி மிக்ஸ் கான்கிரீட்",
+    "expectedProduct": "Ready Mixed Concrete",
+    "expectedStandards": ["IS 4926", "IS 456"]
+  },
+  {
+    "queryId": "ta_04",
+    "language": "ta",
+    "text": "500 kVA மின்சார விநியோக மின்மாற்றி",
+    "expectedProduct": "Distribution Transformer",
+    "expectedStandards": ["IS 1180:Part 1"]
+  },
+  {
+    "queryId": "ta_05",
+    "language": "ta",
+    "text": "மின்சார வயரிங் மற்றும் எர்த்திங் நடைமுறை விதிகள்",
+    "expectedProduct": "Electrical Installation",
+    "expectedStandards": ["IS 732", "IS 3043"]
+  },
+  {
+    "queryId": "ta_06",
+    "language": "ta",
+    "text": "கான்கிரீட் பயன்பாட்டிற்கான ஜல்லி மற்றும் மணல்",
+    "expectedProduct": "Aggregates",
+    "expectedStandards": ["IS 383", "IS 456"]
+  },
+  {
+    "queryId": "ta_07",
+    "language": "ta",
+    "text": "கேபிள்களுக்கான கடத்திகள் விவரக்குறிப்பு",
+    "expectedProduct": "Cable Conductors",
+    "expectedStandards": ["IS 8130"]
+  },
+  {
+    "queryId": "ta_08",
+    "language": "ta",
+    "text": "பொது வெளிச்சத்திற்கான எல்இடி விளக்குகள்",
+    "expectedProduct": "LED Lamp",
+    "expectedStandards": ["IS 16102:Part 1"]
+  },
+  {
+    "queryId": "ta_09",
+    "language": "ta",
+    "text": "கேபிள்கள் சோதனை முறைகள்",
+    "expectedProduct": "Cable Testing",
+    "expectedStandards": ["IS 10810:Part 1"]
+  },
+  {
+    "queryId": "ta_10",
+    "language": "ta",
+    "text": "போர்ட்லேண்ட் சிமெண்ட் 43 கிரேடு விவரக்குறிப்பு",
+    "expectedProduct": "Cement",
+    "expectedStandards": ["IS 8112", "IS 269"]
+  }
+]

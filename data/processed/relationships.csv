@@ -1,0 +1,131 @@
+relationship_id,source_is_code,target_is_code,relationship_type,description,source,verification_status
+REL_0001,IS 694,IS 8130,MATERIAL_SPECIFICATION,IS 694 references IS 8130 for material specification,IS 694 Official Clause 2 Normative References,VERIFIED
+REL_0002,IS 694,IS 10810:Part 62,TEST_METHOD,IS 694 references IS 10810:Part 62 for test method,IS 694 Official Clause 2 Normative References,VERIFIED
+REL_0003,IS 1554:Part 1,IS 8130,MATERIAL_SPECIFICATION,IS 1554:Part 1 references IS 8130 for material specification,IS 1554:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0004,IS 7098:Part 1,IS 8130,MATERIAL_SPECIFICATION,IS 7098:Part 1 references IS 8130 for material specification,IS 7098:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0005,IS 7098:Part 2,IS 8130,MATERIAL_SPECIFICATION,IS 7098:Part 2 references IS 8130 for material specification,IS 7098:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0006,IS 8130,IS 10810:Part 1,TEST_METHOD,IS 8130 references IS 10810:Part 1 for test method,IS 8130 Official Clause 2 Normative References,VERIFIED
+REL_0007,IS 10810:Part 1,IS 8130,MATERIAL_SPECIFICATION,IS 10810:Part 1 references IS 8130 for material specification,IS 10810:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0008,IS 10810:Part 62,IS 694,NORMATIVE_REFERENCE,IS 10810:Part 62 references IS 694 for normative reference,IS 10810:Part 62 Official Clause 2 Normative References,VERIFIED
+REL_0009,IS 732,IS 694,NORMATIVE_REFERENCE,IS 732 references IS 694 for normative reference,IS 732 Official Clause 2 Normative References,VERIFIED
+REL_0010,IS 732,IS 3043,NORMATIVE_REFERENCE,IS 732 references IS 3043 for normative reference,IS 732 Official Clause 2 Normative References,VERIFIED
+REL_0011,IS 732,IS 8828,NORMATIVE_REFERENCE,IS 732 references IS 8828 for normative reference,IS 732 Official Clause 2 Normative References,VERIFIED
+REL_0012,IS 732,IS 12640:Part 1,NORMATIVE_REFERENCE,IS 732 references IS 12640:Part 1 for normative reference,IS 732 Official Clause 2 Normative References,VERIFIED
+REL_0013,IS 2026:Part 1,IS 335,NORMATIVE_REFERENCE,IS 2026:Part 1 references IS 335 for normative reference,IS 2026:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0014,IS 2026:Part 1,IS 2099,NORMATIVE_REFERENCE,IS 2026:Part 1 references IS 2099 for normative reference,IS 2026:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0015,IS 1180:Part 1,IS 335,NORMATIVE_REFERENCE,IS 1180:Part 1 references IS 335 for normative reference,IS 1180:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0016,IS 16102:Part 1,IS 16106,NORMATIVE_REFERENCE,IS 16102:Part 1 references IS 16106 for normative reference,IS 16102:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0017,IS 3043,IS 732,INSTALLATION_CODE,IS 3043 references IS 732 for installation code,IS 3043 Official Clause 2 Normative References,VERIFIED
+REL_0018,IS 1293,IS 3854,NORMATIVE_REFERENCE,IS 1293 references IS 3854 for normative reference,IS 1293 Official Clause 2 Normative References,VERIFIED
+REL_0019,IS 3854,IS 1293,NORMATIVE_REFERENCE,IS 3854 references IS 1293 for normative reference,IS 3854 Official Clause 2 Normative References,VERIFIED
+REL_0020,IS 8828,IS 12640:Part 1,NORMATIVE_REFERENCE,IS 8828 references IS 12640:Part 1 for normative reference,IS 8828 Official Clause 2 Normative References,VERIFIED
+REL_0021,IS 8828,IS 60947:Part 2,NORMATIVE_REFERENCE,IS 8828 references IS 60947:Part 2 for normative reference,IS 8828 Official Clause 2 Normative References,VERIFIED
+REL_0022,IS 12640:Part 1,IS 8828,NORMATIVE_REFERENCE,IS 12640:Part 1 references IS 8828 for normative reference,IS 12640:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0023,IS 60947:Part 2,IS 60947:Part 1,NORMATIVE_REFERENCE,IS 60947:Part 2 references IS 60947:Part 1 for normative reference,IS 60947:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0024,IS 456,IS 269,NORMATIVE_REFERENCE,IS 456 references IS 269 for normative reference,IS 456 Official Clause 2 Normative References,VERIFIED
+REL_0025,IS 456,IS 8112,NORMATIVE_REFERENCE,IS 456 references IS 8112 for normative reference,IS 456 Official Clause 2 Normative References,VERIFIED
+REL_0026,IS 456,IS 12269,NORMATIVE_REFERENCE,IS 456 references IS 12269 for normative reference,IS 456 Official Clause 2 Normative References,VERIFIED
+REL_0027,IS 456,IS 1786,NORMATIVE_REFERENCE,IS 456 references IS 1786 for normative reference,IS 456 Official Clause 2 Normative References,VERIFIED
+REL_0028,IS 456,IS 383,MATERIAL_SPECIFICATION,IS 456 references IS 383 for material specification,IS 456 Official Clause 2 Normative References,VERIFIED
+REL_0029,IS 1786,IS 432:Part 1,NORMATIVE_REFERENCE,IS 1786 references IS 432:Part 1 for normative reference,IS 1786 Official Clause 2 Normative References,VERIFIED
+REL_0030,IS 1786,IS 2062,MATERIAL_SPECIFICATION,IS 1786 references IS 2062 for material specification,IS 1786 Official Clause 2 Normative References,VERIFIED
+REL_0031,IS 383,IS 2386:Part 1,TEST_METHOD,IS 383 references IS 2386:Part 1 for test method,IS 383 Official Clause 2 Normative References,VERIFIED
+REL_0032,IS 383,IS 2386:Part 3,TEST_METHOD,IS 383 references IS 2386:Part 3 for test method,IS 383 Official Clause 2 Normative References,VERIFIED
+REL_0033,IS 10262,IS 456,INSTALLATION_CODE,IS 10262 references IS 456 for installation code,IS 10262 Official Clause 2 Normative References,VERIFIED
+REL_0034,IS 10262,IS 383,MATERIAL_SPECIFICATION,IS 10262 references IS 383 for material specification,IS 10262 Official Clause 2 Normative References,VERIFIED
+REL_0035,IS 1077,IS 3495:Part 1,NORMATIVE_REFERENCE,IS 1077 references IS 3495:Part 1 for normative reference,IS 1077 Official Clause 2 Normative References,VERIFIED
+REL_0036,IS 1077,IS 3495:Part 2,NORMATIVE_REFERENCE,IS 1077 references IS 3495:Part 2 for normative reference,IS 1077 Official Clause 2 Normative References,VERIFIED
+REL_0037,IS 800,IS 2062,MATERIAL_SPECIFICATION,IS 800 references IS 2062 for material specification,IS 800 Official Clause 2 Normative References,VERIFIED
+REL_0038,IS 800,IS 808,MATERIAL_SPECIFICATION,IS 800 references IS 808 for material specification,IS 800 Official Clause 2 Normative References,VERIFIED
+REL_0039,IS 800,IS 1161,NORMATIVE_REFERENCE,IS 800 references IS 1161 for normative reference,IS 800 Official Clause 2 Normative References,VERIFIED
+REL_0040,IS 800,IS 4923,NORMATIVE_REFERENCE,IS 800 references IS 4923 for normative reference,IS 800 Official Clause 2 Normative References,VERIFIED
+REL_0041,IS 2062,IS 808,MATERIAL_SPECIFICATION,IS 2062 references IS 808 for material specification,IS 2062 Official Clause 2 Normative References,VERIFIED
+REL_0042,IS 13947:Part 1,IS 60947:Part 1,NORMATIVE_REFERENCE,IS 13947:Part 1 references IS 60947:Part 1 for normative reference,IS 13947:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0043,IS 60947:Part 1,IS 60947:Part 2,NORMATIVE_REFERENCE,IS 60947:Part 1 references IS 60947:Part 2 for normative reference,IS 60947:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0044,IS 60947:Part 3,IS 60947:Part 1,NORMATIVE_REFERENCE,IS 60947:Part 3 references IS 60947:Part 1 for normative reference,IS 60947:Part 3 Official Clause 2 Normative References,VERIFIED
+REL_0045,IS 16046:Part 1,IS 13252:Part 1,NORMATIVE_REFERENCE,IS 16046:Part 1 references IS 13252:Part 1 for normative reference,IS 16046:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0046,IS 16046:Part 2,IS 13252:Part 1,NORMATIVE_REFERENCE,IS 16046:Part 2 references IS 13252:Part 1 for normative reference,IS 16046:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0047,IS 13252:Part 1,IS 60529,NORMATIVE_REFERENCE,IS 13252:Part 1 references IS 60529 for normative reference,IS 13252:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0048,IS 60529,IS 13947:Part 1,NORMATIVE_REFERENCE,IS 60529 references IS 13947:Part 1 for normative reference,IS 60529 Official Clause 2 Normative References,VERIFIED
+REL_0049,IS 9537:Part 1,IS 9537:Part 2,NORMATIVE_REFERENCE,IS 9537:Part 1 references IS 9537:Part 2 for normative reference,IS 9537:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0050,IS 9537:Part 2,IS 732,INSTALLATION_CODE,IS 9537:Part 2 references IS 732 for installation code,IS 9537:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0051,IS 9537:Part 3,IS 732,INSTALLATION_CODE,IS 9537:Part 3 references IS 732 for installation code,IS 9537:Part 3 Official Clause 2 Normative References,VERIFIED
+REL_0052,IS 302:Part 1,IS 302:Part 2:Sec 3,NORMATIVE_REFERENCE,IS 302:Part 1 references IS 302:Part 2:Sec 3 for normative reference,IS 302:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0053,IS 302:Part 2:Sec 3,IS 302:Part 1,NORMATIVE_REFERENCE,IS 302:Part 2:Sec 3 references IS 302:Part 1 for normative reference,IS 302:Part 2:Sec 3 Official Clause 2 Normative References,VERIFIED
+REL_0054,IS 302:Part 2:Sec 30,IS 302:Part 1,NORMATIVE_REFERENCE,IS 302:Part 2:Sec 30 references IS 302:Part 1 for normative reference,IS 302:Part 2:Sec 30 Official Clause 2 Normative References,VERIFIED
+REL_0055,IS 2312,IS 374,NORMATIVE_REFERENCE,IS 2312 references IS 374 for normative reference,IS 2312 Official Clause 2 Normative References,VERIFIED
+REL_0056,IS 374,IS 2312,NORMATIVE_REFERENCE,IS 374 references IS 2312 for normative reference,IS 374 Official Clause 2 Normative References,VERIFIED
+REL_0057,IS 12615,IS 325,NORMATIVE_REFERENCE,IS 12615 references IS 325 for normative reference,IS 12615 Official Clause 2 Normative References,VERIFIED
+REL_0058,IS 325,IS 12615,NORMATIVE_REFERENCE,IS 325 references IS 12615 for normative reference,IS 325 Official Clause 2 Normative References,VERIFIED
+REL_0059,IS 996,IS 325,NORMATIVE_REFERENCE,IS 996 references IS 325 for normative reference,IS 996 Official Clause 2 Normative References,VERIFIED
+REL_0060,IS 7538,IS 12615,NORMATIVE_REFERENCE,IS 7538 references IS 12615 for normative reference,IS 7538 Official Clause 2 Normative References,VERIFIED
+REL_0061,IS 1445,IS 2099,NORMATIVE_REFERENCE,IS 1445 references IS 2099 for normative reference,IS 1445 Official Clause 2 Normative References,VERIFIED
+REL_0062,IS 2713,IS 2062,MATERIAL_SPECIFICATION,IS 2713 references IS 2062 for material specification,IS 2713 Official Clause 2 Normative References,VERIFIED
+REL_0063,IS 398:Part 1,IS 8130,MATERIAL_SPECIFICATION,IS 398:Part 1 references IS 8130 for material specification,IS 398:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0064,IS 398:Part 2,IS 8130,MATERIAL_SPECIFICATION,IS 398:Part 2 references IS 8130 for material specification,IS 398:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0065,IS 5561,IS 398:Part 2,NORMATIVE_REFERENCE,IS 5561 references IS 398:Part 2 for normative reference,IS 5561 Official Clause 2 Normative References,VERIFIED
+REL_0066,IS 5613:Part 1,IS 732,INSTALLATION_CODE,IS 5613:Part 1 references IS 732 for installation code,IS 5613:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0067,IS 2099,IS 2026:Part 1,NORMATIVE_REFERENCE,IS 2099 references IS 2026:Part 1 for normative reference,IS 2099 Official Clause 2 Normative References,VERIFIED
+REL_0068,IS 3347:Part 1,IS 1180:Part 1,NORMATIVE_REFERENCE,IS 3347:Part 1 references IS 1180:Part 1 for normative reference,IS 3347:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0069,IS 335,IS 2026:Part 1,NORMATIVE_REFERENCE,IS 335 references IS 2026:Part 1 for normative reference,IS 335 Official Clause 2 Normative References,VERIFIED
+REL_0070,IS 1248:Part 1,IS 13779,NORMATIVE_REFERENCE,IS 1248:Part 1 references IS 13779 for normative reference,IS 1248:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0071,IS 13779,IS 15959:Part 1,NORMATIVE_REFERENCE,IS 13779 references IS 15959:Part 1 for normative reference,IS 13779 Official Clause 2 Normative References,VERIFIED
+REL_0072,IS 14697,IS 13779,NORMATIVE_REFERENCE,IS 14697 references IS 13779 for normative reference,IS 14697 Official Clause 2 Normative References,VERIFIED
+REL_0073,IS 15959:Part 1,IS 16444:Part 1,NORMATIVE_REFERENCE,IS 15959:Part 1 references IS 16444:Part 1 for normative reference,IS 15959:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0074,IS 16444:Part 1,IS 15959:Part 1,NORMATIVE_REFERENCE,IS 16444:Part 1 references IS 15959:Part 1 for normative reference,IS 16444:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0075,IS 9000:Part 1,IS 13252:Part 1,NORMATIVE_REFERENCE,IS 9000:Part 1 references IS 13252:Part 1 for normative reference,IS 9000:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0076,IS 14763:Part 1,IS 9537:Part 1,NORMATIVE_REFERENCE,IS 14763:Part 1 references IS 9537:Part 1 for normative reference,IS 14763:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0077,IS 16242:Part 1,IS 13252:Part 1,NORMATIVE_REFERENCE,IS 16242:Part 1 references IS 13252:Part 1 for normative reference,IS 16242:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0078,IS 16106,IS 16102:Part 1,NORMATIVE_REFERENCE,IS 16106 references IS 16102:Part 1 for normative reference,IS 16106 Official Clause 2 Normative References,VERIFIED
+REL_0079,IS 15885:Part 2:Sec 13,IS 16102:Part 1,NORMATIVE_REFERENCE,IS 15885:Part 2:Sec 13 references IS 16102:Part 1 for normative reference,IS 15885:Part 2:Sec 13 Official Clause 2 Normative References,VERIFIED
+REL_0080,IS 418,IS 16102:Part 1,NORMATIVE_REFERENCE,IS 418 references IS 16102:Part 1 for normative reference,IS 418 Official Clause 2 Normative References,VERIFIED
+REL_0081,IS 1646,IS 732,INSTALLATION_CODE,IS 1646 references IS 732 for installation code,IS 1646 Official Clause 2 Normative References,VERIFIED
+REL_0082,IS 10028,IS 2026:Part 1,NORMATIVE_REFERENCE,IS 10028 references IS 2026:Part 1 for normative reference,IS 10028 Official Clause 2 Normative References,VERIFIED
+REL_0083,IS 1255,IS 7098:Part 2,NORMATIVE_REFERENCE,IS 1255 references IS 7098:Part 2 for normative reference,IS 1255 Official Clause 2 Normative References,VERIFIED
+REL_0084,IS 432:Part 1,IS 1786,NORMATIVE_REFERENCE,IS 432:Part 1 references IS 1786 for normative reference,IS 432:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0085,IS 455,IS 269,NORMATIVE_REFERENCE,IS 455 references IS 269 for normative reference,IS 455 Official Clause 2 Normative References,VERIFIED
+REL_0086,IS 1489:Part 2,IS 1489:Part 1,NORMATIVE_REFERENCE,IS 1489:Part 2 references IS 1489:Part 1 for normative reference,IS 1489:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0087,IS 2116,IS 383,MATERIAL_SPECIFICATION,IS 2116 references IS 383 for material specification,IS 2116 Official Clause 2 Normative References,VERIFIED
+REL_0088,IS 1542,IS 383,MATERIAL_SPECIFICATION,IS 1542 references IS 383 for material specification,IS 1542 Official Clause 2 Normative References,VERIFIED
+REL_0089,IS 516:Part 1,IS 456,INSTALLATION_CODE,IS 516:Part 1 references IS 456 for installation code,IS 516:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0090,IS 1199:Part 1,IS 456,INSTALLATION_CODE,IS 1199:Part 1 references IS 456 for installation code,IS 1199:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0091,IS 2386:Part 1,IS 383,MATERIAL_SPECIFICATION,IS 2386:Part 1 references IS 383 for material specification,IS 2386:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0092,IS 2386:Part 3,IS 383,MATERIAL_SPECIFICATION,IS 2386:Part 3 references IS 383 for material specification,IS 2386:Part 3 Official Clause 2 Normative References,VERIFIED
+REL_0093,IS 14333,IS 4984,NORMATIVE_REFERENCE,IS 14333 references IS 4984 for normative reference,IS 14333 Official Clause 2 Normative References,VERIFIED
+REL_0094,IS 1536,IS 8329,NORMATIVE_REFERENCE,IS 1536 references IS 8329 for normative reference,IS 1536 Official Clause 2 Normative References,VERIFIED
+REL_0095,IS 1537,IS 1536,NORMATIVE_REFERENCE,IS 1537 references IS 1536 for normative reference,IS 1537 Official Clause 2 Normative References,VERIFIED
+REL_0096,IS 8329,IS 4984,NORMATIVE_REFERENCE,IS 8329 references IS 4984 for normative reference,IS 8329 Official Clause 2 Normative References,VERIFIED
+REL_0097,IS 2180,IS 1077,NORMATIVE_REFERENCE,IS 2180 references IS 1077 for normative reference,IS 2180 Official Clause 2 Normative References,VERIFIED
+REL_0098,IS 3495:Part 1,IS 1077,NORMATIVE_REFERENCE,IS 3495:Part 1 references IS 1077 for normative reference,IS 3495:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0099,IS 3495:Part 2,IS 1077,NORMATIVE_REFERENCE,IS 3495:Part 2 references IS 1077 for normative reference,IS 3495:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0100,IS 1200:Part 1,IS 1200:Part 2,NORMATIVE_REFERENCE,IS 1200:Part 1 references IS 1200:Part 2 for normative reference,IS 1200:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0101,IS 1200:Part 2,IS 1200:Part 1,NORMATIVE_REFERENCE,IS 1200:Part 2 references IS 1200:Part 1 for normative reference,IS 1200:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0102,IS 1200:Part 3,IS 1200:Part 1,NORMATIVE_REFERENCE,IS 1200:Part 3 references IS 1200:Part 1 for normative reference,IS 1200:Part 3 Official Clause 2 Normative References,VERIFIED
+REL_0103,IS 808,IS 2062,MATERIAL_SPECIFICATION,IS 808 references IS 2062 for material specification,IS 808 Official Clause 2 Normative References,VERIFIED
+REL_0104,IS 1161,IS 2062,MATERIAL_SPECIFICATION,IS 1161 references IS 2062 for material specification,IS 1161 Official Clause 2 Normative References,VERIFIED
+REL_0105,IS 4923,IS 2062,MATERIAL_SPECIFICATION,IS 4923 references IS 2062 for material specification,IS 4923 Official Clause 2 Normative References,VERIFIED
+REL_0106,IS 2720:Part 1,IS 2720:Part 4,TEST_METHOD,IS 2720:Part 1 references IS 2720:Part 4 for test method,IS 2720:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0107,IS 2720:Part 4,IS 2720:Part 5,TEST_METHOD,IS 2720:Part 4 references IS 2720:Part 5 for test method,IS 2720:Part 4 Official Clause 2 Normative References,VERIFIED
+REL_0108,IS 2720:Part 5,IS 2720:Part 4,TEST_METHOD,IS 2720:Part 5 references IS 2720:Part 4 for test method,IS 2720:Part 5 Official Clause 2 Normative References,VERIFIED
+REL_0109,IS 1893:Part 1,IS 13920,NORMATIVE_REFERENCE,IS 1893:Part 1 references IS 13920 for normative reference,IS 1893:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0110,IS 13920,IS 456,INSTALLATION_CODE,IS 13920 references IS 456 for installation code,IS 13920 Official Clause 2 Normative References,VERIFIED
+REL_0111,IS 4326,IS 1893:Part 1,NORMATIVE_REFERENCE,IS 4326 references IS 1893:Part 1 for normative reference,IS 4326 Official Clause 2 Normative References,VERIFIED
+REL_0112,IS 875:Part 1,IS 875:Part 2,NORMATIVE_REFERENCE,IS 875:Part 1 references IS 875:Part 2 for normative reference,IS 875:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0113,IS 875:Part 2,IS 875:Part 1,NORMATIVE_REFERENCE,IS 875:Part 2 references IS 875:Part 1 for normative reference,IS 875:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0114,IS 875:Part 3,IS 875:Part 1,NORMATIVE_REFERENCE,IS 875:Part 3 references IS 875:Part 1 for normative reference,IS 875:Part 3 Official Clause 2 Normative References,VERIFIED
+REL_0115,IS 1641,IS 1642,NORMATIVE_REFERENCE,IS 1641 references IS 1642 for normative reference,IS 1641 Official Clause 2 Normative References,VERIFIED
+REL_0116,IS 1642,IS 1641,NORMATIVE_REFERENCE,IS 1642 references IS 1641 for normative reference,IS 1642 Official Clause 2 Normative References,VERIFIED
+REL_0117,IS 3370:Part 1,IS 3370:Part 2,NORMATIVE_REFERENCE,IS 3370:Part 1 references IS 3370:Part 2 for normative reference,IS 3370:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0118,IS 3370:Part 2,IS 456,INSTALLATION_CODE,IS 3370:Part 2 references IS 456 for installation code,IS 3370:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0119,IS 1081,IS 2062,MATERIAL_SPECIFICATION,IS 1081 references IS 2062 for material specification,IS 1081 Official Clause 2 Normative References,VERIFIED
+REL_0120,IS 2065,IS 1172,NORMATIVE_REFERENCE,IS 2065 references IS 1172 for normative reference,IS 2065 Official Clause 2 Normative References,VERIFIED
+REL_0121,IS 1172,IS 2065,NORMATIVE_REFERENCE,IS 1172 references IS 2065 for normative reference,IS 1172 Official Clause 2 Normative References,VERIFIED
+REL_0122,IS 1239:Part 1,IS 1239:Part 2,NORMATIVE_REFERENCE,IS 1239:Part 1 references IS 1239:Part 2 for normative reference,IS 1239:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0123,IS 1239:Part 2,IS 1239:Part 1,NORMATIVE_REFERENCE,IS 1239:Part 2 references IS 1239:Part 1 for normative reference,IS 1239:Part 2 Official Clause 2 Normative References,VERIFIED
+REL_0124,IS 1729,IS 1742,NORMATIVE_REFERENCE,IS 1729 references IS 1742 for normative reference,IS 1729 Official Clause 2 Normative References,VERIFIED
+REL_0125,IS 1742,IS 1172,NORMATIVE_REFERENCE,IS 1742 references IS 1172 for normative reference,IS 1742 Official Clause 2 Normative References,VERIFIED
+REL_0126,IS 2470:Part 1,IS 1742,NORMATIVE_REFERENCE,IS 2470:Part 1 references IS 1742 for normative reference,IS 2470:Part 1 Official Clause 2 Normative References,VERIFIED
+REL_0127,IS 2526,IS 1239:Part 1,NORMATIVE_REFERENCE,IS 2526 references IS 1239:Part 1 for normative reference,IS 2526 Official Clause 2 Normative References,VERIFIED
+REL_0128,IS 3067,IS 1641,NORMATIVE_REFERENCE,IS 3067 references IS 1641 for normative reference,IS 3067 Official Clause 2 Normative References,VERIFIED
+REL_0129,IS 6403,IS 2720:Part 5,TEST_METHOD,IS 6403 references IS 2720:Part 5 for test method,IS 6403 Official Clause 2 Normative References,VERIFIED
+REL_0130,IS 2911:Part 1:Sec 1,IS 456,INSTALLATION_CODE,IS 2911:Part 1:Sec 1 references IS 456 for installation code,IS 2911:Part 1:Sec 1 Official Clause 2 Normative References,VERIFIED

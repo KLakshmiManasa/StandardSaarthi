@@ -1,0 +1,196 @@
+query_id,procurement_description,expected_is_code,acceptable_alternatives,sector,difficulty,verification_status,qco_expectation
+P8_001,Supply of 1.5 sq mm single core PVC insulated flame retardant copper electrical cables for internal wiring of a government hospital.,IS 694,IS 8130; IS 10810:Part 62,Electrical,EASY,verified,MANDATORY
+P8_002,Procurement of 11 kV 3-core 185 sq mm XLPE insulated armored aluminum conductor underground power cables for sub-station feeder cabling.,IS 7098:Part 2,IS 8130; IS 10810; IS 1255,Electrical,MEDIUM,verified,MANDATORY
+P8_003,Supply of outdoor 500 kVA 11kV/0.415kV oil immersed distribution transformer with Energy Efficiency Level 2.,IS 1180:Part 1,IS 2026:Part 1; IS 335,Electrical,MEDIUM,verified,MANDATORY
+P8_004,Installation of chemical earthing electrode system with copper plate and grounding compound for hospital ICU earth safety.,IS 3043,IS 732; NBC 2016,Electrical,EASY,verified,NOT_MANDATORY
+P8_005,Supply of 10 kVA single phase online uninterruptible power supply (UPS) system for data center server backup.,IS 16242:Part 1,IS 13252:Part 1; IS 16046,Electrical,HARD,verified,MANDATORY
+P8_006,Procurement of 9W 230V AC B22 cap self-ballasted LED bulbs for general office residential quarters lighting.,IS 16102:Part 1,IS 16102:Part 2; IS 15885,Electrical,EASY,verified,MANDATORY
+P8_007,Supply of 4-pole 63A 30mA residual current circuit breaker (RCCB) for shock protection in main panel.,IS 12640:Part 1,IS 8828; IS 732,Electrical,MEDIUM,verified,MANDATORY
+P8_008,Single-phase 230V 10-60A AC static direct connected smart electricity meter with DLMS protocol for smart grid.,IS 16444:Part 1,IS 13779; IS 15959,Electrical,HARD,verified,MANDATORY
+P8_009,Supply of 3-phase 415V 15 kW (20 HP) IE3 premium efficiency line operated induction motor for centrifugal pump.,IS 12615,IS 325; IS 7538,Electrical,MEDIUM,verified,MANDATORY
+P8_010,Rigid heavy-duty 25mm PVC conduits for surface and recessed electrical cable routing in public auditorium.,IS 9537:Part 3,IS 9537:Part 1; IS 732,Electrical,EASY,verified,NOT_MANDATORY
+P8_011,Heavy duty PVC insulated multicore flexible copper control cable 2.5 sq mm 4 core for industrial control panel.,IS 694,IS 8130; IS 10810,Electrical,EASY,verified,MANDATORY
+P8_012,Supply of 1.1kV 3 core 6 sq mm PVC insulated copper flexible cable for control panel wiring.,IS 694,IS 8130; IS 10810,Electrical,EASY,verified,MANDATORY
+P8_013,Armored PVC heavy duty cable 1100V grade 70 sq mm 3.5 core aluminum conductor for underground plant feeder.,IS 1554:Part 1,IS 8130; IS 1255,Electrical,MEDIUM,verified,MANDATORY
+P8_014,Plain annealed copper conductors for insulated electric cables and flexible cords.,IS 8130,IS 694; IS 1554:Part 1,Electrical,EASY,verified,MANDATORY
+P8_015,Flame retardance test methods for bunched electric cables under fire conditions.,IS 10810:Part 62,IS 694; IS 10810,Electrical,MEDIUM,verified,NOT_MANDATORY
+P8_016,Supply of 12mm and 16mm High Strength Deformed Fe 500D TMT steel rebar for RCC columns of high-rise building.,IS 1786,IS 456; IS 432,Civil,EASY,verified,MANDATORY
+P8_017,Supply of 53 Grade Ordinary Portland Cement (OPC 53) in 50kg bags for precast concrete flyover girder casting.,IS 12269,IS 456; IS 4031,Civil,EASY,verified,MANDATORY
+P8_018,Design and proportioning of M30 grade concrete mix using 20mm crushed aggregate and M-sand for foundation raft.,IS 10262,IS 456; IS 383,Civil,HARD,verified,NOT_MANDATORY
+P8_019,Supply of 200mm outer diameter PE-100 PN-10 HDPE pressure pipes for Jal Jeevan Mission rural water supply.,IS 4984,IS 7634; IS 4985,Civil,MEDIUM,verified,MANDATORY
+P8_020,Supply of structural steel ISMB 300 beams and ISMC 200 channels in E250 grade for industrial roof truss fabrication.,IS 2062,IS 800; IS 808,Civil,MEDIUM,verified,MANDATORY
+P8_021,Class 7.5 common burnt clay modular red building bricks for 230mm thick external load-bearing wall masonry.,IS 1077,IS 3495; IS 2212,Civil,EASY,verified,NOT_MANDATORY
+P8_022,Ductile detailing and seismic reinforcement of RCC frame building located in Seismic Zone IV.,IS 13920,IS 456; IS 1893,Civil,HARD,verified,NOT_MANDATORY
+P8_023,Supply of Class 1 110mm uPVC pipes for cold potable water plumbing inside residential staff quarters block.,IS 4985,IS 4984; IS 12235,Civil,EASY,verified,MANDATORY
+P8_024,Compressive and tensile strength testing of hardened concrete cube samples collected from slab casting.,IS 516:Part 1,IS 456; IS 1199,Civil,MEDIUM,verified,NOT_MANDATORY
+P8_025,Code of practice for plain and reinforced concrete structures general structural civil design.,IS 456,IS 875; IS 1786,Civil,EASY,verified,NOT_MANDATORY
+P8_026,Specification for 43 Grade Ordinary Portland Cement (OPC 43) for general masonry and RCC work.,IS 8112,IS 456; IS 12269,Civil,EASY,verified,MANDATORY
+P8_027,Specification for 33 Grade Ordinary Portland Cement (OPC 33) for plastering and non-structural concrete.,IS 269,IS 456; IS 8112,Civil,EASY,verified,MANDATORY
+P8_028,Coarse aggregate and fine aggregate sand specifications for concrete mix preparation.,IS 383,IS 456; IS 2386,Civil,MEDIUM,verified,NOT_MANDATORY
+P8_029,Code of practice for general building construction and internal electrical installation wiring.,IS 732,IS 694; IS 3043,Civil,MEDIUM,verified,NOT_MANDATORY
+P8_030,Plywood for general concrete shuttering formwork and temporary structural support.,IS 4990,IS 303; IS 456,Civil,EASY,verified,NOT_MANDATORY
+P8_031,Procurement of sterile single-use hypodermic syringes with needle 5ml capacity for hospital inpatient injection.,IS 10258,IS 10654; ISO 7886,Medical,EASY,verified,MANDATORY
+P8_032,Supply of surgical examination gloves powder-free natural rubber latex for clinical examination.,IS 4148,IS 13422; ISO 11193,Medical,EASY,verified,MANDATORY
+P8_033,High pressure horizontal cylindrical steam sterilizer autoclave for hospital central sterile supply department.,IS 3829:Part 1,IS 3829:Part 2; IS 13154,Medical,MEDIUM,verified,NOT_MANDATORY
+P8_034,Medical gas pipeline system for oxygen and nitrous oxide supply in hospital operation theaters.,IS 7396:Part 1,HTM 02-01; ISO 7396,Medical,HARD,verified,MANDATORY
+P8_035,3-ply surgical face mask with meltblown filter layer and earloops for healthcare worker infection prevention.,IS 16289,EN 14683; ASTM F2100,Medical,EASY,verified,MANDATORY
+P8_036,Clinical electronic digital thermometer for body temperature measurement in hospital wards.,IS 16422,ISO 80601-2-56,Medical,EASY,verified,NOT_MANDATORY
+P8_037,Motorized ICU hospital bed with multi-position tilt and CPR release function.,IS 13454,IEC 60601-2-38,Medical,MEDIUM,verified,NOT_MANDATORY
+P8_038,Single-use sterile IV cannula catheter 20G with injection port for intravenous fluid administration.,IS 10555:Part 1,ISO 10555-1,Medical,EASY,verified,MANDATORY
+P8_039,Resuscitator bag valve mask (BVM) adult manual resuscitator for emergency medical response.,IS 12457,ISO 10651-4,Medical,MEDIUM,verified,NOT_MANDATORY
+P8_040,Absorbent surgical cotton wool IP grade for wound dressing and clinical hygiene.,IS 1673,IP Pharmacopoeia,Medical,EASY,verified,MANDATORY
+P8_041,Procurement of 100% cotton woven camouflage fabric for military combat uniform garment stitching.,IS 11758,IS 278; IS 1390,Textile,MEDIUM,verified,NOT_MANDATORY
+P8_042,Supply of high visibility safety reflective jackets with fluorescent polyester fabric for road construction workers.,IS 15809,EN ISO 20471,Textile,EASY,verified,MANDATORY
+P8_043,Polypropylene woven sacks for 50kg cement bag packaging with UV stabilization.,IS 11652,IS 9755; IS 14887,Textile,EASY,verified,MANDATORY
+P8_044,Polyester sewing thread 40/2 spun polyester for industrial garment manufacturing.,IS 1720,IS 1373,Textile,EASY,verified,NOT_MANDATORY
+P8_045,Fire retardant treated heavy cotton canvas tarpaulin cover for open truck freight transport.,IS 1424,IS 2089; IS 15742,Textile,MEDIUM,verified,MANDATORY
+P8_046,High tenacity nylon 6.6 multifilament yarn for industrial webbings and safety harnesses.,IS 4471,IS 15742,Textile,MEDIUM,verified,NOT_MANDATORY
+P8_047,Non-woven needle punched polyester geotextile fabric 300 gsm for highway road embankment soil stabilization.,IS 16391,IS 13326; IS 13162,Textile,HARD,verified,MANDATORY
+P8_048,Hospital bed sheets bleach white 100% cotton plain weave for medical ward bedding.,IS 745,IS 1390,Textile,EASY,verified,NOT_MANDATORY
+P8_049,Flame resistant protective clothing for industrial workers exposed to electrical arc flash hazards.,IS 15742,ISO 11612; NFPA 2112,Textile,HARD,verified,MANDATORY
+P8_050,Woolen blankets dyed natural blend for emergency disaster relief supply camps.,IS 1681,IS 2378,Textile,EASY,verified,NOT_MANDATORY
+P8_051,Supply of automotive pneumatic tubeless radial tires 215/75 R15 for commercial utility vehicle fleets.,IS 15633,IS 15636; AIS 037,Automotive,EASY,verified,MANDATORY
+P8_052,Automotive hydraulic brake fluid DOT 4 non-petroleum for passenger car hydraulic braking system.,IS 8654,FMVSS 116; SAE J1704,Automotive,MEDIUM,verified,MANDATORY
+P8_053,Laminated safety glass windshield for heavy commercial truck cabin front window.,IS 2553:Part 2,AIS 008; ISO 3537,Automotive,EASY,verified,MANDATORY
+P8_054,Automotive lead-acid maintenance free starter battery 12V 75Ah for heavy diesel bus engines.,IS 14257,IS 7372,Automotive,EASY,verified,MANDATORY
+P8_055,Automotive seat belts 3-point emergency locking retractor (ELR) for passenger safety in motor cars.,IS 15139,AIS 015; ECE R16,Automotive,MEDIUM,verified,MANDATORY
+P8_056,Commercial vehicle rear view mirrors convex glass for medium and heavy goods motor vehicles.,IS 14945,AIS 001; ECE R46,Automotive,EASY,verified,MANDATORY
+P8_057,Automotive halogen headlamp bulbs H4 12V 60/55W P43t cap for vehicle front lighting.,IS 1606,AIS 030; ECE R37,Automotive,EASY,verified,NOT_MANDATORY
+P8_058,Cast aluminum alloy road wheels 16 inch for passenger motor cars.,IS 9438,AIS 073; ISO 3006,Automotive,MEDIUM,verified,MANDATORY
+P8_059,Fuel injection pump rubber hose reinforced for automotive diesel fuel supply line.,IS 9265,SAE J30,Automotive,EASY,verified,NOT_MANDATORY
+P8_060,Protective helmets for motorcycle riders two-wheeler rider head safety.,IS 4151,ECE 22.05,Automotive,EASY,verified,MANDATORY
+P8_061,Supply of hot rolled structural steel equal angles 75x75x6 mm for transmission tower fabrication.,IS 2062,IS 808; IS 800,Steel,EASY,verified,MANDATORY
+P8_062,Cold rolled carbon steel sheets CR1 grade 1.2mm thickness for electrical panel enclosure fabrication.,IS 513:Part 1,IS 2062; IS 1079,Steel,MEDIUM,verified,MANDATORY
+P8_063,Galvanized plain steel sheets GP grade 0.6mm thickness with Z275 zinc coating for ducting.,IS 277,IS 513; IS 1079,Steel,EASY,verified,MANDATORY
+P8_064,Austenitic stainless steel sheets Grade 304 2.0mm thickness 2B finish for commercial kitchen equipment.,IS 6911,ASTM A240; ISO 15510,Steel,EASY,verified,MANDATORY
+P8_065,Carbon steel seamless pipes for high temperature service in thermal power plant steam lines.,IS 1239:Part 1,IS 3589; ASTM A106,Steel,MEDIUM,verified,MANDATORY
+P8_066,High tensile alloy steel hex bolts Grade 8.8 M16x60mm for structural steel joint bolting.,IS 1367:Part 3,IS 1363; ISO 898-1,Steel,EASY,verified,NOT_MANDATORY
+P8_067,Ductile iron pressure pipes socket and spigot push-on joint for municipal water trunk main.,IS 8329,IS 5382; IS 12288,Steel,MEDIUM,verified,MANDATORY
+P8_068,Hot rolled medium and high tensile steel plates 25mm thickness E350 grade for bridge girder construction.,IS 2062,IS 800; IS 1029,Steel,MEDIUM,verified,MANDATORY
+P8_069,Stainless steel wire rod Grade 316 for chemical plant filter wire mesh weaving.,IS 6528,IS 6911; ASTM A580,Steel,MEDIUM,verified,MANDATORY
+P8_070,High carbon steel wire 4.0mm diameter for prestressed concrete sleeper manufacturing.,IS 1785:Part 1,IS 14268; IS 2090,Steel,HARD,verified,MANDATORY
+P8_071,Portland Pozzolana Cement (PPC) fly ash based for general RCC residential construction.,IS 1489:Part 1,IS 456; IS 4031,Cement,EASY,verified,MANDATORY
+P8_072,Portland Slag Cement (PSC) for marine structures and sewage treatment plant concrete.,IS 455,IS 456; IS 4031,Cement,MEDIUM,verified,MANDATORY
+P8_073,Sulfate Resisting Portland Cement (SRC) for underground foundation exposed to high soil sulfate levels.,IS 12330,IS 456; IS 4031,Cement,MEDIUM,verified,MANDATORY
+P8_074,White Portland Cement for architectural decorative terrazzo flooring and tile joint grouting.,IS 8042,IS 4031; IS 1237,Cement,EASY,verified,MANDATORY
+P8_075,Glazed ceramic wall tiles Group BIII 300x450mm for hospital bathroom wall cladding.,IS 15622,IS 13630; ISO 13006,Cement,EASY,verified,MANDATORY
+P8_076,Vitrified polished floor tiles Group BIa 600x600mm for commercial office building flooring.,IS 15622,IS 13630,Cement,EASY,verified,MANDATORY
+P8_077,Vitreous china wash basin pedestal type for public restroom sanitary installation.,IS 2556:Part 4,IS 2556:Part 1; IS 771,Cement,EASY,verified,MANDATORY
+P8_078,Vitreous china European water closet (EWC) floor mounted washdown WC pan.,IS 2556:Part 2,IS 2556:Part 1,Cement,EASY,verified,MANDATORY
+P8_079,Refractory fireclay bricks High Alumina Grade 50% Al2O3 for industrial boiler furnace lining.,IS 6,IS 8; IS 1529,Cement,HARD,verified,NOT_MANDATORY
+P8_080,Precast concrete paving blocks 80mm thickness M40 grade for heavy vehicle port yard pavement.,IS 15658,IS 456; IS 2570,Cement,MEDIUM,verified,NOT_MANDATORY
+P8_081,Supply of fortified double fortified iodized salt with iron and iodine for public distribution system.,IS 12981,IS 7224; FSSAI Rules,Food,EASY,verified,MANDATORY
+P8_082,Packaged natural mineral drinking water in 1-liter PET bottles for hotel guest rooms.,IS 13428,IS 14543; FSSAI Regulations,Food,EASY,verified,MANDATORY
+P8_083,Packaged drinking water other than mineral water in 20-liter reusable polycarbonate carboys.,IS 14543,IS 13428; FSSAI Regulations,Food,EASY,verified,MANDATORY
+P8_084,Infant milk substitute powder stage 1 for infant nutrition under 6 months.,IS 14433,FSSAI Infant Food Rules,Food,MEDIUM,verified,MANDATORY
+P8_085,Refined bleached deodorized (RBD) palmolein edible oil for mid-day meal scheme cooking.,IS 8323,IS 548; FSSAI Rules,Food,EASY,verified,NOT_MANDATORY
+P8_086,Spices whole and ground turmeric powder for institutional mess kitchen supply.,IS 2446,IS 1797; FSSAI Regulations,Food,EASY,verified,NOT_MANDATORY
+P8_087,Dehydrated onion flakes for commercial food processing and instant soup manufacturing.,IS 4452,FSSAI Regulations,Food,MEDIUM,verified,NOT_MANDATORY
+P8_088,Cereal based complementary food for infants process cereal mix.,IS 11536,FSSAI Regulations,Food,MEDIUM,verified,MANDATORY
+P8_089,Corrugated fiberboard boxes 5-ply for export packaging of fresh mangoes.,IS 2771:Part 1,IS 1397,Food,EASY,verified,NOT_MANDATORY
+P8_090,Pesticide emulsifiable concentrate EC formulation malathion 50% EC for agricultural crop protection.,IS 2567,CIBRC Insecticide Act,Food,HARD,verified,MANDATORY
+P8_091,Supply of single-stage end suction centrifugal water pump 75m3/hr flow at 30m head with 11 kW motor.,IS 1520,IS 5120; IS 12615,Mechanical,MEDIUM,verified,NOT_MANDATORY
+P8_092,Seamless steel gas cylinders for compressed oxygen gas storage 47-liter water capacity at 150 bar.,IS 7285:Part 2,IS 3224; PESO Rules,Mechanical,MEDIUM,verified,MANDATORY
+P8_093,Cylinder valves for compressed industrial oxygen gas cylinders with IS-3 outlet connection thread.,IS 3224,IS 7285; PESO Rules,Mechanical,MEDIUM,verified,MANDATORY
+P8_094,Heavy duty industrial helical gear reducer 50 kW ratio 15:1 for conveyor belt drive.,IS 7403,IS 4460; ISO 6336,Mechanical,HARD,verified,NOT_MANDATORY
+P8_095,Industrial wire rope 6x36 class steel wire rope 20mm diameter for overhead EOT crane hoisting.,IS 2266,IS 1835; IS 3177,Mechanical,MEDIUM,verified,NOT_MANDATORY
+P8_096,Electric overhead traveling (EOT) crane 10-ton capacity double girder for steel warehouse heavy lifting.,IS 3177,IS 807; IS 2266,Mechanical,HARD,verified,NOT_MANDATORY
+P8_097,Industrial pressure relief safety valve 50mm size set pressure 10 bar for steam boiler overpressure protection.,IS 3687,IBR Regulations; ISO 4126,Mechanical,HARD,verified,MANDATORY
+P8_098,Deep groove single row radial ball bearings 6210 C3 clearance for electric motor shaft support.,IS 6453,ISO 15; DIN 625,Mechanical,EASY,verified,NOT_MANDATORY
+P8_099,Flexible rubber spool expansion joint DN 100 PN 16 for HVAC chilled water pump piping vibration isolation.,IS 10224,ASTM F1123,Mechanical,EASY,verified,NOT_MANDATORY
+P8_100,Industrial diesel engine driven air compressor 300 cfm at 7 bar portable for road construction pneumatic tools.,IS 11464,IS 10001,Mechanical,MEDIUM,verified,NOT_MANDATORY
+P8_101,Supply of domestic electric food mixer grinder 750W with 3 stainless steel jars for household kitchen.,IS 4250,IS 302:Part 1; IS 302:Part 2:Sec 14,Consumer,EASY,verified,MANDATORY
+P8_102,Supply of domestic electric iron dry type 1000W with non-stick soleplate for residential use.,IS 366,IS 302:Part 1; IS 302:Part 2:Sec 3,Consumer,EASY,verified,MANDATORY
+P8_103,Domestic storage electric water heater geyser 25-liter capacity 2 kW vertical mounting for residential bathroom.,IS 2082,IS 302:Part 1; IS 302:Part 2:Sec 21,Consumer,EASY,verified,MANDATORY
+P8_104,Procurement of ceiling fan 1200mm sweep 3-blade energy efficient 5-star rated for office room ventilation.,IS 374,BEE Star Label Rules,Consumer,EASY,verified,MANDATORY
+P8_105,Safety footwear leather boots with steel toe cap for industrial shopfloor worker foot safety.,IS 15298:Part 2,IS 15298:Part 1; EN ISO 20345,Consumer,EASY,verified,MANDATORY
+P8_106,Domestic liquefied petroleum gas (LPG) rubber hose for connecting LPG cylinder to gas stove burner.,IS 9573,IS 4246; PESO Rules,Consumer,EASY,verified,MANDATORY
+P8_107,Domestic gas stove 2-burner stainless steel body operating on LPG for home cooking.,IS 4246,IS 9573; IS 5116,Consumer,EASY,verified,MANDATORY
+P8_108,Toys non-electric plastic educational building blocks for preschool children safety.,IS 9873:Part 1,IS 9873:Part 2; IS 15644,Consumer,EASY,verified,MANDATORY
+P8_109,Direct-cool frost-free domestic electric refrigerator 220-liter capacity 3-star energy rating.,IS 15750,IS 1476; BEE Star Label,Consumer,MEDIUM,verified,MANDATORY
+P8_110,Packaged aluminum foil roll 11-micron thickness for food wrap and kitchen storage.,IS 15392,FSSAI Packaging Regulations,Consumer,EASY,verified,NOT_MANDATORY
+P8_111,hospital equipment,IS 10258,IS 4148; IS 16289,Medical,VAGUE,verified,NOT_MANDATORY
+P8_112,cables for procurement,IS 694,IS 1554:Part 1; IS 7098:Part 2,Electrical,VAGUE,verified,NOT_MANDATORY
+P8_113,cement bags supply,IS 12269,IS 8112; IS 1489:Part 1,Civil,VAGUE,verified,NOT_MANDATORY
+P8_114,steel sections for project,IS 2062,IS 1786; IS 800,Steel,VAGUE,verified,NOT_MANDATORY
+P8_115,water pipes required,IS 4984,IS 4985; IS 8329,Civil,VAGUE,verified,NOT_MANDATORY
+P8_116,What is the capital city of France and its historical population?,NONE,NONE,General,OOD,verified,NOT_MANDATORY
+P8_117,Write a Python script to calculate Fibonacci numbers using recursion.,NONE,NONE,Computer Science,OOD,verified,NOT_MANDATORY
+P8_118,How do I bake a chocolate chip cake at home without an oven?,NONE,NONE,Culinary,OOD,verified,NOT_MANDATORY
+P8_119,Who won the ICC Cricket World Cup in 2011 and who was man of the match?,NONE,NONE,Sports,OOD,verified,NOT_MANDATORY
+P8_120,Can you explain Einstein's theory of general relativity in simple terms?,NONE,NONE,Physics,OOD,verified,NOT_MANDATORY
+P8_121,Procurement of cast iron sluice valves for waterworks supply pipeline.,IS 14846,IS 2906,Mechanical,medium,verified,true
+P8_122,Ductile iron pressure pipes for water and sewage transportation.,IS 8329,,Water,easy,verified,true
+P8_123,Centrifugally cast iron pressure pipes for water mains.,IS 1536,IS 8329,Water,medium,verified,true
+P8_124,Stainless steel seamless pipes for high temperature fluid conveyance.,IS 1239,IS 3589,Industrial Equipment,hard,partially_verified,false
+P8_125,Heavy duty mild steel tubes and sockets for gas pipelines.,IS 1239,IS 3589,Industrial Equipment,medium,verified,true
+P8_126,Unplasticized PVC pipes for soil and waste discharge systems.,IS 4985,IS 13592,Plumbing,easy,verified,true
+P8_127,High density polyethylene (HDPE) pipes for potable water supply.,IS 4984,IS 14333,Water,easy,verified,true
+P8_128,Chlorinated Polyvinyl Chloride (CPVC) pipes for hot and cold potable water distribution.,IS 15778,IS 4985,Plumbing,medium,verified,true
+P8_129,Vitreous china sanitary appliances water closet pan and cistern.,IS 2556,,Plumbing,medium,verified,true
+P8_130,Galvanized iron pipes for residential water supply lines.,IS 1239,,Plumbing,easy,verified,true
+P8_131,Portable fire extinguishers water type stored pressure gas cartridge.,IS 15683,IS 2190,Safety,easy,verified,true
+P8_132,Industrial safety helmets for head protection in construction zones.,IS 2925,,Safety,easy,verified,true
+P8_133,High visibility safety jackets for highway maintenance personnel.,IS 15809,,Safety,medium,verified,false
+P8_134,Personal protective safety footwear with steel toe cap for workers.,IS 15298,,Safety,easy,verified,true
+P8_135,Full body safety harness for fall arrest during high rise work.,IS 3521,,Safety,medium,verified,true
+P8_136,Cotton duck canvas fabric for tents and tarpaulins heavy duty.,IS 1424,,Textiles,medium,partially_verified,false
+P8_137,Woven polyester webbing for cargo restraint and lashing systems.,IS 15742,,Textiles,hard,partially_verified,false
+P8_138,High density polyethylene woven sacks for packaging fertilizer and cement.,IS 9755,IS 11652,Packaging,medium,verified,true
+P8_139,Jute bags for packing food grains and sugar 50kg capacity.,IS 12650,IS 16187,Packaging,easy,verified,true
+P8_140,Surgical face masks 3 ply non woven meltblown filtration layer.,IS 16289,,Medical,easy,verified,true
+P8_141,Automotive pneumatic tires for commercial trucks and buses.,IS 15633,IS 15636,Automotive,medium,verified,true
+P8_142,Safety glass laminated wind-screen for motor vehicles.,IS 2553,,Automotive,medium,verified,true
+P8_143,Hydraulic brake hose assembly for automotive braking systems.,IS 7079,,Automotive,hard,partially_verified,false
+P8_144,Lead acid storage batteries for motor vehicles starter ignition.,IS 14257,IS 7372,Automotive,easy,verified,true
+P8_145,Diesel engine fuel filter elements for automotive applications.,IS 3354,,Automotive,hard,partially_verified,false
+P8_146,Submersible pump sets for deep well agricultural irrigation.,IS 8034,IS 9079,Agriculture,easy,verified,true
+P8_147,Drip irrigation poly-tubes for micro irrigation in agriculture.,IS 12786,IS 13488,Agriculture,medium,verified,true
+P8_148,Emitters and drip emitters for agricultural irrigation systems.,IS 13487,,Agriculture,medium,verified,true
+P8_149,Centrifugal pumps for clear cold agricultural water pumping.,IS 6595,,Agriculture,easy,verified,true
+P8_150,Plant protection equipment hand operated knapsack sprayer.,IS 3946,IS 10134,Agriculture,medium,verified,false
+P8_151,Medical grade disposable hypodermic syringes with needle.,IS 10258,IS 10654,Medical,easy,verified,true
+P8_152,Absorbent cotton wool sterile for medical and surgical dressing.,IS 2119,,Medical,easy,verified,false
+P8_153,Surgical rubber gloves sterile single use for operations.,IS 4148,IS 13422,Medical,easy,verified,true
+P8_154,Medical oxygen cylinders seamless steel high pressure.,IS 7285,IS 3224,Medical,medium,verified,true
+P8_155,Intravenous cannula sterile disposable for fluid administration.,IS 15380,,Medical,medium,verified,true
+P8_156,Pipes for project work,IS 4985,,Plumbing,hard,synthetic,false
+P8_157,Electrical item requirement for office,IS 694,,Electrical,hard,synthetic,false
+P8_158,Cable for wiring,IS 694,IS 1554,Electrical,hard,synthetic,false
+P8_159,Cement bag delivery,IS 1489,,Civil,hard,synthetic,false
+P8_160,Water tank installation,IS 12701,,Plumbing,hard,synthetic,false
+P8_161,What is the capital of India?,,,Out of Domain,hard,synthetic,false
+P8_162,Python script to calculate fibonacci sequence,,,Out of Domain,hard,synthetic,false
+P8_163,Best recipe for chicken biryani in pressure cooker,,,Out of Domain,hard,synthetic,false
+P8_164,Who won the cricket world cup in 2011?,,,Out of Domain,hard,synthetic,false
+P8_165,How to change password in windows 11 control panel?,,,Out of Domain,hard,synthetic,false
+P8_166,XLPE insulated heavy duty power cables 11kV grade 3 core.,IS 7098,IS 1554,Electrical,medium,verified,true
+P8_167,Low voltage switchgear and controlgear circuit breakers ACB.,IS 13947,IS 60947,Electrical,hard,verified,true
+P8_168,Single phase AC energy meters static class 1.0 accuracy.,IS 13779,IS 15885,Electrical,medium,verified,true
+P8_169,Distribution transformer 11kV to 433V oil immersed copper winding.,IS 1180,IS 2026,Electrical,medium,verified,true
+P8_170,Solar photovoltaic module crystalline silicon ground mounted.,IS 14286,IS 61215,Electrical,medium,verified,true
+P8_171,Ready mixed concrete RMC grade M30 for structural RCC slab.,IS 4926,IS 456,Civil,easy,verified,true
+P8_172,Fly ash building bricks pulverized fuel ash lime gypsum.,IS 12894,IS 1077,Civil,easy,verified,true
+P8_173,Bitumen emulsion anionic rapid setting for road surface dressing.,IS 8887,IS 73,Civil,medium,verified,true
+P8_174,Precast concrete pipes for culverts non pressure NP3 grade.,IS 458,,Civil,medium,verified,true
+P8_175,Structural steel hollow sections square and rectangular for frames.,IS 4923,IS 1161,Civil,easy,verified,true
+P8_176,Polyester filament yarn for textile manufacturing.,IS 11579,,Textiles,medium,partially_verified,false
+P8_177,Cotton bed sheets bleached for hospital ward beds.,IS 1763,,Textiles,easy,partially_verified,false
+P8_178,Polypropylene woven sack bags for cement packing 50kg.,IS 11652,IS 9755,Packaging,easy,verified,true
+P8_179,Corrugated fiberboard boxes triple wall for heavy equipment packaging.,IS 2771,,Packaging,medium,verified,false
+P8_180,Steel drums and kegs tight head for oil storage 200 liters.,IS 1783,,Packaging,medium,verified,true
+P8_181,Multistage centrifugal pumps for high head boiler feed water.,IS 9079,IS 6595,Industrial Equipment,hard,partially_verified,false
+P8_182,Overhead travelling crane electric EOT 10 ton capacity.,IS 3177,IS 807,Industrial Equipment,hard,partially_verified,false
+P8_183,Industrial air compressor reciprocating stationary oil lubricated.,IS 5456,,Industrial Equipment,hard,partially_verified,false
+P8_184,Industrial safety goggles for chemical splash protection.,IS 5983,IS 2925,Safety,easy,verified,true
+P8_185,Gas masks and respiratory protective devices canister type.,IS 8523,IS 14166,Safety,medium,verified,true
+P8_186,Submersible motor for agricultural pump sets water filled.,IS 9283,IS 8034,Agriculture,medium,verified,true
+P8_187,Rigid PVC pipes for agricultural irrigation networks.,IS 4985,,Agriculture,easy,verified,true
+P8_188,Medical examine gloves non sterile latex powder free.,IS 13422,IS 4148,Medical,easy,verified,true
+P8_189,Sterile disposable hypodermic needles for single use.,IS 10654,IS 10258,Medical,easy,verified,true
+P8_190,Blood bag plastic single bag sterile CPDA anticoagulant.,IS 9837,,Medical,medium,verified,true
+P8_191,Heavy duty diesel oil API CI4 for commercial vehicle engines.,IS 13656,,Automotive,medium,verified,false
+P8_192,Automotive gear lubricant SAE 90 extreme pressure.,IS 1118,,Automotive,medium,verified,false
+P8_193,Unleaded motor gasoline petrol motor spirit for IC engines.,IS 2796,,Automotive,easy,verified,true
+P8_194,High speed diesel fuel HSD for automotive diesel engines.,IS 1460,,Automotive,easy,verified,true
+P8_195,Liquefied petroleum gas LPG cylinder for domestic cooking 14.2kg.,IS 3196,IS 4576,Industrial Equipment,easy,verified,true

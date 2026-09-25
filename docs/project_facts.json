@@ -1,0 +1,56 @@
+{
+  "project_name": "AI-Powered Indian Standards (IS Code) Recommendation Engine for Procurement Descriptions",
+  "problem_statement": "26108",
+  "dataset_version": "v0.2-phase8",
+  "standards_count": 120,
+  "evaluation_queries": 195,
+  "evaluation_query_breakdown": {
+    "verified_queries": 175,
+    "partially_verified_queries": 10,
+    "synthetic_queries": 10
+  },
+  "test_suite_count": 53,
+  "supported_categories": [
+    "Electrical",
+    "Civil",
+    "Mechanical",
+    "Construction",
+    "Water",
+    "Plumbing",
+    "Safety",
+    "Textiles",
+    "Packaging",
+    "Automotive",
+    "Agriculture",
+    "Medical",
+    "Industrial Equipment"
+  ],
+  "architecture": [
+    "Security Sanitizer & Threat Defense Layer",
+    "Ambiguity & Out-of-Domain Query Guardrails",
+    "NLP Entity Extraction",
+    "Dense Vector Semantic Retrieval (SentenceTransformers all-MiniLM-L6-v2)",
+    "Neo4j Knowledge Graph & Graph-RAG",
+    "QCO Compliance & Gazette Verification Engine",
+    "Configurable Hybrid Ranker",
+    "Evidence Grounding & Provenance System"
+  ],
+  "metrics": {
+    "mrr_system_b_vector": 0.2655,
+    "mrr_system_c_graph_rag": 0.1694,
+    "precision_at_1_system_b": 0.2462,
+    "precision_at_1_system_c": 0.1538,
+    "p50_latency_ms": 17.64,
+    "p95_latency_ms": 24.45,
+    "qco_detection_accuracy_pct": 77.14,
+    "ambiguity_guardrail_accuracy_pct": 100.0,
+    "ood_rejection_accuracy_pct": 100.0,
+    "security_threat_protection_pct": 100.0
+  },
+  "deployment_status": "FastAPI REST Server + Web Dashboard + Containerized Docker Setup",
+  "limitations": [
+    "Pilot dataset indexed to 120 verified standards across Electrical and Civil sectors",
+    "CPU-bound dense vector embedding generation under heavy concurrency",
+    "QCO verification strictly constrained to verified gazetted records in database"
+  ]
+}

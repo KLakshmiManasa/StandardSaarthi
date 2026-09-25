@@ -1,0 +1,14 @@
+{
+  "dataset_path": "data/processed/standards_clean.json",
+  "total_standards_audited": 121,
+  "valid_standards_count": 121,
+  "duplicate_codes_count": 0,
+  "duplicate_codes": [],
+  "invalid_urls_count": 0,
+  "invalid_urls": [],
+  "missing_fields_count": 0,
+  "missing_fields_sample": [],
+  "conflicting_lifecycles_count": 0,
+  "conflicting_lifecycles": [],
+  "data_quality_score_percent": 100.0
+}

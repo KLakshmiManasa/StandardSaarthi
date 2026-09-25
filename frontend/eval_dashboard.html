@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIH 26108 — Internal Evaluation & Validation Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .eval-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .metric-card { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; text-align: center; }
+        .metric-card h4 { font-size: 0.8rem; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
+        .metric-card .value { font-size: 1.5rem; font-weight: 700; color: #1e293b; }
+        .table-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+        .table-card h3 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 16px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: #f8fafc; font-weight: 600; color: #475569; }
+        .fail-badge { background: #fee2e2; color: #991b1b; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="logo-area">
+                <span class="badge-sih">SIH 26108</span>
+                <h1>Phase 6 System Validation & Evaluation Dashboard</h1>
+            </div>
+            <p class="subtitle">Reproducible Benchmark Results, IR Metrics, Guardrails, Latency Profiling & Failure Error Analysis</p>
+        </header>
+
+        <!-- Metrics Summary Grid -->
+        <div class="eval-grid">
+            <div class="metric-card">
+                <h4>Evaluation Dataset</h4>
+                <div id="valTotalQueries" class="value">120 Queries</div>
+            </div>
+            <div class="metric-card">
+                <h4>Best P@1 (Vector RAG)</h4>
+                <div id="valPrec1" class="value">0.3250</div>
+            </div>
+            <div class="metric-card">
+                <h4>Best MRR (Vector RAG)</h4>
+                <div id="valMRR" class="value">0.3505</div>
+            </div>
+            <div class="metric-card">
+                <h4>Latency P50 / P95</h4>
+                <div id="valLatency" class="value">14.98 / 21.34 ms</div>
+            </div>
+        </div>
+
+        <!-- 3-Mode Comparative IR Metrics Table -->
+        <section class="table-card">
+            <h3>3-Way System Retrieval Metrics Comparison</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Keyword Search (BM25)</th>
+                        <th>Vector Semantic RAG</th>
+                        <th>Graph-RAG + QCO Pipeline</th>
+                    </tr>
+                </thead>
+                <tbody id="metricsTableBody">
+                    <tr><td>Precision@1</td><td>0.2833</td><td><strong>0.3250</strong></td><td>0.2000</td></tr>
+                    <tr><td>Precision@3</td><td>0.1694</td><td><strong>0.1861</strong></td><td>0.1000</td></tr>
+                    <tr><td>Precision@5</td><td>0.1267</td><td><strong>0.1317</strong></td><td>0.0818</td></tr>
+                    <tr><td>Recall@5</td><td>0.2104</td><td><strong>0.2187</strong></td><td>0.1348</td></tr>
+                    <tr><td>MRR (Mean Reciprocal Rank)</td><td>0.3135</td><td><strong>0.3505</strong></td><td>0.2194</td></tr>
+                    <tr><td>NDCG@5</td><td>0.3105</td><td><strong>0.3469</strong></td><td>0.2184</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Failed Query Error Analysis Table -->
+        <section class="table-card">
+            <h3>Failure Error Analysis & Root Cause Diagnosis</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Query ID & Description</th>
+                        <th>Expected IS Code</th>
+                        <th>Returned Top-3</th>
+                        <th>Failure Category</th>
+                        <th>Corrective Action</th>
+                    </tr>
+                </thead>
+                <tbody id="errorAnalysisTableBody"></tbody>
+            </table>
+        </section>
+    </div>
+
+    <script src="eval_dashboard.js"></script>
+</body>
+</html>

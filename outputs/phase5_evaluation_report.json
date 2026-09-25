@@ -1,0 +1,56 @@
+{
+  "evaluation_dataset_query_count": 20,
+  "benchmark_timestamp": "2026-09-22 16:14:00",
+  "comparative_summary": {
+    "mode_a_keyword_bm25": {
+      "mrr": 0.95,
+      "precision@1": 0.9,
+      "recall@1": 0.2458,
+      "ndcg@1": 0.9,
+      "precision@3": 0.65,
+      "recall@3": 0.5208,
+      "ndcg@3": 0.9582,
+      "precision@5": 0.47,
+      "recall@5": 0.625,
+      "ndcg@5": 0.944,
+      "precision@10": 0.27,
+      "recall@10": 0.7167,
+      "ndcg@10": 0.9282
+    },
+    "mode_b_vector_rag": {
+      "mrr": 0.975,
+      "precision@1": 0.95,
+      "recall@1": 0.2583,
+      "ndcg@1": 0.95,
+      "precision@3": 0.6667,
+      "recall@3": 0.5375,
+      "ndcg@3": 0.9695,
+      "precision@5": 0.54,
+      "recall@5": 0.7208,
+      "ndcg@5": 0.9327,
+      "precision@10": 0.3,
+      "recall@10": 0.8,
+      "ndcg@10": 0.9205
+    },
+    "mode_c_proposed_graph_rag": {
+      "mrr": 0.5523,
+      "precision@1": 0.5,
+      "recall@1": 0.1333,
+      "ndcg@1": 0.5,
+      "precision@3": 0.3167,
+      "recall@3": 0.2542,
+      "ndcg@3": 0.5235,
+      "precision@5": 0.22,
+      "recall@5": 0.2958,
+      "ndcg@5": 0.5137,
+      "precision@10": 0.205,
+      "recall@10": 0.5333,
+      "ndcg@10": 0.5454
+    }
+  },
+  "pipeline_specific_evaluations": {
+    "entity_extraction_accuracy": 0.8,
+    "qco_detection_accuracy": 0.75,
+    "evidence_retrieval_coverage": 0.75
+  }
+}

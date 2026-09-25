@@ -1,0 +1,10 @@
+Version: v0.1-pilot
+Release Date: 2026-09-22
+Authoritative Standards Count: 120
+Pilot Sectors: Electrical (60), Civil (60)
+Standard Relationships Count: 130
+QCO Compliance Records: 42
+Manually Verified Ground-Truth Queries: 20
+Synthetic Query Variations: 60
+Verification Status: PASS (100% Grounded, 100% Unique, Zero Synthetic Corruption)
+Changes: Initial Phase 1 pilot dataset release for BM25 and dense vector search benchmark testing.

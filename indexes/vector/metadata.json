@@ -1,0 +1,854 @@
+{
+  "model_name": "sentence_transformers/all-MiniLM-L6-v2",
+  "vector_dim": 384,
+  "num_records": 121,
+  "standards": [
+    {
+      "doc_id": 0,
+      "is_code": "IS 14543",
+      "title": "Packaged Drinking Water (other than Packaged Natural Mineral Water) \u2014 Specification",
+      "sector": "Food & Water",
+      "product_category": "Packaged Drinking Water"
+    },
+    {
+      "doc_id": 1,
+      "is_code": "IS 694",
+      "title": "Polyvinyl Chloride Insulated Cables for Working Voltages Up to and Including 1100 V",
+      "sector": "Electrical",
+      "product_category": "Cables and Wires"
+    },
+    {
+      "doc_id": 2,
+      "is_code": "IS 1554:Part 1",
+      "title": "PVC Insulated (Heavy Duty) Electric Cables - Part 1: For Working Voltages Up to and Including 1100 V",
+      "sector": "Electrical",
+      "product_category": "Cables and Wires"
+    },
+    {
+      "doc_id": 3,
+      "is_code": "IS 7098:Part 1",
+      "title": "Crosslinked Polyethylene Insulated Thermoplastic Sheathed Cables - Part 1: For Working Voltages Up to and Including 1100 V",
+      "sector": "Electrical",
+      "product_category": "Cables and Wires"
+    },
+    {
+      "doc_id": 4,
+      "is_code": "IS 7098:Part 2",
+      "title": "Crosslinked Polyethylene Insulated PVC Sheathed Cables - Part 2: For Working Voltages From 3.3 kV Up to and Including 33 kV",
+      "sector": "Electrical",
+      "product_category": "Cables and Wires"
+    },
+    {
+      "doc_id": 5,
+      "is_code": "IS 8130",
+      "title": "Conductors for insulated electric cables and flexible cords - Specification (Second Revision)",
+      "sector": "Electrical",
+      "product_category": "Cable Conductors"
+    },
+    {
+      "doc_id": 6,
+      "is_code": "IS 10810:Part 1",
+      "title": "Methods of Test for Cables - Part 1: Annealing Test for Copper Conductors",
+      "sector": "Electrical",
+      "product_category": "Cable Testing"
+    },
+    {
+      "doc_id": 7,
+      "is_code": "IS 10810:Part 62",
+      "title": "Methods of Test for Cables - Part 62: Flame Retardance Test for Bunched Cables",
+      "sector": "Electrical",
+      "product_category": "Cable Testing"
+    },
+    {
+      "doc_id": 8,
+      "is_code": "IS 732",
+      "title": "Code of Practice for Electrical Wiring Installations",
+      "sector": "Electrical",
+      "product_category": "Wiring Installation"
+    },
+    {
+      "doc_id": 9,
+      "is_code": "IS 2026:Part 1",
+      "title": "Power Transformers - Part 1: General",
+      "sector": "Electrical",
+      "product_category": "Transformers"
+    },
+    {
+      "doc_id": 10,
+      "is_code": "IS 1180:Part 1",
+      "title": "Outdoor Type Oil Immersed Distribution Transformers Up to and Including 2500 kVA, 33 kV - Specification",
+      "sector": "Electrical",
+      "product_category": "Transformers"
+    },
+    {
+      "doc_id": 11,
+      "is_code": "IS 16102:Part 1",
+      "title": "Self-ballasted LED Lamps for General Lighting Services - Part 1: Safety Requirements",
+      "sector": "Electrical",
+      "product_category": "Lighting"
+    },
+    {
+      "doc_id": 12,
+      "is_code": "IS 3043",
+      "title": "Code of Practice for Earthing",
+      "sector": "Electrical",
+      "product_category": "Earthing & Grounding"
+    },
+    {
+      "doc_id": 13,
+      "is_code": "IS 1293",
+      "title": "Plugs and Socket-outlets for Household and Similar Purposes Up to and Including 16 Amperes",
+      "sector": "Electrical",
+      "product_category": "Wiring Accessories"
+    },
+    {
+      "doc_id": 14,
+      "is_code": "IS 3854",
+      "title": "Switches for Domestic and Similar Purposes - Specification",
+      "sector": "Electrical",
+      "product_category": "Wiring Switches"
+    },
+    {
+      "doc_id": 15,
+      "is_code": "IS 8828",
+      "title": "Circuit-breakers for Overcurrent Protection for Household and Similar Installations (MCBs)",
+      "sector": "Electrical",
+      "product_category": "Switchgear"
+    },
+    {
+      "doc_id": 16,
+      "is_code": "IS 12640:Part 1",
+      "title": "Residual Current Operated Circuit Breakers Without Integral Overcurrent Protection for Household and Similar Uses (RCCBs)",
+      "sector": "Electrical",
+      "product_category": "Switchgear"
+    },
+    {
+      "doc_id": 17,
+      "is_code": "IS 60947:Part 2",
+      "title": "Low-voltage Switchgear and Controlgear - Part 2: Circuit-breakers (MCCBs)",
+      "sector": "Electrical",
+      "product_category": "Switchgear"
+    },
+    {
+      "doc_id": 18,
+      "is_code": "IS 456",
+      "title": "Code of Practice for Plain and Reinforced Concrete",
+      "sector": "Civil",
+      "product_category": "Structural Concrete"
+    },
+    {
+      "doc_id": 19,
+      "is_code": "IS 1786",
+      "title": "High Strength Deformed Steel Bars and Wires for Concrete Reinforcement - Specification (TMT Rebar)",
+      "sector": "Civil",
+      "product_category": "Reinforcement Steel"
+    },
+    {
+      "doc_id": 20,
+      "is_code": "IS 269",
+      "title": "Ordinary Portland Cement, 33 Grade - Specification",
+      "sector": "Civil",
+      "product_category": "Cement"
+    },
+    {
+      "doc_id": 21,
+      "is_code": "IS 8112",
+      "title": "Ordinary Portland Cement, 43 Grade - Specification",
+      "sector": "Civil",
+      "product_category": "Cement"
+    },
+    {
+      "doc_id": 22,
+      "is_code": "IS 12269",
+      "title": "Ordinary Portland Cement, 53 Grade - Specification",
+      "sector": "Civil",
+      "product_category": "Cement"
+    },
+    {
+      "doc_id": 23,
+      "is_code": "IS 1489:Part 1",
+      "title": "Portland Pozzolana Cement - Specification - Part 1: Flyash Based",
+      "sector": "Civil",
+      "product_category": "Cement"
+    },
+    {
+      "doc_id": 24,
+      "is_code": "IS 383",
+      "title": "Coarse and Fine Aggregates for Concrete - Specification",
+      "sector": "Civil",
+      "product_category": "Concrete Aggregates"
+    },
+    {
+      "doc_id": 25,
+      "is_code": "IS 10262",
+      "title": "Concrete Mix Proportioning - Guidelines",
+      "sector": "Civil",
+      "product_category": "Concrete Mix Design"
+    },
+    {
+      "doc_id": 26,
+      "is_code": "IS 4984",
+      "title": "High Density Polyethylene (HDPE) Pipes for Potable Water Supplies - Specification",
+      "sector": "Civil",
+      "product_category": "Water Pipes"
+    },
+    {
+      "doc_id": 27,
+      "is_code": "IS 4985",
+      "title": "Unplasticized PVC Pipes for Potable Water Supplies - Specification",
+      "sector": "Civil",
+      "product_category": "Water Pipes"
+    },
+    {
+      "doc_id": 28,
+      "is_code": "IS 1077",
+      "title": "Common Burnt Clay Building Bricks - Specification",
+      "sector": "Civil",
+      "product_category": "Masonry Bricks"
+    },
+    {
+      "doc_id": 29,
+      "is_code": "IS 800",
+      "title": "Code of Practice for General Construction in Steel",
+      "sector": "Civil",
+      "product_category": "Structural Steel Construction"
+    },
+    {
+      "doc_id": 30,
+      "is_code": "IS 2062",
+      "title": "Hot Rolled Medium and High Tensile Structural Steel - Specification",
+      "sector": "Civil",
+      "product_category": "Structural Steel"
+    },
+    {
+      "doc_id": 31,
+      "is_code": "IS 2418:Part 1",
+      "title": "Tubular Fluorescent Lamps for General Service - Part 1",
+      "sector": "Electrical",
+      "product_category": "Lighting"
+    },
+    {
+      "doc_id": 32,
+      "is_code": "IS 13947:Part 1",
+      "title": "Low-voltage Switchgear and Controlgear - Part 1: General Rules",
+      "sector": "Electrical",
+      "product_category": "Switchgear"
+    },
+    {
+      "doc_id": 33,
+      "is_code": "IS 60947:Part 1",
+      "title": "Low-voltage Switchgear and Controlgear - Part 1: General Rules",
+      "sector": "Electrical",
+      "product_category": "Switchgear"
+    },
+    {
+      "doc_id": 34,
+      "is_code": "IS 60947:Part 3",
+      "title": "Low-voltage Switchgear and Controlgear - Part 3: Switches",
+      "sector": "Electrical",
+      "product_category": "Switchgear"
+    },
+    {
+      "doc_id": 35,
+      "is_code": "IS 16046:Part 1",
+      "title": "Secondary Cells and Batteries Containing Alkaline - Nickel Systems",
+      "sector": "Electrical",
+      "product_category": "Batteries"
+    },
+    {
+      "doc_id": 36,
+      "is_code": "IS 16046:Part 2",
+      "title": "Secondary Cells and Batteries Containing Alkaline - Lithium Systems",
+      "sector": "Electrical",
+      "product_category": "Batteries"
+    },
+    {
+      "doc_id": 37,
+      "is_code": "IS 13252:Part 1",
+      "title": "Information Technology Equipment - Safety - Part 1",
+      "sector": "Electrical",
+      "product_category": "Electronics Safety"
+    },
+    {
+      "doc_id": 38,
+      "is_code": "IS 60529",
+      "title": "Degrees of Protection Provided by Enclosures (IP Code)",
+      "sector": "Electrical",
+      "product_category": "Enclosure Testing"
+    },
+    {
+      "doc_id": 39,
+      "is_code": "IS 9537:Part 1",
+      "title": "Conduits for Electrical Installations - Part 1: General",
+      "sector": "Electrical",
+      "product_category": "Conduits"
+    },
+    {
+      "doc_id": 40,
+      "is_code": "IS 9537:Part 2",
+      "title": "Conduits for Electrical Installations - Part 2: Rigid Steel Conduits",
+      "sector": "Electrical",
+      "product_category": "Conduits"
+    },
+    {
+      "doc_id": 41,
+      "is_code": "IS 9537:Part 3",
+      "title": "Conduits for Electrical Installations - Part 3: PVC Conduits",
+      "sector": "Electrical",
+      "product_category": "Conduits"
+    },
+    {
+      "doc_id": 42,
+      "is_code": "IS 302:Part 1",
+      "title": "Safety of Household Electrical Appliances - Part 1: General",
+      "sector": "Electrical",
+      "product_category": "Appliances"
+    },
+    {
+      "doc_id": 43,
+      "is_code": "IS 302:Part 2:Sec 3",
+      "title": "Safety of Electric Irons",
+      "sector": "Electrical",
+      "product_category": "Appliances"
+    },
+    {
+      "doc_id": 44,
+      "is_code": "IS 302:Part 2:Sec 30",
+      "title": "Safety of Room Heaters",
+      "sector": "Electrical",
+      "product_category": "Appliances"
+    },
+    {
+      "doc_id": 45,
+      "is_code": "IS 2312",
+      "title": "Electric Ceiling Fans and Regulators",
+      "sector": "Electrical",
+      "product_category": "Fans"
+    },
+    {
+      "doc_id": 46,
+      "is_code": "IS 374",
+      "title": "Electric Ceiling Fans and Regulators - Specification",
+      "sector": "Electrical",
+      "product_category": "Fans"
+    },
+    {
+      "doc_id": 47,
+      "is_code": "IS 12615",
+      "title": "Line Operated Three Phase Induction Motors - Energy Efficient",
+      "sector": "Electrical",
+      "product_category": "Motors"
+    },
+    {
+      "doc_id": 48,
+      "is_code": "IS 325",
+      "title": "Three-phase Induction Motors",
+      "sector": "Electrical",
+      "product_category": "Motors"
+    },
+    {
+      "doc_id": 49,
+      "is_code": "IS 996",
+      "title": "Single-phase Small AC and Universal Motors",
+      "sector": "Electrical",
+      "product_category": "Motors"
+    },
+    {
+      "doc_id": 50,
+      "is_code": "IS 7538",
+      "title": "Three-phase Induction Motors for Centrifugal Pumps",
+      "sector": "Electrical",
+      "product_category": "Motors"
+    },
+    {
+      "doc_id": 51,
+      "is_code": "IS 1445",
+      "title": "Porcelain Insulators for Overhead Power Lines (>1000V)",
+      "sector": "Electrical",
+      "product_category": "Transmission Insulators"
+    },
+    {
+      "doc_id": 52,
+      "is_code": "IS 2713",
+      "title": "Tubular Steel Poles for Overhead Power Lines",
+      "sector": "Electrical",
+      "product_category": "Transmission Poles"
+    },
+    {
+      "doc_id": 53,
+      "is_code": "IS 398:Part 1",
+      "title": "Aluminum Conductors - Part 1: Aluminum Stranded Conductors",
+      "sector": "Electrical",
+      "product_category": "Transmission Conductors"
+    },
+    {
+      "doc_id": 54,
+      "is_code": "IS 398:Part 2",
+      "title": "Aluminum Conductors - Part 2: ACSR Conductors",
+      "sector": "Electrical",
+      "product_category": "Transmission Conductors"
+    },
+    {
+      "doc_id": 55,
+      "is_code": "IS 5561",
+      "title": "Electric Power Connectors",
+      "sector": "Electrical",
+      "product_category": "Transmission Accessories"
+    },
+    {
+      "doc_id": 56,
+      "is_code": "IS 5613:Part 1",
+      "title": "Code of Practice for Overhead Power Lines",
+      "sector": "Electrical",
+      "product_category": "Transmission Practice"
+    },
+    {
+      "doc_id": 57,
+      "is_code": "IS 2099",
+      "title": "Bushings for Alternating Voltages Above 1000 Volts",
+      "sector": "Electrical",
+      "product_category": "Transformer Accessories"
+    },
+    {
+      "doc_id": 58,
+      "is_code": "IS 3347:Part 1",
+      "title": "Dimensions for Porcelain Transformer Bushings Up to 1.1 kV",
+      "sector": "Electrical",
+      "product_category": "Transformer Accessories"
+    },
+    {
+      "doc_id": 59,
+      "is_code": "IS 335",
+      "title": "Insulating Oils for Transformers and Switchgear",
+      "sector": "Electrical",
+      "product_category": "Insulating Oils"
+    },
+    {
+      "doc_id": 60,
+      "is_code": "IS 1248:Part 1",
+      "title": "Direct Acting Indicating Analogue Electrical Measuring Instruments",
+      "sector": "Electrical",
+      "product_category": "Meters"
+    },
+    {
+      "doc_id": 61,
+      "is_code": "IS 13779",
+      "title": "AC Static Watt-hour Meters, Class 1 and 2",
+      "sector": "Electrical",
+      "product_category": "Energy Meters"
+    },
+    {
+      "doc_id": 62,
+      "is_code": "IS 14697",
+      "title": "AC Static Transformer Operated Watthour Meters, Class 0.2S",
+      "sector": "Electrical",
+      "product_category": "Energy Meters"
+    },
+    {
+      "doc_id": 63,
+      "is_code": "IS 15959:Part 1",
+      "title": "Data Exchange for Electricity Meter Reading - Companion Spec",
+      "sector": "Electrical",
+      "product_category": "Smart Meters"
+    },
+    {
+      "doc_id": 64,
+      "is_code": "IS 16444:Part 1",
+      "title": "AC Static Direct Connected Electricity Meters for Smart Metering",
+      "sector": "Electrical",
+      "product_category": "Smart Meters"
+    },
+    {
+      "doc_id": 65,
+      "is_code": "IS 9000:Part 1",
+      "title": "Basic Environmental Testing Procedures for Electronic Items",
+      "sector": "Electrical",
+      "product_category": "Environmental Testing"
+    },
+    {
+      "doc_id": 66,
+      "is_code": "IS 14763:Part 1",
+      "title": "Conduit Systems for Cable Management - Part 1",
+      "sector": "Electrical",
+      "product_category": "Conduits"
+    },
+    {
+      "doc_id": 67,
+      "is_code": "IS 16242:Part 1",
+      "title": "Uninterruptible Power Systems (UPS) - Part 1 Safety",
+      "sector": "Electrical",
+      "product_category": "UPS Systems"
+    },
+    {
+      "doc_id": 68,
+      "is_code": "IS 16106",
+      "title": "Method of Electrical & Photometric Measurements of LED",
+      "sector": "Electrical",
+      "product_category": "LED Testing"
+    },
+    {
+      "doc_id": 69,
+      "is_code": "IS 15885:Part 2:Sec 13",
+      "title": "Lamp Controlgear - Particular Requirements for LED Modules",
+      "sector": "Electrical",
+      "product_category": "Lighting Drivers"
+    },
+    {
+      "doc_id": 70,
+      "is_code": "IS 418",
+      "title": "Tungsten Filament Lamps for Domestic Lighting",
+      "sector": "Electrical",
+      "product_category": "Lighting"
+    },
+    {
+      "doc_id": 71,
+      "is_code": "IS 1646",
+      "title": "Code of Practice for Fire Safety of Buildings - Electrical",
+      "sector": "Electrical",
+      "product_category": "Fire Safety Electrical"
+    },
+    {
+      "doc_id": 72,
+      "is_code": "IS 10028",
+      "title": "Code of Practice for Selection, Installation of Transformers",
+      "sector": "Electrical",
+      "product_category": "Transformer Installation"
+    },
+    {
+      "doc_id": 73,
+      "is_code": "IS 1255",
+      "title": "Code of Practice for Laying of Power Cables Up to 33 kV",
+      "sector": "Electrical",
+      "product_category": "Cable Laying"
+    },
+    {
+      "doc_id": 74,
+      "is_code": "IS 432:Part 1",
+      "title": "Mild Steel and Medium Tensile Steel Bars - Part 1",
+      "sector": "Civil",
+      "product_category": "Reinforcement Steel"
+    },
+    {
+      "doc_id": 75,
+      "is_code": "IS 455",
+      "title": "Portland Slag Cement - Specification",
+      "sector": "Civil",
+      "product_category": "Cement"
+    },
+    {
+      "doc_id": 76,
+      "is_code": "IS 1489:Part 2",
+      "title": "Portland Pozzolana Cement - Part 2: Calcined Clay",
+      "sector": "Civil",
+      "product_category": "Cement"
+    },
+    {
+      "doc_id": 77,
+      "is_code": "IS 2116",
+      "title": "Sand for Masonry Mortars - Specification",
+      "sector": "Civil",
+      "product_category": "Mortar Sand"
+    },
+    {
+      "doc_id": 78,
+      "is_code": "IS 1542",
+      "title": "Sand for Plaster - Specification",
+      "sector": "Civil",
+      "product_category": "Plaster Sand"
+    },
+    {
+      "doc_id": 79,
+      "is_code": "IS 516:Part 1",
+      "title": "Hardened Concrete - Methods of Test - Compressive Strength",
+      "sector": "Civil",
+      "product_category": "Concrete Testing"
+    },
+    {
+      "doc_id": 80,
+      "is_code": "IS 1199:Part 1",
+      "title": "Fresh Concrete - Methods of Sampling and Testing",
+      "sector": "Civil",
+      "product_category": "Concrete Testing"
+    },
+    {
+      "doc_id": 81,
+      "is_code": "IS 2386:Part 1",
+      "title": "Methods of Test for Aggregates - Particle Size and Shape",
+      "sector": "Civil",
+      "product_category": "Aggregate Testing"
+    },
+    {
+      "doc_id": 82,
+      "is_code": "IS 2386:Part 3",
+      "title": "Methods of Test for Aggregates - Specific Gravity, Density",
+      "sector": "Civil",
+      "product_category": "Aggregate Testing"
+    },
+    {
+      "doc_id": 83,
+      "is_code": "IS 14333",
+      "title": "HDPE Pipes for Sewerage and Industrial Effluents",
+      "sector": "Civil",
+      "product_category": "Drainage Pipes"
+    },
+    {
+      "doc_id": 84,
+      "is_code": "IS 1536",
+      "title": "Centrifugally Cast (Spun) Iron Pressure Pipes for Water",
+      "sector": "Civil",
+      "product_category": "Cast Iron Pipes"
+    },
+    {
+      "doc_id": 85,
+      "is_code": "IS 1537",
+      "title": "Vertically Cast Iron Pressure Pipes for Water",
+      "sector": "Civil",
+      "product_category": "Cast Iron Pipes"
+    },
+    {
+      "doc_id": 86,
+      "is_code": "IS 8329",
+      "title": "Ductile Iron Pipes, Fittings and Joints for Water",
+      "sector": "Civil",
+      "product_category": "Ductile Iron Pipes"
+    },
+    {
+      "doc_id": 87,
+      "is_code": "IS 2180",
+      "title": "Heavy Duty Burnt Clay Building Bricks",
+      "sector": "Civil",
+      "product_category": "Masonry Bricks"
+    },
+    {
+      "doc_id": 88,
+      "is_code": "IS 3495:Part 1",
+      "title": "Methods of Tests of Burnt Clay Bricks - Compressive Strength",
+      "sector": "Civil",
+      "product_category": "Brick Testing"
+    },
+    {
+      "doc_id": 89,
+      "is_code": "IS 3495:Part 2",
+      "title": "Methods of Tests of Burnt Clay Bricks - Water Absorption",
+      "sector": "Civil",
+      "product_category": "Brick Testing"
+    },
+    {
+      "doc_id": 90,
+      "is_code": "IS 1200:Part 1",
+      "title": "Method of Measurement of Building Works - Earthwork",
+      "sector": "Civil",
+      "product_category": "Work Measurement"
+    },
+    {
+      "doc_id": 91,
+      "is_code": "IS 1200:Part 2",
+      "title": "Method of Measurement of Building Works - Concrete",
+      "sector": "Civil",
+      "product_category": "Work Measurement"
+    },
+    {
+      "doc_id": 92,
+      "is_code": "IS 1200:Part 3",
+      "title": "Method of Measurement of Building Works - Brickwork",
+      "sector": "Civil",
+      "product_category": "Work Measurement"
+    },
+    {
+      "doc_id": 93,
+      "is_code": "IS 808",
+      "title": "Dimensions for Hot Rolled Steel Beam, Column, Channel",
+      "sector": "Civil",
+      "product_category": "Structural Steel"
+    },
+    {
+      "doc_id": 94,
+      "is_code": "IS 1161",
+      "title": "Steel Tubes for Structural Purposes - Specification",
+      "sector": "Civil",
+      "product_category": "Structural Steel Tubes"
+    },
+    {
+      "doc_id": 95,
+      "is_code": "IS 4923",
+      "title": "Hollow Steel Sections for Structural Use - Specification",
+      "sector": "Civil",
+      "product_category": "Structural Steel Hollow"
+    },
+    {
+      "doc_id": 96,
+      "is_code": "IS 2720:Part 1",
+      "title": "Methods of Test for Soils - Part 1 Sample Preparation",
+      "sector": "Civil",
+      "product_category": "Soil Testing"
+    },
+    {
+      "doc_id": 97,
+      "is_code": "IS 2720:Part 4",
+      "title": "Methods of Test for Soils - Part 4 Grain Size Analysis",
+      "sector": "Civil",
+      "product_category": "Soil Testing"
+    },
+    {
+      "doc_id": 98,
+      "is_code": "IS 2720:Part 5",
+      "title": "Methods of Test for Soils - Part 5 Liquid & Plastic Limit",
+      "sector": "Civil",
+      "product_category": "Soil Testing"
+    },
+    {
+      "doc_id": 99,
+      "is_code": "IS 1893:Part 1",
+      "title": "Criteria for Earthquake Resistant Design of Structures",
+      "sector": "Civil",
+      "product_category": "Seismic Design"
+    },
+    {
+      "doc_id": 100,
+      "is_code": "IS 13920",
+      "title": "Ductile Design of RCC Structures Subjected to Seismic Forces",
+      "sector": "Civil",
+      "product_category": "Seismic Concrete Design"
+    },
+    {
+      "doc_id": 101,
+      "is_code": "IS 4326",
+      "title": "Code of Practice for Earthquake Resistant Construction",
+      "sector": "Civil",
+      "product_category": "Seismic Construction"
+    },
+    {
+      "doc_id": 102,
+      "is_code": "IS 875:Part 1",
+      "title": "Design Loads for Buildings - Part 1 Dead Loads",
+      "sector": "Civil",
+      "product_category": "Structural Loads"
+    },
+    {
+      "doc_id": 103,
+      "is_code": "IS 875:Part 2",
+      "title": "Design Loads for Buildings - Part 2 Imposed Loads",
+      "sector": "Civil",
+      "product_category": "Structural Loads"
+    },
+    {
+      "doc_id": 104,
+      "is_code": "IS 875:Part 3",
+      "title": "Design Loads for Buildings - Part 3 Wind Loads",
+      "sector": "Civil",
+      "product_category": "Structural Loads"
+    },
+    {
+      "doc_id": 105,
+      "is_code": "IS 1641",
+      "title": "Code of Practice for Fire Safety of Buildings - General",
+      "sector": "Civil",
+      "product_category": "Fire Safety"
+    },
+    {
+      "doc_id": 106,
+      "is_code": "IS 1642",
+      "title": "Code of Practice for Fire Safety of Buildings - Details",
+      "sector": "Civil",
+      "product_category": "Fire Safety Construction"
+    },
+    {
+      "doc_id": 107,
+      "is_code": "IS 3370:Part 1",
+      "title": "Concrete Structures for Storage of Liquids - Part 1 General",
+      "sector": "Civil",
+      "product_category": "Water Tanks"
+    },
+    {
+      "doc_id": 108,
+      "is_code": "IS 3370:Part 2",
+      "title": "Concrete Structures for Storage of Liquids - Part 2 RCC",
+      "sector": "Civil",
+      "product_category": "Water Tanks"
+    },
+    {
+      "doc_id": 109,
+      "is_code": "IS 1081",
+      "title": "Code of Practice for Fixing Metal Doors and Windows",
+      "sector": "Civil",
+      "product_category": "Doors & Windows"
+    },
+    {
+      "doc_id": 110,
+      "is_code": "IS 2065",
+      "title": "Code of Practice for Water Supply in Buildings",
+      "sector": "Civil",
+      "product_category": "Plumbing & Water Supply"
+    },
+    {
+      "doc_id": 111,
+      "is_code": "IS 1172",
+      "title": "Basic Requirements for Water Supply, Drainage and Sanitation",
+      "sector": "Civil",
+      "product_category": "Plumbing & Sanitation"
+    },
+    {
+      "doc_id": 112,
+      "is_code": "IS 1239:Part 1",
+      "title": "Steel Tubes, Tubulars and Steel Fittings - Part 1 Tubes",
+      "sector": "Civil",
+      "product_category": "Steel Water Pipes"
+    },
+    {
+      "doc_id": 113,
+      "is_code": "IS 1239:Part 2",
+      "title": "Steel Tubes, Tubulars and Steel Fittings - Part 2 Fittings",
+      "sector": "Civil",
+      "product_category": "Steel Water Pipe Fittings"
+    },
+    {
+      "doc_id": 114,
+      "is_code": "IS 1729",
+      "title": "Cast Iron Drainage Pipes and Pipe Fittings",
+      "sector": "Civil",
+      "product_category": "Drainage Pipes"
+    },
+    {
+      "doc_id": 115,
+      "is_code": "IS 1742",
+      "title": "Code of Practice for Building Drainage",
+      "sector": "Civil",
+      "product_category": "Building Drainage"
+    },
+    {
+      "doc_id": 116,
+      "is_code": "IS 2470:Part 1",
+      "title": "Code of Practice for Installation of Septic Tanks - Small",
+      "sector": "Civil",
+      "product_category": "Sanitation"
+    },
+    {
+      "doc_id": 117,
+      "is_code": "IS 2526",
+      "title": "Code of Practice for Domestic Gas Installations",
+      "sector": "Civil",
+      "product_category": "Gas Installation"
+    },
+    {
+      "doc_id": 118,
+      "is_code": "IS 3067",
+      "title": "Code of Practice for General Security Measures in Buildings",
+      "sector": "Civil",
+      "product_category": "Building Security"
+    },
+    {
+      "doc_id": 119,
+      "is_code": "IS 6403",
+      "title": "Code of Practice for Bearing Capacity of Shallow Foundations",
+      "sector": "Civil",
+      "product_category": "Geotechnical Design"
+    },
+    {
+      "doc_id": 120,
+      "is_code": "IS 2911:Part 1:Sec 1",
+      "title": "Design and Construction of Pile Foundations - Concrete Piles",
+      "sector": "Civil",
+      "product_category": "Pile Foundations"
+    }
+  ]
+}

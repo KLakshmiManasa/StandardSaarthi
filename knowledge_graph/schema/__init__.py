@@ -1,0 +1,3 @@
+"""
+Knowledge Graph Schema Package
+"""

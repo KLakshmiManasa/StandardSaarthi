@@ -1,0 +1,38 @@
+{
+  "audit_timestamp": "2026-09-22 15:41:14",
+  "dataset_version": "v0.1-pilot",
+  "graph_version": "kg-v0.1",
+  "overall_status": "PASS",
+  "node_statistics": {
+    "STANDARD": 120,
+    "PRODUCT": 73,
+    "MATERIAL": 65,
+    "APPLICATION": 136,
+    "TEST_METHOD": 30,
+    "AMENDMENT": 35,
+    "QCO": 42,
+    "AUTHORITY": 3
+  },
+  "total_nodes": 504,
+  "relationship_statistics": {
+    "SPECIFIES_PRODUCT": 120,
+    "USES_MATERIAL": 537,
+    "APPLIES_TO": 169,
+    "TESTED_BY": 265,
+    "AMENDED_BY": 35,
+    "MATERIAL_SPECIFICATION": 22,
+    "TEST_METHOD": 8,
+    "ASSOCIATED_WITH_QCO": 42,
+    "NORMATIVE_REFERENCE": 89,
+    "INSTALLATION_CODE": 11,
+    "ISSUED_BY": 42
+  },
+  "total_relationships": 1340,
+  "integrity_metrics": {
+    "duplicate_nodes": 0,
+    "orphan_standards": 0,
+    "broken_references": 0,
+    "valid_edges": 1340,
+    "referential_integrity_pct": 100.0
+  }
+}

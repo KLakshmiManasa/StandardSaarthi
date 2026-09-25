@@ -1,0 +1,17 @@
+query_id,input_type,language,query,expected_product,expected_primary_standards,expected_related_standards,expected_regulatory_status,expected_clarification,notes,source
+gt_01,product_description,en,PVC insulated copper cable for internal building wiring,Cable,IS 694,IS 8130|IS 10810,MANDATORY,false,Building wiring standard,Official BIS Gazette
+gt_02,technical_specification,en,1100 V heavy duty armored electric cable with copper conductor,Heavy Duty Cable,IS 1554:Part 1,IS 8130|IS 10810,MANDATORY,false,Heavy duty 1100V power cable,Official BIS Gazette
+gt_03,product_description,en,M30 ready mixed concrete for structural building slabs,Ready Mixed Concrete,IS 4926,IS 456|IS 383,NOT_MANDATORY,false,RMC specification,Official BIS Gazette
+gt_04,technical_specification,en,500 kVA outdoor oil immersed distribution transformer 11kV/433V,Distribution Transformer,IS 1180:Part 1,IS 2026:Part 1|IS 3043,MANDATORY,false,Outdoor distribution transformer,Official BIS Gazette
+gt_05,product_description,en,Earthing pipe electrode for electrical installation safety,Earthing,IS 3043,IS 732,NOT_MANDATORY,false,Earthing code of practice,Official BIS Gazette
+gt_06,product_description,en,electrical cable for office,Cable,IS 694,IS 8130,MANDATORY,true,Ambiguous cable missing voltage/conductor material,Procurement Query
+gt_07,product_description,en,Python programming language tutorial,Non Procurement,None,None,NOT_APPLICABLE,false,Out-of-domain query,User Query
+gt_08,natural_language,en,What standards apply to conductors used in insulated power cables?,Cable Conductors,IS 8130,IS 10810:Part 1,MANDATORY,false,Conductor specification,Official BIS Gazette
+gt_09,tender_document,en,Tender for supply of 1100V grade 3 core 16 sq mm PVC insulated copper cable,Cable,IS 694,IS 8130|IS 10810,MANDATORY,false,Tender PDF parsing,Tender Spec
+gt_10,tender_document,en,Tender specification for M30 ready mixed concrete and OPC 43 cement,Concrete & Cement,IS 4926|IS 8112,IS 456|IS 383,NOT_MANDATORY,false,Tender DOCX parsing,Tender Spec
+gt_11,product_description,ta,கட்டிட மின்சார வயரிங்கிற்கான பிவிசி இன்சுலேட்டட் செம்பு கேபிள்,Cable,IS 694,IS 8130|IS 10810,MANDATORY,false,Tamil query equivalent,Indic Dataset
+gt_12,product_description,hi,आंतरिक भवन वायरिंग के लिए पीवीसी इंसुलेटेड तांबे का केबल,Cable,IS 694,IS 8130|IS 10810,MANDATORY,false,Hindi query equivalent,Indic Dataset
+gt_13,product_description,en,Conductors for insulated electric cables with amendments,Cable Conductors,IS 8130,IS 10810:Part 1,MANDATORY,false,Standard with 2 amendments,Official BIS Gazette
+gt_14,product_description,en,Methods of test for cables annealing test for copper conductors,Cable Testing,IS 10810:Part 1,IS 8130,NOT_MANDATORY,false,Test method standard,Official BIS Gazette
+gt_15,product_description,en,Self ballasted LED lamps for general lighting services,LED Lamp,IS 16102:Part 1,IS 16102:Part 2,MANDATORY,false,Mandatory QCO product,Official BIS Gazette
+gt_16,product_description,en,Ordinary Portland cement 43 grade specification,Cement,IS 8112,IS 269|IS 456,MANDATORY,false,Cement standard with QCO,Official BIS Gazette

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "scen_01",
+    "name": "1. Electrical Cable Mapping",
+    "description": "Demonstrates high-precision NLP entity extraction, dense vector retrieval, and ground-truth mapping for standard electrical cables.",
+    "query": "Procurement of 1.5 sq mm single core PVC insulated flame retardant copper electrical cables suitable for internal building wiring.",
+    "expected_behavior": "Returns IS 694 with high relevance score, QCO mandatory certification flag, and verified BIS evidence provenance.",
+    "category": "Electrical",
+    "difficulty": "easy"
+  },
+  {
+    "id": "scen_02",
+    "name": "2. Ambiguous Requirement Guardrail",
+    "description": "Demonstrates system safety guardrail detecting underspecified procurement descriptions and prompting user clarification.",
+    "query": "Requirement for electrical cable for office project.",
+    "expected_behavior": "Triggers NEEDS_CLARIFICATION status and prompts missing fields (product_type, voltage_grade, conductor_material).",
+    "category": "Electrical",
+    "difficulty": "hard"
+  },
+  {
+    "id": "scen_03",
+    "name": "3. Multi-Attribute Civil Construction",
+    "description": "Demonstrates multi-attribute feature scoring and Knowledge Graph traversal across materials and normative references.",
+    "query": "Ready mixed concrete (RMC) grade M30 using Ordinary Portland Cement 43 Grade and coarse aggregates for structural RCC slab.",
+    "expected_behavior": "Returns IS 4926 with related standards IS 456, IS 8112, and IS 383 referenced in Knowledge Graph.",
+    "category": "Civil",
+    "difficulty": "medium"
+  },
+  {
+    "id": "scen_04",
+    "name": "4. QCO Mandatory Certified Product",
+    "description": "Demonstrates Quality Control Order (QCO) gazette compliance verification and clause-level reference.",
+    "query": "Supply of outdoor 500 kVA 11kV/0.415kV oil immersed distribution transformer with Energy Efficiency Level 2.",
+    "expected_behavior": "Returns IS 1180:Part 1 with QCO mandatory status and Ministry of Power Gazette citation.",
+    "category": "Electrical",
+    "difficulty": "medium"
+  },
+  {
+    "id": "scen_05",
+    "name": "5. Out-of-Domain Safety Rejection",
+    "description": "Demonstrates strict domain boundary enforcement and isolation against non-procurement or out-of-scope requests.",
+    "query": "What is the best smartphone for gaming and how to write a Python fibonacci function?",
+    "expected_behavior": "Triggers OUT_OF_DOMAIN status and rejects request without returning random standards.",
+    "category": "Out of Domain",
+    "difficulty": "hard"
+  }
+]

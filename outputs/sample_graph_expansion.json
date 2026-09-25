@@ -1,0 +1,110 @@
+{
+  "input_candidate_codes": [
+    "IS 694",
+    "IS 456",
+    "IS 1554:Part 1"
+  ],
+  "total_primary_candidates": 3,
+  "total_graph_derived_standards": 7,
+  "graph_expansion": [
+    {
+      "primary_candidate_is_code": "IS 694",
+      "primary_title": "Polyvinyl Chloride Insulated Cables for Working Voltages Up to and Including 1100 V",
+      "primary_sector": "Electrical",
+      "active_amendments_count": 2,
+      "qco_compliance_associated": true,
+      "graph_derived_standards": [
+        {
+          "derived_is_code": "IS 8130",
+          "derived_title": "Conductors for Insulated Electric Cables and Flexible Cords",
+          "sector": "Electrical",
+          "relationship_type": "MATERIAL_SPECIFICATION",
+          "graph_depth": 1,
+          "evidence_source": "IS 694 Official Clause 2 Normative References",
+          "verification_status": "VERIFIED"
+        },
+        {
+          "derived_is_code": "IS 10810:Part 62",
+          "derived_title": "Methods of Test for Cables - Part 62: Flame Retardance Test for Bunched Cables",
+          "sector": "Electrical",
+          "relationship_type": "TEST_METHOD",
+          "graph_depth": 1,
+          "evidence_source": "IS 694 Official Clause 2 Normative References",
+          "verification_status": "VERIFIED"
+        }
+      ]
+    },
+    {
+      "primary_candidate_is_code": "IS 456",
+      "primary_title": "Code of Practice for Plain and Reinforced Concrete",
+      "primary_sector": "Civil",
+      "active_amendments_count": 5,
+      "qco_compliance_associated": false,
+      "graph_derived_standards": [
+        {
+          "derived_is_code": "IS 269",
+          "derived_title": "Ordinary Portland Cement, 33 Grade - Specification",
+          "sector": "Civil",
+          "relationship_type": "NORMATIVE_REFERENCE",
+          "graph_depth": 1,
+          "evidence_source": "IS 456 Official Clause 2 Normative References",
+          "verification_status": "VERIFIED"
+        },
+        {
+          "derived_is_code": "IS 8112",
+          "derived_title": "Ordinary Portland Cement, 43 Grade - Specification",
+          "sector": "Civil",
+          "relationship_type": "NORMATIVE_REFERENCE",
+          "graph_depth": 1,
+          "evidence_source": "IS 456 Official Clause 2 Normative References",
+          "verification_status": "VERIFIED"
+        },
+        {
+          "derived_is_code": "IS 12269",
+          "derived_title": "Ordinary Portland Cement, 53 Grade - Specification",
+          "sector": "Civil",
+          "relationship_type": "NORMATIVE_REFERENCE",
+          "graph_depth": 1,
+          "evidence_source": "IS 456 Official Clause 2 Normative References",
+          "verification_status": "VERIFIED"
+        },
+        {
+          "derived_is_code": "IS 1786",
+          "derived_title": "High Strength Deformed Steel Bars and Wires for Concrete Reinforcement - Specification (TMT Rebar)",
+          "sector": "Civil",
+          "relationship_type": "NORMATIVE_REFERENCE",
+          "graph_depth": 1,
+          "evidence_source": "IS 456 Official Clause 2 Normative References",
+          "verification_status": "VERIFIED"
+        },
+        {
+          "derived_is_code": "IS 383",
+          "derived_title": "Coarse and Fine Aggregates for Concrete - Specification",
+          "sector": "Civil",
+          "relationship_type": "MATERIAL_SPECIFICATION",
+          "graph_depth": 1,
+          "evidence_source": "IS 456 Official Clause 2 Normative References",
+          "verification_status": "VERIFIED"
+        }
+      ]
+    },
+    {
+      "primary_candidate_is_code": "IS 1554:Part 1",
+      "primary_title": "PVC Insulated (Heavy Duty) Electric Cables - Part 1: For Working Voltages Up to and Including 1100 V",
+      "primary_sector": "Electrical",
+      "active_amendments_count": 2,
+      "qco_compliance_associated": true,
+      "graph_derived_standards": [
+        {
+          "derived_is_code": "IS 8130",
+          "derived_title": "Conductors for Insulated Electric Cables and Flexible Cords",
+          "sector": "Electrical",
+          "relationship_type": "MATERIAL_SPECIFICATION",
+          "graph_depth": 1,
+          "evidence_source": "IS 1554:Part 1 Official Clause 2 Normative References",
+          "verification_status": "VERIFIED"
+        }
+      ]
+    }
+  ]
+}

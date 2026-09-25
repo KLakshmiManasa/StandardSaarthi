@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StandardSaarthi | Indian Standards Intelligence</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Application Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <a href="#/" class="brand-link">
+                    <div class="brand-logo">IS</div>
+                    <div class="brand-text">
+                        <h1>StandardSaarthi</h1>
+                        <p>AI-powered standards intelligence for smarter procurement</p>
+                    </div>
+                </a>
+            </div>
+            <div class="header-controls">
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation Bar -->
+    <nav class="main-nav" id="main-nav">
+        <div class="nav-container">
+            <a href="#/" class="nav-link active" data-route="/">Home</a>
+            <a href="#/analyze" class="nav-link" data-route="/analyze">Analyze</a>
+            <a href="#/tenders" class="nav-link" data-route="/tenders">Tenders</a>
+            <a href="#/standards" class="nav-link" data-route="/standards">Standards</a>
+            <a href="#/regulatory" class="nav-link" data-route="/regulatory">Compliance</a>
+            <a href="#/history" class="nav-link" data-route="/history">History</a>
+        </div>
+    </nav>
+
+    <!-- App Main Container -->
+    <main class="app-container">
+        
+        <!-- 1. HOME VIEW -->
+        <section id="view-home" class="view-panel active">
+            <div class="hero-section">
+                <h2>Find the Right Indian Standards for Your Tender</h2>
+                <p>Analyze a product requirement, technical specification, or tender document to identify applicable Indian Standards, related standards, and mandatory compliance requirements.</p>
+                <div class="hero-actions">
+                    <a href="#/analyze" class="btn btn-primary btn-lg">🔍 Analyze Requirement</a>
+                    <a href="#/analyze?mode=c" class="btn btn-secondary btn-lg">📄 Upload Tender</a>
+                    <a href="#/standards" class="btn btn-outline btn-lg">📚 Browse Standards</a>
+                </div>
+            </div>
+
+            <!-- Recent Analyses -->
+            <div class="section-block">
+                <h3>Recent Analyses</h3>
+                <div id="home-recent-list" class="recent-grid">
+                    <p class="text-muted">No recent analysis session. Click 'Analyze Requirement' to begin.</p>
+                </div>
+            </div>
+
+            <!-- How It Works Guide -->
+            <div class="section-block">
+                <h3>How StandardSaarthi Works</h3>
+                <div class="workflow-steps">
+                    <div class="step-card">
+                        <div class="step-num">01</div>
+                        <h4>Understand Requirement</h4>
+                        <p>Extract the product, material, application, and technical requirements from your input.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">02</div>
+                        <h4>Find Relevant Standards</h4>
+                        <p>Identify applicable primary and related Indian Standards.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">03</div>
+                        <h4>Check Compliance</h4>
+                        <p>Check applicable mandatory requirements, QCOs, testing, and installation requirements.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">04</div>
+                        <h4>Review & Export</h4>
+                        <p>Review the evidence and generate a procurement-ready report.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ANALYZE REQUIREMENT VIEW -->
+        <section id="view-analyze" class="view-panel">
+            <div class="card">
+                <h2>Procurement Requirement Analysis Workspace</h2>
+                <p class="subtitle">Select input mode to analyze requirements and discover grounded Indian Standards recommendations.</p>
+                
+                <!-- Input Mode Selector -->
+                <div class="mode-tabs">
+                    <button class="mode-btn active" data-mode="mode-a">Product Description</button>
+                    <button class="mode-btn" data-mode="mode-b">Technical Specification</button>
+                    <button class="mode-btn" data-mode="mode-c">Tender Document Upload</button>
+                </div>
+
+                <!-- MODE A FORM -->
+                <div id="mode-a" class="mode-panel active">
+                    <div class="form-group">
+                        <label for="input-query">Describe Procurement Requirement</label>
+                        <textarea id="input-query" placeholder="Type your procurement requirement (e.g. Procurement of 1.5 sq mm single core PVC insulated copper electrical cables suitable for internal building wiring operating at 1100V)..." rows="4"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="language-select">Input Language</label>
+                            <select id="language-select">
+                                <option value="auto">Auto Detect</option>
+                                <option value="en">English</option>
+                                <option value="hi">Hindi (हिंदी)</option>
+                                <option value="ta">Tamil (தமிழ்)</option>
+                                <option value="te">Telugu (తెలుగు)</option>
+                                <option value="mr">Marathi (मराठी)</option>
+                                <option value="bn">Bengali (বাংলা)</option>
+                                <option value="gu">Gujarati (ગુજરાતી)</option>
+                            </select>
+                        </div>
+                        <div class="form-group align-end">
+                            <button class="btn btn-primary btn-block" id="btn-analyze-a" onclick="runAnalysisModeA()">Analyze Requirement</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODE B FORM -->
+                <div id="mode-b" class="mode-panel">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" id="spec-name" placeholder="e.g. Ready Mixed Concrete / Electric Cable">
+                        </div>
+                        <div class="form-group">
+                            <label>Product Category</label>
+                            <input type="text" id="spec-category" placeholder="e.g. Civil / Electrical">
+                        </div>
+                        <div class="form-group">
+                            <label>Material</label>
+                            <input type="text" id="spec-material" placeholder="e.g. Cement / Aggregate / Copper">
+                        </div>
+                        <div class="form-group">
+                            <label>Voltage / Rating</label>
+                            <input type="text" id="spec-voltage" placeholder="e.g. 1100V / 11kV">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimensions / Size</label>
+                            <input type="text" id="spec-dimensions" placeholder="e.g. 1.5 sq mm / 20mm">
+                        </div>
+                        <div class="form-group">
+                            <label>Grade / Capacity</label>
+                            <input type="text" id="spec-grade" placeholder="e.g. M30 / 100 kVA">
+                        </div>
+                        <div class="form-group span-2">
+                            <label>Intended Application</label>
+                            <input type="text" id="spec-application" placeholder="e.g. Structural concrete works / Internal wiring">
+                        </div>
+                        <div class="form-group span-2">
+                            <label>Safety & Performance Requirements</label>
+                            <input type="text" id="spec-safety" placeholder="e.g. Flame retardant, high compressive strength">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="runAnalysisModeB()">Analyze Technical Specification</button>
+                </div>
+
+                <!-- MODE C FORM -->
+                <div id="mode-c" class="mode-panel">
+                    <div class="upload-dropzone" id="dropzone">
+                        <div class="upload-icon">📁</div>
+                        <h3>Upload Tender Specification Document</h3>
+                        <p>Supported file formats: PDF, DOCX, TXT</p>
+                        <input type="file" id="tender-file-input" accept=".pdf,.docx,.txt" style="display:none">
+                        <button class="btn btn-secondary" onclick="document.getElementById('tender-file-input').click()">Select File</button>
+                    </div>
+                    <div id="file-selected-name" class="file-info"></div>
+                    <button class="btn btn-primary" id="btn-upload" onclick="uploadTenderDocument()" style="display:none; margin-top:15px;">Upload & Extract Requirements</button>
+                </div>
+
+            </div>
+
+            <!-- Dynamic Loading Progress Card -->
+            <div id="analysis-spinner" class="card loading-card" style="display:none">
+                <div class="spinner"></div>
+                <h4 id="loading-stage-title">Analyzing Procurement Requirement...</h4>
+                <div class="progress-bar-track">
+                    <div id="progress-bar-fill" class="progress-bar-fill"></div>
+                </div>
+                <p id="loading-stage-desc" class="subtitle">Extracting requirements, matching standards, and checking compliance...</p>
+            </div>
+
+            <!-- Analysis Output Results View -->
+            <div id="analysis-results" class="results-container" style="display:none">
+                
+                <div id="status-banner" class="status-banner"></div>
+
+                <!-- Requirement Understanding Panel -->
+                <div class="card">
+                    <h3>Requirement Understanding</h3>
+                    <div id="entity-chips" class="chip-group"></div>
+                    <div id="multilingual-notice" class="notice-box" style="display:none"></div>
+                </div>
+
+                <!-- Primary Recommended Standards -->
+                <div class="card">
+                    <div class="card-header-row">
+                        <h3>Recommended Primary Standards</h3>
+                        <button class="btn btn-sm btn-primary" onclick="downloadPdfReport()">📄 Download PDF Report</button>
+                    </div>
+                    <div id="recommendations-list"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. TENDER DOCUMENTS VIEW -->
+        <section id="view-tenders" class="view-panel">
+            <div class="card">
+                <h2>Tender Document Analysis & Requirements Matrix</h2>
+                <div id="tender-requirements-view">
+                    <div class="empty-state">
+                        <div class="empty-icon">📄</div>
+                        <h3>No Tender Document Selected</h3>
+                        <p>Upload a tender PDF or DOCX file to extract itemized requirements and map applicable standards.</p>
+                        <a href="#/analyze?mode=c" class="btn btn-primary">Upload Tender Specification</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. STANDARDS CATALOG VIEW -->
+        <section id="view-standards" class="view-panel">
+            <div class="card">
+                <h2>Verified Indian Standards Catalog</h2>
+                <div class="search-bar-row">
+                    <input type="text" id="catalog-search" placeholder="Search by IS Code, Title, or Product Category..." onkeyup="filterCatalog()">
+                    <select id="catalog-sector-filter" onchange="filterCatalog()">
+                        <option value="">All Sectors</option>
+                        <option value="Electrical">Electrical Sector</option>
+                        <option value="Civil">Civil / Construction</option>
+                    </select>
+                </div>
+                <div id="catalog-list" class="catalog-grid"></div>
+            </div>
+        </section>
+
+        <!-- 5. STANDARD DETAIL VIEW (DYNAMIC ROUTE /standards/:code) -->
+        <section id="view-standard-detail" class="view-panel">
+            <div class="card">
+                <div class="card-header-row">
+                    <h2 id="detail-code-title">Standard Detail</h2>
+                    <a href="#/standards" class="btn btn-sm btn-outline">Back to Catalog</a>
+                </div>
+                <div id="detail-body">
+                    <p>Loading standard details...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. REGULATORY / QCO VIEW -->
+        <section id="view-regulatory" class="view-panel">
+            <div class="card">
+                <h2>Statutory Compliance & QCO Portal</h2>
+                <p class="subtitle">Browse mandatory Quality Control Orders (QCOs) issued by Central Ministries and BIS certification schemes.</p>
+                <div id="qco-list" class="qco-grid"></div>
+            </div>
+        </section>
+
+        <!-- 7. HISTORY VIEW -->
+        <section id="view-history" class="view-panel">
+            <div class="card">
+                <h2>Search History & Saved Procurement Projects</h2>
+                <div id="history-list">
+                    <div class="empty-state">
+                        <div class="empty-icon">🕒</div>
+                        <h3>No Search History Available</h3>
+                        <p>Run a procurement requirement analysis to save and review past search queries.</p>
+                        <a href="#/analyze" class="btn btn-primary">Analyze Requirement</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. REPORTS VIEW -->
+        <section id="view-reports" class="view-panel">
+            <div class="card">
+                <h2>Procurement Reports Manager</h2>
+                <p class="subtitle">Generate and download formal PDF Procurement Standards Reports for active or historical sessions.</p>
+                <div id="reports-list">
+                    <div class="empty-state">
+                        <div class="empty-icon">📊</div>
+                        <h3>No Reports Generated Yet</h3>
+                        <p>Execute an analysis session to generate downloadable PDF reports.</p>
+                        <a href="#/analyze" class="btn btn-primary">Start New Analysis</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. ADMIN DIAGNOSTICS VIEW -->
+        <section id="view-admin" class="view-panel">
+            <div class="card">
+                <h2>System Diagnostics & Performance Metrics</h2>
+                <div id="admin-metrics-view">
+                    <p>Loading system diagnostic metrics...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Slide-Over Drawer Modal: "Why this standard?" -->
+    <div id="why-modal-overlay" class="drawer-overlay" onclick="closeWhyModal()">
+        <div class="drawer-content" onclick="event.stopPropagation()">
+            <div class="drawer-header">
+                <h3 id="why-title">Why Was This Recommended?</h3>
+                <button class="close-btn" onclick="closeWhyModal()">✕</button>
+            </div>
+            <div id="why-body" class="drawer-body">
+                <p>Loading recommendation match breakdown...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Popup Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <footer class="app-footer">
+        <p><strong>StandardSaarthi</strong> — AI-powered standards intelligence for smarter procurement.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

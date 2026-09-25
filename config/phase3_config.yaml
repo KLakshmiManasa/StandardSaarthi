@@ -1,0 +1,29 @@
+# SIH 26108 — Phase 3 Configuration File
+# Reproducibility, Model Selection, and Algorithm Hyperparameters
+
+retrieval:
+  bm25_top_n: 50
+  semantic_top_n: 50
+  rrf_k: 60
+  candidate_pool_limit: 100
+
+reranker:
+  enabled: true
+  model_name: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  rerank_top_n: 30
+
+metadata_weights:
+  sector: 0.10
+  product_category: 0.30
+  material: 0.20
+  application: 0.25
+  technical_parameters: 0.15
+
+final_ranking_weights:
+  alpha_reranker: 0.60
+  beta_rrf_norm: 0.25
+  gamma_metadata: 0.15
+
+relevance_thresholds:
+  high_relevance: 0.70
+  medium_relevance: 0.45

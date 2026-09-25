@@ -1,0 +1,175 @@
+{
+  "evaluation_timestamp": "2026-09-22 17:26:16",
+  "dataset_info": {
+    "file": "data/evaluation/ground_truth_phase6.csv",
+    "total_queries": 120,
+    "evaluation_duration_sec": 3.6
+  },
+  "comparative_metrics_table": {
+    "metric": [
+      "Precision@1",
+      "Precision@3",
+      "Precision@5",
+      "Precision@10",
+      "Recall@1",
+      "Recall@5",
+      "MRR",
+      "NDCG@5",
+      "NDCG@10"
+    ],
+    "keyword_bm25": [
+      0.2833,
+      0.1694,
+      0.1267,
+      0.075,
+      0.0944,
+      0.2104,
+      0.3135,
+      0.3105,
+      0.3128
+    ],
+    "vector_rag": [
+      0.325,
+      0.1861,
+      0.1317,
+      0.0792,
+      0.1076,
+      0.2187,
+      0.3505,
+      0.3469,
+      0.3383
+    ],
+    "graph_rag_qco": [
+      0.2,
+      0.1,
+      0.0818,
+      0.0582,
+      0.0659,
+      0.1348,
+      0.2194,
+      0.2184,
+      0.2169
+    ]
+  },
+  "pipeline_evaluations": {
+    "entity_extraction_f1": 0.0773,
+    "qco_detection_accuracy": 0.6545,
+    "evidence_validity_coverage": 0.6545,
+    "ambiguity_detection_accuracy": 1.0,
+    "ood_rejection_accuracy": 1.0
+  },
+  "performance_latency": {
+    "p50_ms": 14.98,
+    "p95_ms": 21.34,
+    "mean_ms": 11.94
+  },
+  "failed_queries_count": 88,
+  "sample_failure_analysis": [
+    {
+      "query_id": "QRY_ELEC_004",
+      "procurement_description": "Installation of chemical earthing electrode system with copper plate and grounding compound for hospital ICU earth safety.",
+      "expected_standard": "IS 3043",
+      "returned_standards": [],
+      "failure_category": "missing_knowledge",
+      "reason": "Expected standard 'IS 3043' is not indexed in pilot database.",
+      "possible_corrective_action": "Ingest missing standard record into PostgreSQL and FAISS vector store."
+    },
+    {
+      "query_id": "QRY_ELEC_005",
+      "procurement_description": "Supply of 10 kVA single phase online uninterruptible power supply (UPS) system for data center server backup.",
+      "expected_standard": "IS 16242:Part 1",
+      "returned_standards": [],
+      "failure_category": "entity_extraction_failure",
+      "reason": "NLP module failed to map product keywords to domain dictionary.",
+      "possible_corrective_action": "Expand product dictionary vocabulary and synonym tokens."
+    },
+    {
+      "query_id": "QRY_ELEC_006",
+      "procurement_description": "Procurement of 9W 230V AC B22 cap self-ballasted LED bulbs for general office residential quarters lighting.",
+      "expected_standard": "IS 16102:Part 1",
+      "returned_standards": [],
+      "failure_category": "entity_extraction_failure",
+      "reason": "NLP module failed to map product keywords to domain dictionary.",
+      "possible_corrective_action": "Expand product dictionary vocabulary and synonym tokens."
+    },
+    {
+      "query_id": "QRY_ELEC_008",
+      "procurement_description": "Single-phase 230V 10-60A AC static direct connected smart electricity meter with DLMS protocol for smart grid.",
+      "expected_standard": "IS 16444:Part 1",
+      "returned_standards": [],
+      "failure_category": "entity_extraction_failure",
+      "reason": "NLP module failed to map product keywords to domain dictionary.",
+      "possible_corrective_action": "Expand product dictionary vocabulary and synonym tokens."
+    },
+    {
+      "query_id": "QRY_ELEC_009",
+      "procurement_description": "Supply of 3-phase 415V 15 kW (20 HP) IE3 premium efficiency line operated induction motor for centrifugal pump.",
+      "expected_standard": "IS 12615",
+      "returned_standards": [],
+      "failure_category": "entity_extraction_failure",
+      "reason": "NLP module failed to map product keywords to domain dictionary.",
+      "possible_corrective_action": "Expand product dictionary vocabulary and synonym tokens."
+    },
+    {
+      "query_id": "QRY_ELEC_010",
+      "procurement_description": "Rigid heavy-duty 25mm PVC conduits for surface and recessed electrical cable routing in public auditorium.",
+      "expected_standard": "IS 9537:Part 3",
+      "returned_standards": [
+        "IS 694",
+        "IS 1554:Part 1",
+        "IS 7098:Part 1"
+      ],
+      "failure_category": "incorrect_ranking",
+      "reason": "Standard 'IS 9537:Part 3' retrieved in candidate pool but ranked lower than top 1.",
+      "possible_corrective_action": "Fine-tune hybrid ranking weights between dense similarity and entity match."
+    },
+    {
+      "query_id": "QRY_CIVIL_002",
+      "procurement_description": "Supply of 53 Grade Ordinary Portland Cement (OPC 53) in 50kg bags for precast concrete flyover girder casting.",
+      "expected_standard": "IS 12269",
+      "returned_standards": [
+        "IS 269",
+        "IS 1489:Part 1",
+        "IS 1489:Part 2"
+      ],
+      "failure_category": "incorrect_ranking",
+      "reason": "Standard 'IS 12269' retrieved in candidate pool but ranked lower than top 1.",
+      "possible_corrective_action": "Fine-tune hybrid ranking weights between dense similarity and entity match."
+    },
+    {
+      "query_id": "QRY_CIVIL_007",
+      "procurement_description": "Ductile detailing and seismic reinforcement of RCC frame building located in Seismic Zone IV.",
+      "expected_standard": "IS 13920",
+      "returned_standards": [
+        "IS 1786",
+        "IS 432:Part 1",
+        "IS 8112"
+      ],
+      "failure_category": "incorrect_ranking",
+      "reason": "Standard 'IS 13920' retrieved in candidate pool but ranked lower than top 1.",
+      "possible_corrective_action": "Fine-tune hybrid ranking weights between dense similarity and entity match."
+    },
+    {
+      "query_id": "QRY_CIVIL_008",
+      "procurement_description": "Supply of Class 1 110mm uPVC pipes for cold potable water plumbing inside residential staff quarters block.",
+      "expected_standard": "IS 4985",
+      "returned_standards": [
+        "IS 1239:Part 1",
+        "IS 14333",
+        "IS 1537"
+      ],
+      "failure_category": "incorrect_ranking",
+      "reason": "Standard 'IS 4985' retrieved in candidate pool but ranked lower than top 1.",
+      "possible_corrective_action": "Fine-tune hybrid ranking weights between dense similarity and entity match."
+    },
+    {
+      "query_id": "QRY_CIVIL_009",
+      "procurement_description": "Compressive and tensile strength testing of hardened concrete cube samples collected from slab casting.",
+      "expected_standard": "IS 516:Part 1",
+      "returned_standards": [],
+      "failure_category": "entity_extraction_failure",
+      "reason": "NLP module failed to map product keywords to domain dictionary.",
+      "possible_corrective_action": "Expand product dictionary vocabulary and synonym tokens."
+    }
+  ]
+}

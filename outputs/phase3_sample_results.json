@@ -1,0 +1,842 @@
+[
+  {
+    "status": "SUCCESS",
+    "query": "Supply of PVC insulated copper electrical cables for internal building wiring",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 694",
+        "title": "Polyvinyl Chloride Insulated Cables for Working Voltages Up to and Including 1100 V",
+        "sector": "Electrical",
+        "product_category": "Cables and Wires",
+        "relevance_score": 0.8396,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 1554:Part 1",
+        "title": "PVC Insulated (Heavy Duty) Electric Cables - Part 1: For Working Voltages Up to and Including 1100 V",
+        "sector": "Electrical",
+        "product_category": "Cables and Wires",
+        "relevance_score": 0.8294,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 7098:Part 2",
+        "title": "Crosslinked Polyethylene Insulated PVC Sheathed Cables - Part 2: For Working Voltages From 3.3 kV Up to and Including 33 kV",
+        "sector": "Electrical",
+        "product_category": "Cables and Wires",
+        "relevance_score": 0.5268,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 8130",
+        "title": "Conductors for Insulated Electric Cables and Flexible Cords",
+        "sector": "Electrical",
+        "product_category": "Cable Conductors",
+        "relevance_score": 0.3134,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 7098:Part 1",
+        "title": "Crosslinked Polyethylene Insulated Thermoplastic Sheathed Cables - Part 1: For Working Voltages Up to and Including 1100 V",
+        "sector": "Electrical",
+        "product_category": "Cables and Wires",
+        "relevance_score": 0.2867,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "53 Grade Ordinary Portland Cement (OPC 53) bags for precast flyover girder casting",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 12269",
+        "title": "Ordinary Portland Cement, 53 Grade - Specification",
+        "sector": "Civil",
+        "product_category": "Cement",
+        "relevance_score": 0.8901,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 8112",
+        "title": "Ordinary Portland Cement, 43 Grade - Specification",
+        "sector": "Civil",
+        "product_category": "Cement",
+        "relevance_score": 0.6847,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 8329",
+        "title": "Ductile Iron Pipes, Fittings and Joints for Water",
+        "sector": "Civil",
+        "product_category": "Ductile Iron Pipes",
+        "relevance_score": 0.4899,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 875:Part 2",
+        "title": "Design Loads for Buildings - Part 2 Imposed Loads",
+        "sector": "Civil",
+        "product_category": "Structural Loads",
+        "relevance_score": 0.4659,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 2470:Part 1",
+        "title": "Code of Practice for Installation of Septic Tanks - Small",
+        "sector": "Civil",
+        "product_category": "Sanitation",
+        "relevance_score": 0.4467,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "High Strength Deformed Fe 500D TMT steel rebar for RCC column structural reinforcement",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 1786",
+        "title": "High Strength Deformed Steel Bars and Wires for Concrete Reinforcement - Specification (TMT Rebar)",
+        "sector": "Civil",
+        "product_category": "Reinforcement Steel",
+        "relevance_score": 0.9217,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 1199:Part 1",
+        "title": "Fresh Concrete - Methods of Sampling and Testing",
+        "sector": "Civil",
+        "product_category": "Concrete Testing",
+        "relevance_score": 0.4227,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 455",
+        "title": "Portland Slag Cement - Specification",
+        "sector": "Civil",
+        "product_category": "Cement",
+        "relevance_score": 0.419,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 3067",
+        "title": "Code of Practice for General Security Measures in Buildings",
+        "sector": "Civil",
+        "product_category": "Building Security",
+        "relevance_score": 0.4185,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 1200:Part 3",
+        "title": "Method of Measurement of Building Works - Brickwork",
+        "sector": "Civil",
+        "product_category": "Work Measurement",
+        "relevance_score": 0.4111,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "PE-100 PN-10 High Density Polyethylene (HDPE) pressure pipes for rural drinking water distribution",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 4984",
+        "title": "High Density Polyethylene (HDPE) Pipes for Potable Water Supplies - Specification",
+        "sector": "Civil",
+        "product_category": "Water Pipes",
+        "relevance_score": 0.8256,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 456",
+        "title": "Code of Practice for Plain and Reinforced Concrete",
+        "sector": "Civil",
+        "product_category": "Structural Concrete",
+        "relevance_score": 0.4368,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 1200:Part 1",
+        "title": "Method of Measurement of Building Works - Earthwork",
+        "sector": "Civil",
+        "product_category": "Work Measurement",
+        "relevance_score": 0.4298,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 3495:Part 1",
+        "title": "Methods of Tests of Burnt Clay Bricks - Compressive Strength",
+        "sector": "Civil",
+        "product_category": "Brick Testing",
+        "relevance_score": 0.4073,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 516:Part 1",
+        "title": "Hardened Concrete - Methods of Test - Compressive Strength",
+        "sector": "Civil",
+        "product_category": "Concrete Testing",
+        "relevance_score": 0.3934,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "ISMB 300 beams and ISMC 200 channels in E250 structural steel grade",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 1642",
+        "title": "Code of Practice for Fire Safety of Buildings - Details",
+        "sector": "Civil",
+        "product_category": "Fire Safety Construction",
+        "relevance_score": 0.3834,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 3370:Part 2",
+        "title": "Concrete Structures for Storage of Liquids - Part 2 RCC",
+        "sector": "Civil",
+        "product_category": "Water Tanks",
+        "relevance_score": 0.3774,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 808",
+        "title": "Dimensions for Hot Rolled Steel Beam, Column, Channel",
+        "sector": "Civil",
+        "product_category": "Structural Steel",
+        "relevance_score": 0.3559,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 2062",
+        "title": "Hot Rolled Medium and High Tensile Structural Steel - Specification",
+        "sector": "Civil",
+        "product_category": "Structural Steel",
+        "relevance_score": 0.3206,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 1161",
+        "title": "Steel Tubes for Structural Purposes - Specification",
+        "sector": "Civil",
+        "product_category": "Structural Steel Tubes",
+        "relevance_score": 0.2832,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "11 kV 3-core 185 sq mm XLPE insulated armored aluminum conductor underground power cables",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 7098:Part 2",
+        "title": "Crosslinked Polyethylene Insulated PVC Sheathed Cables - Part 2: For Working Voltages From 3.3 kV Up to and Including 33 kV",
+        "sector": "Electrical",
+        "product_category": "Cables and Wires",
+        "relevance_score": 0.6754,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 7098:Part 1",
+        "title": "Crosslinked Polyethylene Insulated Thermoplastic Sheathed Cables - Part 1: For Working Voltages Up to and Including 1100 V",
+        "sector": "Electrical",
+        "product_category": "Cables and Wires",
+        "relevance_score": 0.5139,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 13252:Part 1",
+        "title": "Information Technology Equipment - Safety - Part 1",
+        "sector": "Electrical",
+        "product_category": "Electronics Safety",
+        "relevance_score": 0.4135,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 60947:Part 3",
+        "title": "Low-voltage Switchgear and Controlgear - Part 3: Switches",
+        "sector": "Electrical",
+        "product_category": "Switchgear",
+        "relevance_score": 0.3933,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 13947:Part 1",
+        "title": "Low-voltage Switchgear and Controlgear - Part 1: General Rules",
+        "sector": "Electrical",
+        "product_category": "Switchgear",
+        "relevance_score": 0.3857,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "Outdoor 500 kVA 11kV/0.415kV oil immersed distribution transformer with Energy Level 2",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 1180:Part 1",
+        "title": "Outdoor Type Oil Immersed Distribution Transformers Up to and Including 2500 kVA, 33 kV - Specification",
+        "sector": "Electrical",
+        "product_category": "Transformers",
+        "relevance_score": 0.8568,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 12640:Part 1",
+        "title": "Residual Current Operated Circuit Breakers Without Integral Overcurrent Protection for Household and Similar Uses (RCCBs)",
+        "sector": "Electrical",
+        "product_category": "Switchgear",
+        "relevance_score": 0.4045,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 8130",
+        "title": "Conductors for Insulated Electric Cables and Flexible Cords",
+        "sector": "Electrical",
+        "product_category": "Cable Conductors",
+        "relevance_score": 0.3763,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 875:Part 1",
+        "title": "Design Loads for Buildings - Part 1 Dead Loads",
+        "sector": "Civil",
+        "product_category": "Structural Loads",
+        "relevance_score": 0.3718,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 14697",
+        "title": "AC Static Transformer Operated Watthour Meters, Class 0.2S",
+        "sector": "Electrical",
+        "product_category": "Energy Meters",
+        "relevance_score": 0.2666,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "Chemical earthing electrode system with copper plate for ICU electrical earth safety",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 16046:Part 2",
+        "title": "Secondary Cells and Batteries Containing Alkaline - Lithium Systems",
+        "sector": "Electrical",
+        "product_category": "Batteries",
+        "relevance_score": 0.4243,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 2099",
+        "title": "Bushings for Alternating Voltages Above 1000 Volts",
+        "sector": "Electrical",
+        "product_category": "Transformer Accessories",
+        "relevance_score": 0.4199,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 14763:Part 1",
+        "title": "Conduit Systems for Cable Management - Part 1",
+        "sector": "Electrical",
+        "product_category": "Conduits",
+        "relevance_score": 0.4092,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 3043",
+        "title": "Code of Practice for Earthing",
+        "sector": "Electrical",
+        "product_category": "Earthing & Grounding",
+        "relevance_score": 0.3073,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 732",
+        "title": "Code of Practice for Electrical Wiring Installations",
+        "sector": "Electrical",
+        "product_category": "Wiring Installation",
+        "relevance_score": 0.2774,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "10 kVA single phase online uninterruptible power supply (UPS) system for data center",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 13947:Part 1",
+        "title": "Low-voltage Switchgear and Controlgear - Part 1: General Rules",
+        "sector": "Electrical",
+        "product_category": "Switchgear",
+        "relevance_score": 0.3488,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 16242:Part 1",
+        "title": "Uninterruptible Power Systems (UPS) - Part 1 Safety",
+        "sector": "Electrical",
+        "product_category": "UPS Systems",
+        "relevance_score": 0.3362,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 2026:Part 1",
+        "title": "Power Transformers - Part 1: General",
+        "sector": "Electrical",
+        "product_category": "Transformers",
+        "relevance_score": 0.2597,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 1180:Part 1",
+        "title": "Outdoor Type Oil Immersed Distribution Transformers Up to and Including 2500 kVA, 33 kV - Specification",
+        "sector": "Electrical",
+        "product_category": "Transformers",
+        "relevance_score": 0.2435,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 13779",
+        "title": "AC Static Watt-hour Meters, Class 1 and 2",
+        "sector": "Electrical",
+        "product_category": "Energy Meters",
+        "relevance_score": 0.2413,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  },
+  {
+    "status": "SUCCESS",
+    "query": "4-pole 63A 30mA residual current circuit breaker (RCCB) for human shock protection",
+    "retrieval_method": "phase3",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "rank": 1,
+        "is_code": "IS 12640:Part 1",
+        "title": "Residual Current Operated Circuit Breakers Without Integral Overcurrent Protection for Household and Similar Uses (RCCBs)",
+        "sector": "Electrical",
+        "product_category": "Switchgear",
+        "relevance_score": 0.8486,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 2,
+        "is_code": "IS 8828",
+        "title": "Circuit-breakers for Overcurrent Protection for Household and Similar Installations (MCBs)",
+        "sector": "Electrical",
+        "product_category": "Switchgear",
+        "relevance_score": 0.2574,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 3,
+        "is_code": "IS 60947:Part 2",
+        "title": "Low-voltage Switchgear and Controlgear - Part 2: Circuit-breakers (MCCBs)",
+        "sector": "Electrical",
+        "product_category": "Switchgear",
+        "relevance_score": 0.247,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 4,
+        "is_code": "IS 732",
+        "title": "Code of Practice for Electrical Wiring Installations",
+        "sector": "Electrical",
+        "product_category": "Wiring Installation",
+        "relevance_score": 0.2439,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      },
+      {
+        "rank": 5,
+        "is_code": "IS 1293",
+        "title": "Plugs and Socket-outlets for Household and Similar Purposes Up to and Including 16 Amperes",
+        "sector": "Electrical",
+        "product_category": "Wiring Accessories",
+        "relevance_score": 0.2321,
+        "match_details": {
+          "raw_bm25_score": null,
+          "raw_semantic_similarity": null,
+          "normalized_bm25": null,
+          "normalized_semantic": null,
+          "matched_terms": []
+        }
+      }
+    ],
+    "legal_notice": "INFORMATIONAL AI CANDIDATE RECOMMENDATION \u2014 Search results are candidate recommendations for technical evaluation and require official human/officer verification. High search rank does not constitute official BIS certification or legal statutory approval."
+  }
+]
