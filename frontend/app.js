@@ -2,8 +2,33 @@
 let currentAnalysisResult = null;
 let selectedFile = null;
 
+function getSelectedOutputLanguage() {
+    const el = document.getElementById('output-language-select');
+    if (el && el.value) {
+        localStorage.setItem('standardsaarthi_output_lang', el.value);
+        return el.value;
+    }
+    return localStorage.getItem('standardsaarthi_output_lang') || 'en';
+}
+
+function handleOutputLanguageChange(lang) {
+    localStorage.setItem('standardsaarthi_output_lang', lang);
+    const selectElem = document.getElementById('output-language-select');
+    if (selectElem && selectElem.value !== lang) {
+        selectElem.value = lang;
+    }
+    if (currentAnalysisResult) {
+        runAnalysisModeA();
+    }
+}
+
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('standardsaarthi_output_lang');
+    if (savedLang) {
+        const selectElem = document.getElementById('output-language-select');
+        if (selectElem) selectElem.value = savedLang;
+    }
     initRouter();
     initMobileMenu();
     initModeSwitching();
@@ -185,6 +210,7 @@ function handleSelectedFile(file) {
 async function runAnalysisModeA() {
     const query = document.getElementById('input-query').value.trim();
     const lang = document.getElementById('language-select').value;
+    const outputLang = document.getElementById('output-language-select')?.value || 'en';
 
     if (!query) {
         showToast('Please enter a procurement description.', 'warning');
@@ -198,7 +224,7 @@ async function runAnalysisModeA() {
         const resp = await fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ description: query, language: lang })
+            body: JSON.stringify({ description: query, language: lang, output_language: outputLang })
         });
         const data = await resp.json();
         currentAnalysisResult = data;
@@ -216,6 +242,7 @@ async function runAnalysisModeA() {
 // 5. MODE B: Technical Specification Analysis
 // ----------------------------------------------------
 async function runAnalysisModeB() {
+    const outputLang = document.getElementById('output-language-select')?.value || 'en';
     const specData = {
         product_name: document.getElementById('spec-name').value.trim(),
         product_category: document.getElementById('spec-category').value.trim(),
@@ -224,7 +251,8 @@ async function runAnalysisModeB() {
         dimensions: document.getElementById('spec-dimensions').value.trim(),
         grade: document.getElementById('spec-grade').value.trim(),
         application: document.getElementById('spec-application').value.trim(),
-        safety_requirements: document.getElementById('spec-safety').value.trim()
+        safety_requirements: document.getElementById('spec-safety').value.trim(),
+        output_language: outputLang
     };
 
     if (!specData.product_name && !specData.product_category) {
@@ -324,11 +352,24 @@ function renderAnalysisResults(data) {
     const container = document.getElementById('analysis-results');
     container.style.display = 'block';
 
+    const labels = data.ui_labels || {};
+
+    // Dynamic UI Label Updates
+    const reqHeader = document.getElementById('lbl-req-understanding');
+    if (reqHeader) reqHeader.innerText = labels.requirement_understanding || "Requirement Understanding";
+
+    const recsHeader = document.getElementById('lbl-recommended-standards');
+    if (recsHeader) recsHeader.innerText = labels.recommended_standards || "Recommended Primary Standards";
+
+    const btnPdf = document.getElementById('btn-download-pdf');
+    if (btnPdf) btnPdf.innerText = labels.download_pdf_report || "📄 Download PDF Report";
+
     // Status Banner
     const banner = document.getElementById('status-banner');
     if (data.status === 'needs_clarification') {
         banner.className = 'status-banner needs_clarification';
-        banner.innerHTML = `⚠️ <strong>Needs Clarification:</strong> ${data.message} (${(data.missing_fields || []).join(', ')})`;
+        const missingFieldsStr = formatDetailList(data.missing_fields);
+        banner.innerHTML = `⚠️ <strong>Needs Clarification:</strong> ${data.message} (${missingFieldsStr})`;
     } else if (data.status === 'out_of_domain') {
         banner.className = 'status-banner out_of_domain';
         banner.innerHTML = `🚫 <strong>Scope Restriction:</strong> ${data.message}`;
@@ -341,6 +382,9 @@ function renderAnalysisResults(data) {
     if (data.multilingual_info && data.multilingual_info.is_translated) {
         mlNotice.style.display = 'block';
         mlNotice.innerHTML = `🌐 <strong>Multilingual Translation:</strong> Query in <em>${data.multilingual_info.language_name}</em> translated to English: "<em>${data.multilingual_info.normalized_english}</em>"`;
+    } else if (data.output_language && data.output_language !== 'en') {
+        mlNotice.style.display = 'block';
+        mlNotice.innerHTML = `🌐 <strong>${labels.multilingual_notice || 'Multilingual Output Notice'}:</strong> ${labels.translation_notice || 'Output generated in requested language'} (<em>${data.output_language_name || data.output_language}</em>).`;
     } else {
         mlNotice.style.display = 'none';
     }
@@ -352,7 +396,7 @@ function renderAnalysisResults(data) {
     if (entities.product) chipsHtml += `<span class="chip">Product: ${entities.product}</span>`;
     if (entities.category) chipsHtml += `<span class="chip">Category: ${entities.category}</span>`;
     if (entities.container) chipsHtml += `<span class="chip">Container: ${entities.container}</span>`;
-    if (entities.materials && entities.materials.length) chipsHtml += `<span class="chip">Materials: ${entities.materials.join(', ')}</span>`;
+    if (entities.materials) chipsHtml += `<span class="chip">Materials: ${formatDetailList(entities.materials)}</span>`;
     if (entities.application) chipsHtml += `<span class="chip">Application: ${entities.application}</span>`;
     if (entities.volume) chipsHtml += `<span class="chip">Volume: ${entities.volume}</span>`;
     chipContainer.innerHTML = chipsHtml || '<p class="text-muted">General procurement item.</p>';
@@ -369,20 +413,25 @@ function renderAnalysisResults(data) {
     let recsHtml = '';
     recs.forEach((r, idx) => {
         const isQco = r.qco_compliance && r.qco_compliance.qco_mandatory;
-        const badge = isQco ? `<span class="badge-qco">MANDATORY QCO</span>` : `<span class="badge-rec">RECOMMENDED</span>`;
+        const qcoBadgeText = labels.mandatory_qco || 'MANDATORY QCO';
+        const recBadgeText = labels.recommended || 'RECOMMENDED';
+        const badge = isQco ? `<span class="badge-qco">${qcoBadgeText}</span>` : `<span class="badge-rec">${recBadgeText}</span>`;
         const scorePct = Math.round((r.relevance_score || 0.5) * 100);
+        const scoreText = labels.relevance_score ? `${scorePct}% ${labels.relevance_score}` : `${scorePct}% Relevance`;
+        const inspectText = labels.inspect_details || 'Inspect Standard Details';
+        const whyText = labels.why_this_standard || 'Why This Standard?';
 
         recsHtml += `
             <div class="rec-item">
                 <div class="rec-header">
                     <span class="rec-code">#${idx + 1} ${r.is_code}</span>
-                    <div>${badge} <span class="score-pill">${scorePct}% Relevance</span></div>
+                    <div>${badge} <span class="score-pill">${scoreText}</span></div>
                 </div>
                 <div class="rec-title">${r.title}</div>
                 <div class="rec-scope">${r.scope || 'Scope verified from official BIS documentation.'}</div>
                 <div class="rec-footer">
-                    <a href="#/standards/${encodeURIComponent(r.is_code)}" class="btn btn-sm btn-outline">Inspect Standard Details</a>
-                    <button class="btn btn-sm btn-secondary" onclick="openWhyModal('${(r.is_code || '').replace(/'/g, "\\'")}')">Why This Standard?</button>
+                    <a href="#/standards/${encodeURIComponent(r.is_code)}" class="btn btn-sm btn-outline">${inspectText}</a>
+                    <button class="btn btn-sm btn-secondary" onclick="openWhyModal('${(r.is_code || '').replace(/'/g, "\\'")}')">${whyText}</button>
                 </div>
             </div>
         `;
@@ -396,18 +445,23 @@ function openWhyModal(isCode) {
     if (!rec) return;
 
     const overlay = document.getElementById('why-modal-overlay');
-    document.getElementById('why-title').innerText = `Why ${rec.is_code}?`;
+    const labels = (currentAnalysisResult && currentAnalysisResult.ui_labels) || {};
+    const whyHeader = labels.why_this_standard || `Why ${rec.is_code}?`;
+    document.getElementById('why-title').innerText = `${whyHeader} (${rec.is_code})`;
 
     const reasons = rec.ranking_reasons || rec.reasons || [];
-    let html = `<h4>Recommendation Matching Factors</h4><ul style="margin:1rem 0 1.5rem 1.25rem">`;
+    const factorTitle = labels.requirement_understanding || "Recommendation Matching Factors";
+    let html = `<h4>${factorTitle}</h4><ul style="margin:1rem 0 1.5rem 1.25rem">`;
     reasons.forEach(r => html += `<li style="margin-bottom:0.4rem">${r}</li>`);
     html += `</ul>`;
 
     if (rec.qco_compliance && rec.qco_compliance.qco_mandatory) {
+        const qcoNoticeHeading = labels.statutory_qco_notice || "Statutory Mandatory Quality Control Order Notice";
+        const qcoNoticeText = rec.qco_compliance.notice || "This standard is mandated under Central Ministry Gazette Notification. Procurement officers must enforce BIS ISI certification.";
         html += `
             <div style="background:#fef2f2; border:1px solid #fca5a5; padding:1rem; border-radius:6px; margin-bottom:1rem">
-                <strong style="color:#dc2626">Statutory Mandatory Quality Control Order Notice</strong>
-                <p style="font-size:0.88rem; margin-top:0.35rem">This standard is mandated under Central Ministry Gazette Notification. Procurement officers must enforce BIS ISI certification.</p>
+                <strong style="color:#dc2626">${qcoNoticeHeading}</strong>
+                <p style="font-size:0.88rem; margin-top:0.35rem">${qcoNoticeText}</p>
             </div>
         `;
     }
@@ -459,16 +513,59 @@ function validateSource(source) {
     return true;
 }
 
+// Helper function to safely format lists/objects/strings from API
+function formatDetailList(value) {
+    if (Array.isArray(value)) {
+        return value
+            .map(item => {
+                if (item && typeof item === 'object') {
+                    return item.name || item.label || item.title || JSON.stringify(item);
+                }
+                return String(item);
+            })
+            .filter(Boolean)
+            .join(', ');
+    }
+
+    if (value === null || value === undefined || value === '') {
+        return 'Not available';
+    }
+
+    if (typeof value === 'object') {
+        return Object.values(value)
+            .map(item => {
+                if (item && typeof item === 'object') {
+                    return item.name || item.label || item.title || JSON.stringify(item);
+                }
+                return String(item);
+            })
+            .filter(Boolean)
+            .join(', ');
+    }
+
+    return String(value);
+}
+
 // Standard Details Dedicated Page Route
 async function loadStandardDetailsPage(isCode) {
+    const initialDetailBody = document.getElementById('detail-body');
+    if (initialDetailBody) {
+        initialDetailBody.innerHTML = '<p class="placeholder-text">Loading standard details...</p>';
+    }
     try {
-        const resp = await fetch(`/api/standards/${encodeURIComponent(isCode)}`);
+        const outLang = getSelectedOutputLanguage();
+        const resp = await fetch(`/api/standards/${encodeURIComponent(isCode)}?output_language=${encodeURIComponent(outLang)}`);
         if (!resp.ok) throw new Error('Details unavailable.');
         const details = await resp.json();
+        const labels = details.ui_labels || {};
 
         const stdCode = details.is_code || isCode;
         const stdNum = details.standardNumber || details.isNumber || stdCode;
-        document.getElementById('detail-code-title').innerText = `${stdNum} Details & Lifecycle`;
+        const headerTitle = labels.details_and_lifecycle ? `${stdNum} ${labels.details_and_lifecycle}` : `${stdNum} Details & Lifecycle`;
+        const headerElem = document.getElementById('detail-code-title');
+        if (headerElem) {
+            headerElem.innerText = headerTitle;
+        }
 
         const srcObj = details.source || {};
         const authorityName = srcObj.authority || "Bureau of Indian Standards (BIS)";
@@ -502,7 +599,7 @@ async function loadStandardDetailsPage(isCode) {
         const supersededBy = details.supersededBy || (details.lifecycle && details.lifecycle.superseded_by !== "None" ? details.lifecycle.superseded_by : "None recorded");
 
         // Button & Badge
-        const buttonText = specificUrl ? "View Standard on BIS ↗" : "View on BIS Standards Portal ↗";
+        const buttonText = labels.view_on_bis_portal || (specificUrl ? "View Standard on BIS ↗" : "View on BIS Standards Portal ↗");
         const targetUrl = specificUrl || portalUrl;
         const sourceButtonHtml = `<a href="${targetUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">${buttonText}</a>`;
         const verifiedBadgeHtml = isVerified ? `<span class="badge-rec">✓ Official BIS Source</span>` : '';
@@ -532,12 +629,27 @@ async function loadStandardDetailsPage(isCode) {
             amendmentsDetailHtml = `<p style="margin-top:0.5rem; font-size:0.88rem; color:#64748b">No amendments recorded for this standard.</p>`;
         }
 
+        const displayTitle = details.localized_title || details.title || 'Title not available';
+        const displayScope = details.localized_scope || details.scope || 'Scope verified from official BIS documentation.';
+        const displayApps = formatDetailList(details.localized_applications ?? details.applications);
+        const displayMats = formatDetailList(details.localized_materials ?? details.materials);
+        
+        let techParamsStr = '';
+        const techParamsVal = details.localized_technical_parameters ?? details.technical_parameters;
+        if (techParamsVal && typeof techParamsVal === 'object' && !Array.isArray(techParamsVal)) {
+            techParamsStr = Object.entries(techParamsVal).map(([k, v]) => `${k}: ${v}`).join(' | ');
+        } else if (techParamsVal) {
+            techParamsStr = formatDetailList(techParamsVal);
+        } else {
+            techParamsStr = 'Standard electrical & material parameters as per BIS.';
+        }
+
         let html = `
             <div style="margin-bottom:1.25rem; padding-bottom:1rem; border-bottom:1px solid var(--border-light)">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap">
                     <div>
                         <h3 style="margin:0 0 0.35rem 0; font-size:1.4rem; color:var(--primary-color)">${stdNum}</h3>
-                        <p style="font-weight:600; font-size:1.05rem; margin:0; color:#334155">${details.title}</p>
+                        <p style="font-weight:600; font-size:1.05rem; margin:0; color:#334155">${displayTitle}</p>
                     </div>
                     <div>${statusBadgeHtml}</div>
                 </div>
@@ -545,25 +657,25 @@ async function loadStandardDetailsPage(isCode) {
 
             <!-- VERSION & LIFECYCLE GRID -->
             <div style="margin-bottom:1.5rem">
-                <h4 style="font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em; color:#64748b; margin-bottom:0.75rem">VERSION & LIFECYCLE</h4>
+                <h4 style="font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em; color:#64748b; margin-bottom:0.75rem">${labels.details_and_lifecycle || 'VERSION & LIFECYCLE'}</h4>
                 <div class="lifecycle-grid">
                     <div class="version-card">
                         <div>
-                            <div class="version-card-label">CURRENT EDITION</div>
+                            <div class="version-card-label">${labels.current_edition || 'CURRENT EDITION'}</div>
                             <div class="version-card-value">${pubYear}</div>
                         </div>
                         <div class="version-card-subtext">The year of the published standard edition.</div>
                     </div>
                     <div class="version-card">
                         <div>
-                            <div class="version-card-label">REVISION</div>
+                            <div class="version-card-label">${labels.revision || 'REVISION'}</div>
                             <div class="version-card-value">${revLabel}</div>
                         </div>
                         <div class="version-card-subtext">The revision number of the standard.</div>
                     </div>
                     <div class="version-card">
                         <div>
-                            <div class="version-card-label">LAST REVIEWED</div>
+                            <div class="version-card-label">${labels.last_reviewed || 'LAST REVIEWED'}</div>
                             <div class="version-card-value">${revYear}</div>
                         </div>
                         <div class="version-card-subtext">The year in which BIS reviewed the standard.</div>
@@ -580,14 +692,14 @@ async function loadStandardDetailsPage(isCode) {
 
             <!-- AMENDMENTS & REVISION HISTORY -->
             <div class="amendments-section">
-                <h4 style="font-size:0.95rem; font-weight:700; color:var(--primary-color); margin:0 0 0.5rem 0">AMENDMENTS & REVISION HISTORY</h4>
+                <h4 style="font-size:0.95rem; font-weight:700; color:var(--primary-color); margin:0 0 0.5rem 0">${labels.amendments_history || 'AMENDMENTS & REVISION HISTORY'}</h4>
                 <p style="margin:0 0 0.5rem 0; font-size:0.9rem"><strong>Current Published Edition:</strong> ${stdNum} — ${revLabel}</p>
                 ${amendmentsDetailHtml}
             </div>
 
             <!-- SUPERSEDING INFORMATION -->
             <div style="margin-top:1.25rem; padding:1rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px">
-                <h4 style="font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em; color:#64748b; margin:0 0 0.5rem 0">SUPERSEDING INFORMATION</h4>
+                <h4 style="font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em; color:#64748b; margin:0 0 0.5rem 0">${labels.superseding_info || 'SUPERSEDING INFORMATION'}</h4>
                 <div style="display:flex; gap:2rem; flex-wrap:wrap; font-size:0.9rem">
                     <div><strong>Supersedes:</strong> ${supersedes}</div>
                     <div><strong>Superseded By:</strong> ${supersededBy}</div>
@@ -596,15 +708,15 @@ async function loadStandardDetailsPage(isCode) {
 
             <!-- SCOPE & DETAILS -->
             <div style="margin-top:1.5rem">
-                <p style="margin-top:0.75rem"><strong>Scope & Description:</strong> ${details.scope}</p>
-                <p style="margin-top:0.5rem"><strong>Materials Specification:</strong> ${details.materials}</p>
-                <p><strong>Applications:</strong> ${details.applications}</p>
-                <p><strong>Technical Parameters:</strong> ${details.technical_parameters}</p>
+                <p style="margin-top:0.75rem"><strong>${labels.scope_and_description || 'Scope & Description'}:</strong> ${displayScope}</p>
+                <p style="margin-top:0.5rem"><strong>${labels.materials_specification || 'Materials Specification'}:</strong> ${displayMats}</p>
+                <p><strong>${labels.applications || 'Applications'}:</strong> ${displayApps}</p>
+                <p><strong>${labels.technical_parameters || 'Technical Parameters'}:</strong> ${techParamsStr}</p>
             </div>
 
             <!-- SOURCE AUTHORITY -->
             <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--border-light)">
-                <p style="margin-bottom:0.6rem"><strong>Source Authority:</strong> ${authorityName}</p>
+                <p style="margin-bottom:0.6rem"><strong>${labels.source_authority || 'Source Authority'}:</strong> ${authorityName}</p>
                 <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap">
                     ${sourceButtonHtml}
                     ${verifiedBadgeHtml}
@@ -613,10 +725,16 @@ async function loadStandardDetailsPage(isCode) {
             </div>
         `;
 
-        document.getElementById('detail-body').innerHTML = html;
-        showToast(`Loaded details for ${stdCode}`, 'info');
+        const detailBodyElem = document.getElementById('detail-body');
+        if (detailBodyElem) {
+            detailBodyElem.innerHTML = html;
+        }
     } catch (err) {
-        document.getElementById('detail-body').innerHTML = `<p class="error-text">Standard details for '${isCode}' not available in verified database.</p>`;
+        const detailBodyElem = document.getElementById('detail-body');
+        if (detailBodyElem) {
+            detailBodyElem.innerHTML = `<p class="placeholder-text">Failed to load details for standard "${isCode}".</p>`;
+        }
+        console.error(err);
     }
 }
 
@@ -808,6 +926,9 @@ async function downloadPdfReport() {
         return;
     }
 
+    // PDF report is always generated in English as per system requirement
+    const pdfLanguage = 'en';
+
     try {
         const resp = await fetch('/api/reports/generate', {
             method: 'POST',
@@ -815,7 +936,8 @@ async function downloadPdfReport() {
             body: JSON.stringify({
                 query: currentAnalysisResult.query,
                 entities: currentAnalysisResult.entities,
-                recommendations: currentAnalysisResult.recommendations
+                recommendations: currentAnalysisResult.recommendations,
+                output_language: pdfLanguage
             })
         });
 
@@ -874,9 +996,39 @@ function hideResults() {
     document.getElementById('analysis-results').style.display = 'none';
 }
 
+// Dynamic Output Language Selector Change Handler
+async function handleOutputLanguageChange(newLang) {
+    if (!currentAnalysisResult) return;
+
+    if (currentAnalysisResult.query) {
+        startLoadingProgress();
+        try {
+            const inputLang = document.getElementById('language-select')?.value || 'auto';
+            const resp = await fetch('/api/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    description: currentAnalysisResult.user_original_query || currentAnalysisResult.query,
+                    language: inputLang,
+                    output_language: newLang
+                })
+            });
+            const data = await resp.json();
+            currentAnalysisResult = data;
+            renderAnalysisResults(data);
+            showToast(`Output language updated to ${data.output_language_name || newLang}`, 'info');
+        } catch (err) {
+            console.error('Failed to update output language:', err);
+        } finally {
+            stopLoadingProgress();
+        }
+    }
+}
+
 // Global Window Bindings
 window.openWhyModal = openWhyModal;
 window.closeWhyModal = closeWhyModal;
+window.handleOutputLanguageChange = handleOutputLanguageChange;
 
 
 

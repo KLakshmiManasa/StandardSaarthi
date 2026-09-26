@@ -11,6 +11,8 @@ class RecommendRequest(BaseModel):
     top_k: int = Field(10, ge=1, le=50, description="Number of top recommendations to return")
     mode: str = Field("graph_rag", description="Retrieval pipeline mode: 'graph_rag', 'vector', or 'keyword'")
     language: Optional[str] = Field("auto", description="Query input language code (e.g. 'en', 'hi', 'ta')")
+    output_language: Optional[str] = Field("en", description="Preferred output response language code ('en', 'hi', 'ta')")
+
 
 class EntitySummary(BaseModel):
     product: Optional[str] = Field(None, description="Primary product or equipment extracted")

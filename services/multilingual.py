@@ -1,28 +1,15 @@
 """
 Multilingual Processing Service for SIH 26108 / Product Engine.
-Uses `mtranslate` for Indian language detection and translation normalization,
-with fallback dictionary normalization for Indic procurement terms when rate limits occur.
+Uses `config.languages.SUPPORTED_LANGUAGES` as centralized single source of truth for language maps.
+Implements Indian language detection and query translation normalization with fallback dictionary for Indic procurement terms.
 """
 
 import logging
 from typing import Dict, Any
 
-logger = logging.getLogger("MultilingualService")
+from config.languages import SUPPORTED_LANGUAGES
 
-# Supported Indian languages map
-SUPPORTED_LANGUAGES = {
-    "auto": "Auto Detect",
-    "en": "English",
-    "hi": "Hindi (हिंदी)",
-    "ta": "Tamil (தமிழ்)",
-    "te": "Telugu (తెలుగు)",
-    "mr": "Marathi (मराठी)",
-    "bn": "Bengali (বাংলা)",
-    "gu": "Gujarati (ગુજરાતી)",
-    "kn": "Kannada (કન્નડ)",
-    "ml": "Malayalam (മലയാളം)",
-    "pa": "Punjabi (ਪੰਜਾਬੀ)"
-}
+logger = logging.getLogger("MultilingualService")
 
 # Indic Procurement Glossary for Rate-Limit & Fallback Translation
 INDIC_GLOSSARY = {
@@ -129,6 +116,7 @@ HINDI_MARKERS = [
     "जिन्हें", "करता", "करते", "करती", "होगा", "होगी", "करें", "इंसुलेशन", "कॉपर", "तांबा"
 ]
 
+
 class MultilingualService:
     def __init__(self):
         try:
@@ -143,12 +131,12 @@ class MultilingualService:
         """
         Detects language of input text using script inspection and lexical classification.
         Respects explicit manual selection if target_lang != 'auto'.
-        Distinguishes Hindi (hi) vs Marathi (mr) for Devanagari script.
+        Uses SUPPORTED_LANGUAGES as single source of truth.
         """
         if target_lang and target_lang != "auto":
             return {
                 "code": target_lang,
-                "name": SUPPORTED_LANGUAGES.get(target_lang, "Selected Language"),
+                "name": SUPPORTED_LANGUAGES.get(target_lang, target_lang),
                 "method": "manual_selection",
                 "confidence": 1.0
             }
@@ -157,12 +145,12 @@ class MultilingualService:
         if not text_str or text_str.isascii():
             return {
                 "code": "en",
-                "name": "English",
+                "name": SUPPORTED_LANGUAGES.get("en", "English"),
                 "method": "ascii_check",
                 "confidence": 1.0
             }
 
-        # Check non-Devanagari script ranges
+        # Check non-Devanagari script ranges for Eighth Schedule languages
         if any('\u0b80' <= c <= '\u0bff' for c in text_str):
             return {"code": "ta", "name": SUPPORTED_LANGUAGES["ta"], "method": "script_detection", "confidence": 0.99}
         if any('\u0c00' <= c <= '\u0c7f' for c in text_str):
@@ -177,12 +165,16 @@ class MultilingualService:
             return {"code": "gu", "name": SUPPORTED_LANGUAGES["gu"], "method": "script_detection", "confidence": 0.99}
         if any('\u0a00' <= c <= '\u0a7f' for c in text_str):
             return {"code": "pa", "name": SUPPORTED_LANGUAGES["pa"], "method": "script_detection", "confidence": 0.99}
+        if any('\u0b00' <= c <= '\u0b7f' for c in text_str):
+            return {"code": "or", "name": SUPPORTED_LANGUAGES["or"], "method": "script_detection", "confidence": 0.99}
+        if any('\u0600' <= c <= '\u06ff' for c in text_str) or any('\u0750' <= c <= '\u077f' for c in text_str):
+            return {"code": "ur", "name": SUPPORTED_LANGUAGES["ur"], "method": "script_detection", "confidence": 0.99}
+        if any('\u1c50' <= c <= '\u1c7f' for c in text_str):
+            return {"code": "sat", "name": SUPPORTED_LANGUAGES["sat"], "method": "script_detection", "confidence": 0.99}
 
-        # Devanagari script range check
+        # Devanagari script range check (Hindi, Marathi, Sanskrit, Bodo, Dogri, Konkani, Maithili, Nepali)
         if any('\u0900' <= c <= '\u097f' for c in text_str):
-            # Check for Marathi-specific letter 'ळ' (\u0933)
             has_lla = '\u0933' in text_str
-
             t_lower = text_str.lower()
             mr_score = 5 if has_lla else 0
             hi_score = 0
@@ -197,104 +189,92 @@ class MultilingualService:
 
             if mr_score > hi_score:
                 det_code = "mr"
-            elif hi_score > mr_score:
-                det_code = "hi"
             else:
-                det_code = "mr" if has_lla else "hi"
+                det_code = "hi"
 
-            conf = min(0.99, round(0.70 + abs(mr_score - hi_score) * 0.05, 2))
             return {
                 "code": det_code,
-                "name": SUPPORTED_LANGUAGES.get(det_code, "Devanagari Language"),
+                "name": SUPPORTED_LANGUAGES.get(det_code, "Hindi"),
                 "method": "devanagari_lexical_classification",
-                "confidence": conf,
-                "mr_score": mr_score,
-                "hi_score": hi_score
+                "confidence": 0.95
             }
-
-        return {"code": "en", "name": "English", "method": "fallback", "confidence": 0.50}
-
-    def process_query(self, query_text: str, target_lang: str = "auto") -> Dict[str, Any]:
-        text = str(query_text or "").strip()
-        if not text:
-            return {
-                "original_text": "",
-                "normalized_english": "",
-                "detected_language": "en",
-                "language_name": "English",
-                "is_translated": False
-            }
-
-        # Language Detection
-        lang_info = self.detect_language(text, target_lang=target_lang)
-        det_code = lang_info["code"]
-        lang_name = lang_info["name"]
-
-        # ASCII Quick Check (if auto-detected as English or target_lang is 'en')
-        if text.isascii() and (not target_lang or target_lang in ["auto", "en"]):
-            return {
-                "original_text": text,
-                "normalized_english": text,
-                "detected_language": "en",
-                "language_name": "English",
-                "detection_details": lang_info,
-                "is_translated": False
-            }
-
-        translated = None
-        if self.available and self.mtranslate:
-            try:
-                translated = self.mtranslate.translate(text, 'en', det_code if det_code != 'auto' else 'auto')
-            except Exception as e:
-                logger.warning(f"mtranslate rate limit or error, using dictionary fallback: {e}")
-
-        # Dictionary entity extraction & fallback translation
-        indic_words = text.split()
-        extracted_entities = []
-        for word in indic_words:
-            clean_word = word.strip("।,;:!?'\"()")
-            for k, val in ENTITY_KEYWORDS_MAP.items():
-                if k.lower() in clean_word.lower():
-                    extracted_entities.append(val)
-
-        if not translated or translated == text or not translated.isascii():
-            # Build clean, accurate translation using glossary replacements
-            norm_words = []
-            for token in text.split():
-                clean_tok = token.strip("।,;:!?'\"()")
-                if clean_tok in INDIC_GLOSSARY:
-                    norm_words.append(INDIC_GLOSSARY[clean_tok])
-                elif clean_tok.isascii():
-                    norm_words.append(clean_tok)
-
-            if norm_words:
-                translated = "I need " + " ".join(norm_words) + " for electrical procurement"
-            else:
-                translated = "I need cables for electrical wiring inside a building, with copper conductors and PVC insulation."
-
-        # Verify that key entities present in the Indic text are preserved in translated English
-        trans_lower = (translated or "").lower()
-        missing_entities = [e for e in dict.fromkeys(extracted_entities) if e.lower() not in trans_lower]
-        if missing_entities:
-            translated = f"{translated} specifying {', '.join(missing_entities)}"
-
-        logger.info(
-            f"[DEBUG LOGGING] Multilingual Language Detection Run:\n"
-            f"  - Original Text: '{text[:60]}...'\n"
-            f"  - Detected Code: '{det_code}'\n"
-            f"  - Language Name: '{lang_name}'\n"
-            f"  - Detection Method: {lang_info.get('method')}\n"
-            f"  - Confidence: {lang_info.get('confidence')}\n"
-            f"  - Normalized English: '{translated}'"
-        )
 
         return {
-            "original_text": text,
-            "normalized_english": translated,
-            "detected_language": det_code,
-            "language_name": lang_name,
-            "detection_details": lang_info,
-            "is_translated": True
+            "code": "en",
+            "name": "English",
+            "method": "default_fallback",
+            "confidence": 0.5
         }
+
+    def translate_to_english(self, text: str, source_lang: str = "auto") -> Dict[str, Any]:
+        """
+        Normalizes input text from Indian languages to English for recommendation processing.
+        """
+        text_str = str(text or "").strip()
+        det = self.detect_language(text_str, target_lang=source_lang)
+        lang_code = det["code"]
+
+        if not text_str:
+            return {
+                "original_text": text_str,
+                "normalized_english": text_str,
+                "detected_language": lang_code,
+                "language_name": det["name"],
+                "is_translated": False,
+                "method": "none",
+                "detection_details": det
+            }
+
+        if source_lang == "auto" and (text_str.isascii() or lang_code == "en"):
+            return {
+                "original_text": text_str,
+                "normalized_english": text_str,
+                "detected_language": "en",
+                "language_name": "English",
+                "is_translated": False,
+                "method": "ascii_check",
+                "detection_details": det
+            }
+
+        translated_text = None
+        method_used = "glossary_fallback"
+
+        # Try mtranslate
+        if self.available and self.mtranslate:
+            try:
+                translated_text = self.mtranslate.translate(text_str, 'en', 'auto')
+                if translated_text and translated_text.strip() != text_str:
+                    method_used = "mtranslate"
+            except Exception as e:
+                logger.warning(f"mtranslate error during input translation: {e}")
+
+        # Fallback dictionary normalization
+        if not translated_text or translated_text.strip() == text_str:
+            words = text_str.split()
+            norm_words = []
+            for w in words:
+                w_clean = w.strip(",.!?\"'")
+                if w_clean in INDIC_GLOSSARY:
+                    norm_words.append(INDIC_GLOSSARY[w_clean])
+                elif w_clean in ENTITY_KEYWORDS_MAP:
+                    norm_words.append(ENTITY_KEYWORDS_MAP[w_clean])
+                else:
+                    norm_words.append(w_clean)
+            translated_text = " ".join([w for w in norm_words if w])
+            method_used = "glossary_fallback"
+
+        return {
+            "original_text": text_str,
+            "normalized_english": translated_text or text_str,
+            "detected_language": lang_code,
+            "language_name": det["name"],
+            "is_translated": lang_code != "en",
+            "method": method_used,
+            "detection_details": det
+        }
+
+    def process_query(self, query: str, target_lang: str = "auto") -> Dict[str, Any]:
+        return self.translate_to_english(query, source_lang=target_lang)
+
 
 multilingual_service = MultilingualService()

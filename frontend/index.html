@@ -116,12 +116,28 @@
                             <select id="language-select">
                                 <option value="auto">Auto Detect</option>
                                 <option value="en">English</option>
-                                <option value="hi">Hindi (हिंदी)</option>
-                                <option value="ta">Tamil (தமிழ்)</option>
-                                <option value="te">Telugu (తెలుగు)</option>
-                                <option value="mr">Marathi (मराठी)</option>
-                                <option value="bn">Bengali (বাংলা)</option>
-                                <option value="gu">Gujarati (ગુજરાતી)</option>
+                                <option value="hi">हिन्दी (Hindi)</option>
+                                <option value="ta">தமிழ் (Tamil)</option>
+                                <option value="te">తెలుగు (Telugu)</option>
+                                <option value="bn">বাংলা (Bengali)</option>
+                                <option value="gu">ગુજરાતી (Gujarati)</option>
+                                <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                                <option value="ml">മലയാളം (Malayalam)</option>
+                                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="output-language-select">Output Language</label>
+                            <select id="output-language-select" onchange="handleOutputLanguageChange(this.value)">
+                                <option value="en" selected>English</option>
+                                <option value="hi">हिन्दी (Hindi)</option>
+                                <option value="ta">தமிழ் (Tamil)</option>
+                                <option value="te">తెలుగు (Telugu)</option>
+                                <option value="bn">বাংলা (Bengali)</option>
+                                <option value="gu">ગુજરાતી (Gujarati)</option>
+                                <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                                <option value="ml">മലയാളം (Malayalam)</option>
+                                <option value="kn">ಕನ್ನಡ (Kannada)</option>
                             </select>
                         </div>
                         <div class="form-group align-end">
@@ -201,7 +217,7 @@
 
                 <!-- Requirement Understanding Panel -->
                 <div class="card">
-                    <h3>Requirement Understanding</h3>
+                    <h3 id="lbl-req-understanding">Requirement Understanding</h3>
                     <div id="entity-chips" class="chip-group"></div>
                     <div id="multilingual-notice" class="notice-box" style="display:none"></div>
                 </div>
@@ -209,8 +225,8 @@
                 <!-- Primary Recommended Standards -->
                 <div class="card">
                     <div class="card-header-row">
-                        <h3>Recommended Primary Standards</h3>
-                        <button class="btn btn-sm btn-primary" onclick="downloadPdfReport()">📄 Download PDF Report</button>
+                        <h3 id="lbl-recommended-standards">Recommended Primary Standards</h3>
+                        <button class="btn btn-sm btn-primary" id="btn-download-pdf" onclick="downloadPdfReport()">📄 Download PDF Report</button>
                     </div>
                     <div id="recommendations-list"></div>
                 </div>

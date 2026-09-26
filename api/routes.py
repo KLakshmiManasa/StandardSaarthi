@@ -19,6 +19,7 @@ from api.health import router as health_router, check_health
 
 from services.tender_parser import tender_parser
 from services.multilingual import multilingual_service
+from services.localization_service import localization_service
 from services.standards_service import standards_service
 from services.history_store import history_store
 from services.report_generator import report_generator
@@ -50,6 +51,7 @@ def get_health():
 @app.post("/api/recommend")
 def recommend_standards(req: RecommendRequest):
     raw_query = req.description or ""
+    out_lang = localization_service.validate_language(req.output_language)
     if (req.language and req.language != "auto") or not raw_query.isascii():
         lang_res = multilingual_service.process_query(raw_query, target_lang=req.language or "auto")
         effective_query = lang_res.get("normalized_english", raw_query)
@@ -62,6 +64,8 @@ def recommend_standards(req: RecommendRequest):
         top_k=req.top_k,
         mode=req.mode
     )
+
+    res = localization_service.localize_recommendation_response(res, out_lang)
 
     status_code = 200
     if res["status"] == "needs_clarification":
@@ -79,6 +83,7 @@ def recommend_standards(req: RecommendRequest):
 class AnalyzeRequest(BaseModel):
     description: str
     language: Optional[str] = "auto"
+    output_language: Optional[str] = "en"
     top_k: Optional[int] = 10
     mode: Optional[str] = "graph_rag"
 
@@ -88,6 +93,7 @@ def analyze_product_description(req: AnalyzeRequest):
     Mode A Entry Point: Natural-language product description analysis with multilingual support.
     """
     raw_query = req.description or ""
+    out_lang = localization_service.validate_language(req.output_language)
     
     # Multilingual translation / normalization if Indic language
     lang_res = multilingual_service.process_query(raw_query, target_lang=req.language or "auto")
@@ -104,6 +110,9 @@ def analyze_product_description(req: AnalyzeRequest):
     # Attach multilingual metadata
     res["multilingual_info"] = lang_res
     res["user_original_query"] = raw_query
+
+    # Apply output localization
+    res = localization_service.localize_recommendation_response(res, out_lang)
 
     # Save to search history if processed
     if res.get("status") in ["success", "needs_clarification", "no_results"]:
@@ -140,6 +149,7 @@ class TechnicalSpecRequest(BaseModel):
     performance_requirements: Optional[str] = None
     safety_requirements: Optional[str] = None
     other_specifications: Optional[str] = None
+    output_language: Optional[str] = "en"
 
 @app.post("/api/analyze/specification")
 def analyze_technical_specification(spec: TechnicalSpecRequest):
@@ -147,6 +157,7 @@ def analyze_technical_specification(spec: TechnicalSpecRequest):
     Mode B Entry Point: Structured technical specification form inputs.
     Converts structured input into normalized procurement query.
     """
+    out_lang = localization_service.validate_language(spec.output_language)
     parts = []
     if spec.product_name: parts.append(f"Product: {spec.product_name}")
     if spec.product_category: parts.append(f"Category: {spec.product_category}")
@@ -164,6 +175,7 @@ def analyze_technical_specification(spec: TechnicalSpecRequest):
 
     res = pipeline.recommend(procurement_description=query_str, top_k=10, mode="graph_rag")
     res["structured_input"] = spec.model_dump()
+    res = localization_service.localize_recommendation_response(res, out_lang)
 
     history_store.add_entry(
         query=query_str,
@@ -173,6 +185,7 @@ def analyze_technical_specification(spec: TechnicalSpecRequest):
     )
 
     return res
+
 
 # ==========================================================
 # 3. MODE C — TENDER DOCUMENT UPLOAD & PARSING
@@ -218,14 +231,17 @@ def list_standards(sector: Optional[str] = Query(None), q: Optional[str] = Query
     return standards_service.list_standards(sector=sector, query=q)
 
 @app.get("/api/standards/{standard_code}")
-def get_standard_detail(standard_code: str):
+def get_standard_detail(standard_code: str, output_language: Optional[str] = Query("en")):
     """
     Returns full detailed record of a single standard with scope, lifecycle, and relationship categories.
+    Localizes user-facing fields into output_language.
     """
     detail = standards_service.get_standard_details(standard_code)
     if not detail:
         raise HTTPException(status_code=404, detail=f"Standard '{standard_code}' not available in verified standards database.")
-    return detail
+    
+    out_lang = localization_service.validate_language(output_language)
+    return localization_service.localize_standard_details(detail, out_lang)
 
 @app.get("/api/standards/{standard_code}/relationships")
 @app.get("/api/standards/{standard_code}/related")
@@ -285,14 +301,17 @@ class ReportRequest(BaseModel):
     query: str
     entities: Optional[Dict[str, Any]] = None
     recommendations: List[Dict[str, Any]]
+    output_language: Optional[str] = "en"
 
 @app.post("/api/reports/generate")
 def generate_procurement_report(req: ReportRequest):
     """
-    Generates downloadable PDF Procurement Standards Report.
+    Generates downloadable PDF Procurement Standards Report in English.
     """
     try:
-        pdf_bytes = report_generator.generate_pdf_report(req.model_dump())
+        # PDF report is always generated in English
+        out_lang = "en"
+        pdf_bytes = report_generator.generate_pdf_report(req.model_dump(), output_language=out_lang)
         filename = f"Procurement_Standards_Report_{int(os.times().elapsed)}.pdf"
         return Response(
             content=pdf_bytes,
@@ -302,6 +321,7 @@ def generate_procurement_report(req: ReportRequest):
     except Exception as e:
         logger.error(f"Report generation failed: {e}")
         raise HTTPException(status_code=500, detail=f"Report generation error: {str(e)}")
+
 
 # ==========================================================
 # 7. HISTORY & SAVED ANALYSES ENDPOINTS
