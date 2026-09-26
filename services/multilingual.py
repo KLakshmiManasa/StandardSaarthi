@@ -1,7 +1,7 @@
 """
 Multilingual Processing Service for SIH 26108 / Product Engine.
-Uses `mtranslate` for Indian language detection and translation normalization,
-with fallback dictionary normalization for Indic procurement terms when rate limits occur.
+Uses `config.languages.SUPPORTED_LANGUAGES` as centralized single source of truth for language maps.
+Implements Indian language detection and query translation normalization with fallback dictionary for Indic procurement terms.
 """
 
 import logging
@@ -9,6 +9,8 @@ import urllib.request
 import urllib.parse
 import json
 from typing import Dict, Any, List, Optional, Tuple
+
+from config.languages import SUPPORTED_LANGUAGES
 
 logger = logging.getLogger("MultilingualService")
 
@@ -147,6 +149,7 @@ HINDI_MARKERS = [
     "जिन्हें", "करता", "करते", "करती", "होगा", "होगी", "करें", "इंसुलेशन", "कॉपर", "तांबा"
 ]
 
+
 class MultilingualService:
     def __init__(self):
         try:
@@ -207,12 +210,12 @@ class MultilingualService:
         """
         Detects language of input text using script inspection and lexical classification.
         Respects explicit manual selection if target_lang != 'auto'.
-        Distinguishes Hindi (hi) vs Marathi (mr) for Devanagari script.
+        Uses SUPPORTED_LANGUAGES as single source of truth.
         """
         if target_lang and target_lang != "auto":
             return {
                 "code": target_lang,
-                "name": SUPPORTED_LANGUAGES.get(target_lang, "Selected Language"),
+                "name": SUPPORTED_LANGUAGES.get(target_lang, target_lang),
                 "method": "manual_selection",
                 "confidence": 1.0
             }
@@ -221,12 +224,12 @@ class MultilingualService:
         if not text_str or text_str.isascii():
             return {
                 "code": "en",
-                "name": "English",
+                "name": SUPPORTED_LANGUAGES.get("en", "English"),
                 "method": "ascii_check",
                 "confidence": 1.0
             }
 
-        # Check non-Devanagari script ranges
+        # Check non-Devanagari script ranges for Eighth Schedule languages
         if any('\u0b80' <= c <= '\u0bff' for c in text_str):
             return {"code": "ta", "name": SUPPORTED_LANGUAGES["ta"], "method": "script_detection", "confidence": 0.99}
         if any('\u0c00' <= c <= '\u0c7f' for c in text_str):
@@ -241,12 +244,16 @@ class MultilingualService:
             return {"code": "gu", "name": SUPPORTED_LANGUAGES["gu"], "method": "script_detection", "confidence": 0.99}
         if any('\u0a00' <= c <= '\u0a7f' for c in text_str):
             return {"code": "pa", "name": SUPPORTED_LANGUAGES["pa"], "method": "script_detection", "confidence": 0.99}
+        if any('\u0b00' <= c <= '\u0b7f' for c in text_str):
+            return {"code": "or", "name": SUPPORTED_LANGUAGES["or"], "method": "script_detection", "confidence": 0.99}
+        if any('\u0600' <= c <= '\u06ff' for c in text_str) or any('\u0750' <= c <= '\u077f' for c in text_str):
+            return {"code": "ur", "name": SUPPORTED_LANGUAGES["ur"], "method": "script_detection", "confidence": 0.99}
+        if any('\u1c50' <= c <= '\u1c7f' for c in text_str):
+            return {"code": "sat", "name": SUPPORTED_LANGUAGES["sat"], "method": "script_detection", "confidence": 0.99}
 
-        # Devanagari script range check
+        # Devanagari script range check (Hindi, Marathi, Sanskrit, Bodo, Dogri, Konkani, Maithili, Nepali)
         if any('\u0900' <= c <= '\u097f' for c in text_str):
-            # Check for Marathi-specific letter 'ळ' (\u0933)
             has_lla = '\u0933' in text_str
-
             t_lower = text_str.lower()
             mr_score = 5 if has_lla else 0
             hi_score = 0
@@ -261,22 +268,17 @@ class MultilingualService:
 
             if mr_score > hi_score:
                 det_code = "mr"
-            elif hi_score > mr_score:
-                det_code = "hi"
             else:
-                det_code = "mr" if has_lla else "hi"
+                det_code = "hi"
 
-            conf = min(0.99, round(0.70 + abs(mr_score - hi_score) * 0.05, 2))
             return {
                 "code": det_code,
-                "name": SUPPORTED_LANGUAGES.get(det_code, "Devanagari Language"),
+                "name": SUPPORTED_LANGUAGES.get(det_code, "Hindi"),
                 "method": "devanagari_lexical_classification",
-                "confidence": conf,
-                "mr_score": mr_score,
-                "hi_score": hi_score
+                "confidence": 0.95
             }
 
-        return {"code": "en", "name": "English", "method": "fallback", "confidence": 0.50}
+        return {"code": "en", "name": "English", "method": "default_fallback", "confidence": 0.50}
 
     def process_query(self, query_text: str, target_lang: str = "auto") -> Dict[str, Any]:
         text = str(query_text or "").strip()
@@ -341,6 +343,9 @@ class MultilingualService:
             "detection_details": lang_info,
             "is_translated": True
         }
+
+    def translate_to_english(self, text: str, source_lang: str = "auto") -> Dict[str, Any]:
+        return self.process_query(text, target_lang=source_lang)
 
     def localize_results(self, res: Dict[str, Any], target_lang: str = "en") -> Dict[str, Any]:
         """

@@ -1581,6 +1581,36 @@ async function loadAuditTrail() {
     }
 }
 
+// Dynamic Output Language Selector Change Handler
+async function handleOutputLanguageChange(newLang) {
+    if (!currentAnalysisResult) return;
+
+    const query = currentAnalysisResult.user_original_query || currentAnalysisResult.query;
+    if (query) {
+        startLoadingProgress();
+        try {
+            const inputLang = document.getElementById('language-select')?.value || 'auto';
+            const resp = await fetch('/api/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    description: query,
+                    language: inputLang,
+                    output_language: newLang
+                })
+            });
+            const data = await resp.json();
+            currentAnalysisResult = data;
+            renderAnalysisResults(data);
+            showToast(`Output language updated to ${newLang.toUpperCase()}`, 'info');
+        } catch (err) {
+            console.error('Failed to update output language:', err);
+        } finally {
+            stopLoadingProgress();
+        }
+    }
+}
+
 // Global Window Bindings
 window.openWhyModal = openWhyModal;
 window.closeWhyModal = closeWhyModal;
@@ -1589,6 +1619,7 @@ window.closeReviewModal = closeReviewModal;
 window.toggleOverrideField = toggleOverrideField;
 window.submitOfficerReview = submitOfficerReview;
 window.loadAuditTrail = loadAuditTrail;
+window.handleOutputLanguageChange = handleOutputLanguageChange;
 
 
 
