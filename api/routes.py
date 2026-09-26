@@ -63,6 +63,11 @@ def recommend_standards(req: RecommendRequest):
         mode=req.mode
     )
 
+    if (req.language and req.language != "auto") or not raw_query.isascii():
+        detected_lang = lang_res.get("detected_language", "en")
+        if detected_lang != "en":
+            res = multilingual_service.localize_results(res, target_lang=detected_lang)
+
     status_code = 200
     if res["status"] == "needs_clarification":
         status_code = 400
@@ -105,13 +110,18 @@ def analyze_product_description(req: AnalyzeRequest):
     res["multilingual_info"] = lang_res
     res["user_original_query"] = raw_query
 
+    # Localize standard titles, scopes, and match reasons into user's language
+    detected_lang = lang_res.get("detected_language", "en")
+    if detected_lang != "en":
+        res = multilingual_service.localize_results(res, target_lang=detected_lang)
+
     # Save to search history if processed
-    if res.get("status") in ["success", "needs_clarification", "no_results"]:
+    if res.get("status") in ["success", "abstain", "needs_clarification", "no_results"]:
         history_store.add_entry(
             query=raw_query,
             mode="product_description",
             result_summary=res,
-            language=lang_res.get("detected_language", "en")
+            language=detected_lang
         )
 
     status_code = 200
@@ -179,16 +189,16 @@ def analyze_technical_specification(spec: TechnicalSpecRequest):
 # ==========================================================
 @app.post("/api/analyze/document")
 @app.post("/api/tender/analyze")
-async def analyze_tender_document(file: UploadFile = File(...)):
+async def analyze_tender_document(file: UploadFile = File(...), language: Optional[str] = Query("auto")):
     """
-    Mode C Entry Point: PDF, DOCX, or TXT file upload and text requirement extraction.
+    Mode C Entry Point: PDF, DOCX, or TXT file upload and text requirement extraction with multilingual support.
     """
     contents = await file.read()
     if len(contents) == 0:
         raise HTTPException(status_code=400, detail="Uploaded file is empty.")
 
     try:
-        parsed_doc = tender_parser.parse_tender_document(contents, file.filename)
+        parsed_doc = tender_parser.parse_tender_document(contents, file.filename, target_lang=language or "auto")
         return parsed_doc
     except ValueError as ve:
         raise HTTPException(status_code=400, detail=str(ve))
@@ -328,6 +338,45 @@ def save_project(req: SaveProjectRequest):
     return res
 
 # ==========================================================
+# 7B. OFFICER REVIEW & AUDIT TRAIL ENDPOINTS
+# ==========================================================
+class AuditReviewRequest(BaseModel):
+    analysis_id: Optional[str] = None
+    query: str
+    recommended_standard: str
+    decision: str  # "ACCEPTED" or "OVERRIDDEN"
+    final_standard: str
+    officer_name: str
+    officer_designation: str
+    department: Optional[str] = "GeM / Central Procurement Division"
+    justification: str
+
+@app.post("/api/audit/review")
+def record_officer_review(req: AuditReviewRequest):
+    """
+    Records official procurement officer determination (ACCEPT or OVERRIDE) with required justification into statutory audit trail.
+    """
+    record = history_store.add_audit_review(
+        analysis_id=req.analysis_id,
+        query=req.query,
+        recommended_standard=req.recommended_standard,
+        decision=req.decision,
+        final_standard=req.final_standard,
+        officer_name=req.officer_name,
+        officer_designation=req.officer_designation,
+        department=req.department or "Government Procurement Division",
+        justification=req.justification
+    )
+    return record
+
+@app.get("/api/audit/trail")
+def get_audit_trail():
+    """
+    Returns complete chronological statutory audit trail of procurement officer determinations.
+    """
+    return history_store.list_audit_trail()
+
+# ==========================================================
 # 8. ADMIN / DIAGNOSTICS ENDPOINT (SIH METRICS ISOLATED)
 # ==========================================================
 @app.get("/api/admin/metrics")
@@ -395,4 +444,4 @@ def read_frontend_static(filename: str):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run("api.routes:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("api.routes:app", host="0.0.0.0", port=8000, reload=False)

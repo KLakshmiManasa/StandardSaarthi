@@ -6,7 +6,7 @@ Provides:
 """
 
 import re
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Optional
 
 # Controlled Out-Of-Domain Keywords / Intent Patterns
 OOD_PATTERNS = [
@@ -70,9 +70,12 @@ class QueryGuardrails:
 
         # 2. Ambiguity & Sufficiency Check
         words = q_lower.split()
+        category = str(entities.get("category", "") if entities else "").lower()
+        prod_name = str(entities.get("product", "") if entities else "").lower()
+
         indic_material_terms = ["कॉपर", "तांबा", "पीवीसी", "इंसुलेशन", "காப்பர்", "பிவிசி", "செம்பு", "కాపర్", "పివిసి"]
-        has_material = any(w in q_lower for w in ["pvc", "copper", "aluminum", "steel", "concrete", "clay", "cotton", "rubber", "hdpe", "xlpe", "cpvc", "vitreous", "polycarbonate", "plastic", "pet"] + indic_material_terms)
-        has_spec = any(w in q_lower for w in ["1.1kv", "11kv", "mm", "sq mm", "grade", "3 core", "50kg", "9w", "v", "kva", "m30", "fe 500d", "opc", "amp", "liter", "litre", "20-liter", "20 litre", "20l"])
+        has_material = any(w in q_lower for w in ["pvc", "copper", "aluminum", "steel", "concrete", "clay", "cotton", "rubber", "hdpe", "xlpe", "cpvc", "vitreous", "polycarbonate", "plastic", "pet", "water"] + indic_material_terms)
+        has_spec = any(w in q_lower for w in ["1.1kv", "11kv", "mm", "sq mm", "grade", "3 core", "50kg", "9w", "v", "kva", "m30", "fe 500d", "opc", "amp", "liter", "litre", "20-liter", "20 litre", "20l", "drinking", "potable", "mineral", "bottled"])
         has_code = any(k in q_lower for k in ["is ", "is-", "qco", "bis"])
 
         if entities:
@@ -81,14 +84,38 @@ class QueryGuardrails:
             if entities.get("technical_attributes") or entities.get("volume") or entities.get("container"):
                 has_spec = True
 
-        if not has_code and (len(words) < 5 or (len(words) < 9 and not (has_material or has_spec or has_entity_match))):
+        # Check if cable/wire query
+        is_cable_query = any(w in q_lower for w in ["cable", "wire", "conductor", "केबल", "तार", "கேபிள்", "கம்பி", "వైరింగ్", "కేబుల్"]) or "electrical" in category
+        is_specific_product = valid_prod and prod_name not in ["cable", "wire", "flexible cable", "power cable", "general equipment", "general item", "general procurement item", ""]
+
+        is_ambiguous = False
+        if not has_code:
+            # Cable queries without conductor material and specs are ambiguous
+            if is_cable_query and not has_material and not has_spec:
+                is_ambiguous = True
+            # Ultra-short query (single word or generic 2-word query without a resolved product)
+            elif len(words) < 2:
+                is_ambiguous = True
+            # Query lacking both a specific recognized product, material, and technical specification
+            elif not is_specific_product and not has_material and not has_spec:
+                is_ambiguous = True
+
+        if is_ambiguous:
             missing = []
-            if not has_material:
-                missing.append("conductor_material")
-            if not has_spec:
-                missing.append("technical_characteristics")
+            if is_cable_query:
+                if not has_material:
+                    missing.append("conductor_material")
+                if not has_spec:
+                    missing.append("technical_characteristics")
+            else:
+                if not has_material and not valid_prod:
+                    missing.append("material_specification")
+                if not has_spec and not valid_prod:
+                    missing.append("technical_characteristics")
+                if not valid_prod:
+                    missing.append("product_type")
             if not missing:
-                missing.append("product_type")
+                missing.append("technical_characteristics")
 
             return "AMBIGUOUS", {
                 "status": "AMBIGUOUS_QUERY",

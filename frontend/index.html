@@ -32,10 +32,11 @@
     <nav class="main-nav" id="main-nav">
         <div class="nav-container">
             <a href="#/" class="nav-link active" data-route="/">Home</a>
-            <a href="#/analyze" class="nav-link" data-route="/analyze">Analyze</a>
-            <a href="#/tenders" class="nav-link" data-route="/tenders">Tenders</a>
-            <a href="#/standards" class="nav-link" data-route="/standards">Standards</a>
-            <a href="#/regulatory" class="nav-link" data-route="/regulatory">Compliance</a>
+            <a href="#/analyze" class="nav-link" data-route="/analyze">Analyze Requirement</a>
+            <a href="#/tenders" class="nav-link" data-route="/tenders">Tender Documents</a>
+            <a href="#/standards" class="nav-link" data-route="/standards">Standards Catalog</a>
+            <a href="#/regulatory" class="nav-link" data-route="/regulatory">Statutory QCOs</a>
+            <a href="#/audit" class="nav-link" data-route="/audit">Officer Audit Trail</a>
             <a href="#/history" class="nav-link" data-route="/history">History</a>
         </div>
     </nav>
@@ -49,9 +50,9 @@
                 <h2>Find the Right Indian Standards for Your Tender</h2>
                 <p>Analyze a product requirement, technical specification, or tender document to identify applicable Indian Standards, related standards, and mandatory compliance requirements.</p>
                 <div class="hero-actions">
-                    <a href="#/analyze" class="btn btn-primary btn-lg">🔍 Analyze Requirement</a>
-                    <a href="#/analyze?mode=c" class="btn btn-secondary btn-lg">📄 Upload Tender</a>
-                    <a href="#/standards" class="btn btn-outline btn-lg">📚 Browse Standards</a>
+                    <a href="#/analyze" class="btn btn-primary btn-lg">Analyze Requirement</a>
+                    <a href="#/analyze?mode=c" class="btn btn-secondary btn-lg">Upload Tender Specification</a>
+                    <a href="#/standards" class="btn btn-outline btn-lg">Browse Standards Catalog</a>
                 </div>
             </div>
 
@@ -122,6 +123,10 @@
                                 <option value="mr">Marathi (मराठी)</option>
                                 <option value="bn">Bengali (বাংলা)</option>
                                 <option value="gu">Gujarati (ગુજરાતી)</option>
+                                <option value="kn">Kannada (ಕನ್ನಡ)</option>
+                                <option value="ml">Malayalam (മലയാളം)</option>
+                                <option value="pa">Punjabi (ਪੰਜਾਬੀ)</option>
+                                <option value="or">Odia (ଓଡ଼ିଆ)</option>
                             </select>
                         </div>
                         <div class="form-group align-end">
@@ -172,7 +177,7 @@
                 <!-- MODE C FORM -->
                 <div id="mode-c" class="mode-panel">
                     <div class="upload-dropzone" id="dropzone">
-                        <div class="upload-icon">📁</div>
+                        <div class="upload-icon-label">[Document Attachment]</div>
                         <h3>Upload Tender Specification Document</h3>
                         <p>Supported file formats: PDF, DOCX, TXT</p>
                         <input type="file" id="tender-file-input" accept=".pdf,.docx,.txt" style="display:none">
@@ -201,16 +206,16 @@
 
                 <!-- Requirement Understanding Panel -->
                 <div class="card">
-                    <h3>Requirement Understanding</h3>
+                    <h3 id="understanding-heading">Requirement Understanding</h3>
                     <div id="entity-chips" class="chip-group"></div>
                     <div id="multilingual-notice" class="notice-box" style="display:none"></div>
                 </div>
 
-                <!-- Primary Recommended Standards -->
+                <!-- Primary Recommended Standards / Candidates -->
                 <div class="card">
                     <div class="card-header-row">
-                        <h3>Recommended Primary Standards</h3>
-                        <button class="btn btn-sm btn-primary" onclick="downloadPdfReport()">📄 Download PDF Report</button>
+                        <h3 id="recommendations-heading">Recommended Primary Standards</h3>
+                        <button class="btn btn-sm btn-primary" id="btn-download-pdf" onclick="downloadPdfReport()">Download Official PDF Report</button>
                     </div>
                     <div id="recommendations-list"></div>
                 </div>
@@ -224,7 +229,7 @@
                 <h2>Tender Document Analysis & Requirements Matrix</h2>
                 <div id="tender-requirements-view">
                     <div class="empty-state">
-                        <div class="empty-icon">📄</div>
+                        <div class="empty-icon-label">[No Document Attached]</div>
                         <h3>No Tender Document Selected</h3>
                         <p>Upload a tender PDF or DOCX file to extract itemized requirements and map applicable standards.</p>
                         <a href="#/analyze?mode=c" class="btn btn-primary">Upload Tender Specification</a>
@@ -271,13 +276,29 @@
             </div>
         </section>
 
-        <!-- 7. HISTORY VIEW -->
+        <!-- 7. OFFICER AUDIT TRAIL VIEW -->
+        <section id="view-audit" class="view-panel">
+            <div class="card">
+                <div class="card-header-row">
+                    <div>
+                        <h2>Statutory Procurement Officer Audit Trail</h2>
+                        <p class="subtitle">Official decision-support register: Chronological record of officer determinations (Accept / Override) and justifications.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline" onclick="loadAuditTrail()">Refresh Audit Log</button>
+                </div>
+                <div id="audit-trail-container" style="margin-top:1.25rem;">
+                    <p class="text-muted">Loading officer audit register...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. HISTORY VIEW -->
         <section id="view-history" class="view-panel">
             <div class="card">
                 <h2>Search History & Saved Procurement Projects</h2>
                 <div id="history-list">
                     <div class="empty-state">
-                        <div class="empty-icon">🕒</div>
+                        <div class="empty-icon-label">[No History Recorded]</div>
                         <h3>No Search History Available</h3>
                         <p>Run a procurement requirement analysis to save and review past search queries.</p>
                         <a href="#/analyze" class="btn btn-primary">Analyze Requirement</a>
@@ -286,14 +307,14 @@
             </div>
         </section>
 
-        <!-- 8. REPORTS VIEW -->
+        <!-- 9. REPORTS VIEW -->
         <section id="view-reports" class="view-panel">
             <div class="card">
                 <h2>Procurement Reports Manager</h2>
                 <p class="subtitle">Generate and download formal PDF Procurement Standards Reports for active or historical sessions.</p>
                 <div id="reports-list">
                     <div class="empty-state">
-                        <div class="empty-icon">📊</div>
+                        <div class="empty-icon-label">[No Reports Generated]</div>
                         <h3>No Reports Generated Yet</h3>
                         <p>Execute an analysis session to generate downloadable PDF reports.</p>
                         <a href="#/analyze" class="btn btn-primary">Start New Analysis</a>
@@ -302,7 +323,7 @@
             </div>
         </section>
 
-        <!-- 9. ADMIN DIAGNOSTICS VIEW -->
+        <!-- 10. ADMIN DIAGNOSTICS VIEW -->
         <section id="view-admin" class="view-panel">
             <div class="card">
                 <h2>System Diagnostics & Performance Metrics</h2>
@@ -313,6 +334,68 @@
         </section>
 
     </main>
+
+    <!-- Officer Determination / Audit Review Modal -->
+    <div id="review-modal-overlay" class="drawer-overlay" onclick="closeReviewModal()">
+        <div class="modal-dialog" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div>
+                    <h3 id="review-modal-title">Procurement Officer Review & Determination</h3>
+                    <p class="modal-subtitle">Decision-Support System: Statutory Procurement Audit Trail</p>
+                </div>
+                <button class="close-btn" onclick="closeReviewModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Procurement Requirement:</label>
+                    <div id="review-query-text" class="review-box-query"></div>
+                </div>
+                <div class="form-group">
+                    <label>System Candidate / Recommendation:</label>
+                    <div id="review-target-std" class="review-box-std"></div>
+                </div>
+                <div class="form-group">
+                    <label>Officer Determination Action:</label>
+                    <div class="determination-options">
+                        <label class="determination-option">
+                            <input type="radio" name="officer-decision" id="decision-accept" value="ACCEPTED" checked onchange="toggleOverrideField()">
+                            <span><strong>ACCEPT</strong> System Recommendation</span>
+                        </label>
+                        <label class="determination-option">
+                            <input type="radio" name="officer-decision" id="decision-override" value="OVERRIDDEN" onchange="toggleOverrideField()">
+                            <span><strong>OVERRIDE</strong> with Alternative Standard</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="override-field-group" class="form-group" style="display:none;">
+                    <label for="override-standard-code">Designated Alternative Standard (IS Code):</label>
+                    <input type="text" id="override-standard-code" placeholder="e.g. IS 7098 (Part 1):1988">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="officer-name">Reviewing Official Name & Employee ID:</label>
+                        <input type="text" id="officer-name" placeholder="e.g. Er. Rajesh Kumar (EMP-88412)" value="Er. Rajesh Kumar (EMP-88412)">
+                    </div>
+                    <div class="form-group">
+                        <label for="officer-desig">Designation / Role:</label>
+                        <input type="text" id="officer-desig" placeholder="e.g. Executive Engineer (E&M)" value="Executive Engineer (E&M)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="officer-dept">Department / Procurement Cell:</label>
+                    <input type="text" id="officer-dept" placeholder="e.g. GeM / Central Procurement Cell" value="GeM / Central Procurement Cell">
+                </div>
+                <div class="form-group">
+                    <label for="review-justification">Statutory Audit Justification (Mandatory):</label>
+                    <textarea id="review-justification" rows="3" placeholder="Provide technical schedule clause, environmental duty rating, or statutory reasoning for this determination..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeReviewModal()">Cancel</button>
+                    <button class="btn btn-primary" id="btn-submit-review" onclick="submitOfficerReview()">Record Determination & Save to Audit Trail</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Slide-Over Drawer Modal: "Why this standard?" -->
     <div id="why-modal-overlay" class="drawer-overlay" onclick="closeWhyModal()">

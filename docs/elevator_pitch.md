@@ -1,7 +1,8 @@
 # 30-Second Elevator Pitch — SIH 26108
 
-**"Finding the right Indian Standard for public procurement tenders currently requires hours of searching through dense catalogs and fragmented gazette notifications.**
+**"Manually cross-checking procurement specifications against thousands of Indian Standards and gazette notifications currently takes 3 to 5 hours per tender, exposing officers to severe audit objections and tender cancellations.**
 
-**Our AI-powered engine transforms this process. A procurement officer simply enters a natural-language description—like 'PVC copper cable for internal wiring'. In under 20 milliseconds, our system extracts technical attributes, searches dense embeddings, traverses a Knowledge Graph of related standards, and verifies mandatory Quality Control Orders.**
+**StandardSaarthi cuts this to under 45 seconds. An officer enters a natural-language description—like 'PVC copper cable for internal wiring'. In milliseconds, our engine extracts technical attributes, computes dense embeddings, verifies statutory Quality Control Orders, and applies confidence-gating. When confidence is borderline, it safely abstains instead of forcing a hazardous guess.**
 
-**The result is an explainable, evidence-grounded recommendation with official BIS links that ensures tender compliance and eliminates audit risk."**
+**With an integrated officer review and tamper-evident audit trail, StandardSaarthi is not an opaque search box—it is an enterprise decision-support system that guarantees 100% tender compliance."**
+

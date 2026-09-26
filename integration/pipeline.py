@@ -17,6 +17,7 @@ from phase5.retrieval.graph_rag import GraphRAGRetriever
 from phase5.qco.qco_engine import QCOEngine
 from phase5.ranking.hybrid_ranker import HybridRanker
 from phase5.evidence.evidence_system import EvidenceSystem
+from services.standards_service import standards_service
 
 logger = logging.getLogger("SIH26108_Pipeline")
 
@@ -218,9 +219,12 @@ class IntegrationPipeline:
             )
 
             # Evidence Items
+            # Evidence Items
             from services.standards_service import is_valid_official_source_url
+            import urllib.parse
             raw_ev_url = g_ctx.get("source_provenance", {}).get("source_url")
-            valid_ev_url = raw_ev_url if is_valid_official_source_url(raw_ev_url) else "https://standards.bis.gov.in/"
+            standard_search_url = f"https://standards.bis.gov.in/website/know-your-standards?searchTerm={urllib.parse.quote(is_code)}"
+            valid_ev_url = raw_ev_url if (raw_ev_url and is_valid_official_source_url(raw_ev_url) and raw_ev_url != "https://standards.bis.gov.in/") else standard_search_url
 
             evidence_items = [
                 {
@@ -232,7 +236,7 @@ class IntegrationPipeline:
                         "authority": "Bureau of Indian Standards (BIS)",
                         "authorityUrl": "https://www.bis.gov.in/",
                         "portalUrl": "https://standards.bis.gov.in/",
-                        "specificUrl": None if valid_ev_url == "https://standards.bis.gov.in/" else valid_ev_url,
+                        "specificUrl": valid_ev_url,
                         "verified": True,
                         "sourceType": "official_bis"
                     }
@@ -256,15 +260,33 @@ class IntegrationPipeline:
             # Related Standards
             ref_stds = [r["target_is_code"] for r in g_ctx.get("referenced_standards", []) if "target_is_code" in r]
 
+            # Lifecycle and supersession details
+            std_detail = standards_service.get_standard_details(is_code)
+            lifecycle_status = std_detail.get("lifecycleStatus", "CURRENT / VERIFIED")
+            superseded_by = std_detail.get("supersededBy")
+            supersedes = std_detail.get("supersedingStandard")
+            edition_yr = std_detail.get("publicationYear") or std_detail.get("edition_year") or "Active"
+            warning_msg = std_detail.get("warning")
+
+            std_scope = std_detail.get("scope") or g_ctx.get("scope") or ""
+
             recommendations.append({
                 "rank": 0, # Will be set after sorting
                 "is_code": is_code,
                 "title": g_ctx["title"],
+                "scope": std_scope,
                 "relevance_score": rank_result["relevance_score"],
                 "confidence_level": rank_result["confidence_level"],
+                "score_breakdown": rank_result.get("score_breakdown", {}),
+                "lifecycle_status": lifecycle_status,
+                "superseded_by": superseded_by,
+                "supersedes": supersedes,
+                "edition_year": edition_yr,
+                "superseding_warning": warning_msg,
                 "reasons": reasons,
                 "qco": qco_struct,
                 "evidence": evidence_items,
+                "evidence_items": evidence_items,
                 "related_standards": ref_stds,
                 "relevant_clauses": clauses_struct
             })
@@ -272,6 +294,12 @@ class IntegrationPipeline:
         # Sort recommendations by relevance_score descending and set rank
         recommendations.sort(key=lambda x: x["relevance_score"], reverse=True)
         final_recs = recommendations[:top_k]
+
+        # Confidence-Gating / Abstain Behavior Check
+        gate_res = self.hybrid_ranker.evaluate_confidence_gate(final_recs, entities)
+        is_confident = gate_res.get("is_confident", True)
+        is_abstained = gate_res.get("abstain", False)
+
         for i, rec in enumerate(final_recs, start=1):
             rec["rank"] = i
             rec["ranking_reasons"] = rec.get("reasons", [])
@@ -280,17 +308,27 @@ class IntegrationPipeline:
                 "qco_name": rec.get("qco", {}).get("reference", ""),
                 "compliance_requirements": rec.get("qco", {}).get("requirements", [])
             }
+            rec["is_definitive"] = is_confident and (i == 1)
+            rec["citation_status"] = "PRIMARY_RECOMMENDED" if (is_confident and i == 1) else ("CLOSEST_CANDIDATE" if is_abstained else "RELATED_STANDARD")
 
         elapsed_ms = round((time.time() - start_time) * 1000, 2)
 
+        status_label = "abstain" if is_abstained else "success"
+        main_message = gate_res.get("message") if is_abstained else "Grounded Indian Standards recommendations retrieved successfully."
+
         return {
-            "status": "success",
+            "status": status_label,
+            "is_confident": is_confident,
+            "confidence_gated": is_abstained,
+            "abstain_reason": gate_res.get("reason"),
+            "message": main_message,
             "query": sanitized_text,
             "entities": entity_summary,
             "recommendations": final_recs,
+            "closest_candidates": final_recs if is_abstained else [],
             "warnings": warnings,
             "processing": {
-                "retrieval_method": "Graph-RAG + QCO",
+                "retrieval_method": "Graph-RAG + QCO" + (" (Confidence Gated)" if is_abstained else ""),
                 "candidate_count": len(recommendations),
                 "latency_ms": elapsed_ms,
                 "dataset_version": "v0.1-pilot",

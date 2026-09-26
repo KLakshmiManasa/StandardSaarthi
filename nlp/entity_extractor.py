@@ -69,7 +69,9 @@ INDIC_TERM_MAPPINGS = [
     (r'\b(?:इंसुलेशन|इंसुलेटेड|இன்சுலேஷன்|ఇన్సులేషన్)\b', 'insulation insulated'),
     (r'\b(?:इलेक्ट्रिकल|बिजली|மின்சார|மின்|ఎలక్ట్రికల్)\b', 'electrical'),
     (r'\b(?:बिल्डिंग|கட்டிட|భవనం)\b', 'building'),
-    (r'\b(?:अंदर|உள்ளே|లోపల)\b', 'indoor')
+    (r'\b(?:अंदर|உள்ளே|లోపల)\b', 'indoor'),
+    (r'(?:அடைக்கப்பட்ட\s*குடிநீர்|குடிநீர்|பாட்டில்\s*தண்ணீர்|தண்ணீர்)', 'packaged drinking water'),
+    (r'(?:पैकेज्ड\s*पेयजल|पेयजल|पीने\s*का\s*पानी|पानी)', 'packaged drinking water')
 ]
 
 class NLPEntityExtractor:

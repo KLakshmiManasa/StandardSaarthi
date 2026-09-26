@@ -22,3 +22,12 @@ relevance_thresholds:
 qco_settings:
   strict_verification_required: true
   unverified_message: "No verified QCO mapping found in the available knowledge base."
+
+confidence_gating:
+  enabled: true
+  min_relevance_threshold: 0.50
+  low_confidence_abstain: true
+  borderline_threshold: 0.55
+  margin_threshold: 0.03
+  abstain_message: "Not confident enough to recommend a single definitive standard. Showing closest candidates for officer review to prevent wrong-citation risk."
+

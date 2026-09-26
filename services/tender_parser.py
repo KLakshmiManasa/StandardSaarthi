@@ -60,7 +60,7 @@ class TenderParser:
             logger.error(f"DOCX extraction failed: {e}")
             raise ValueError(f"Could not extract text from DOCX document: {e}")
 
-    def parse_tender_document(self, file_bytes: bytes, filename: str) -> Dict[str, Any]:
+    def parse_tender_document(self, file_bytes: bytes, filename: str, target_lang: str = "auto") -> Dict[str, Any]:
         raw_text = self.extract_text_from_file(file_bytes, filename)
         if not raw_text or len(raw_text.strip()) < 10:
             return {
@@ -70,26 +70,49 @@ class TenderParser:
                 "extracted_requirements": []
             }
 
+        # Detect document language
+        from services.multilingual import multilingual_service
+        lang_info = multilingual_service.detect_language(raw_text, target_lang=target_lang)
+        doc_lang = lang_info.get("code", "en")
+        doc_lang_name = lang_info.get("name", "English")
+
         raw_lines = [line.strip() for line in raw_text.split('\n') if line.strip()]
         
         requirements = []
         req_id = 1
 
+        # Multilingual procurement keywords & regexes
+        item_pattern = re.compile(
+            r'^(?:item\s*\d+|section\s*\d+|\d+[\.\)]|supply\s+of|procurement\s+of|technical\s+spec|'
+            r'உருப்படி\s*\d+|பொருட்கள்\s*\d+|தேவை|விவரக்குறிப்பு|'
+            r'मद\s*\d+|वस्तु\s*\d+|सामग्री|आवश्यकता|'
+            r'అంశం\s*\d+|వస్తువు|అవసరం|'
+            r'আইটেম\s*\d+|পণ্য|প্রয়োজনীয়তা|'
+            r'વસ્તુ\s*\d+|જરૂરિયાત)',
+            re.IGNORECASE
+        )
+
         current_requirement = []
         for line in raw_lines:
-            # Skip document header lines like "TENDER SPECIFICATION NO:"
-            if re.match(r'^(?:tender\s+specification|tender\s+no|document\s+no)', line, re.IGNORECASE):
+            # Skip document header lines
+            if re.match(r'^(?:tender\s+specification|tender\s+no|document\s+no|ஒப்பந்தப்புள்ளி|निविदा|టెండర్|দরপত্র)', line, re.IGNORECASE):
                 continue
 
             # Detect numbered items or supply procurement lines
-            is_new_item = bool(re.match(r'^(?:item\s*\d+|section\s*\d+|\d+[\.\)]|supply\s+of|procurement\s+of|technical\s+spec)', line, re.IGNORECASE))
+            is_new_item = bool(item_pattern.match(line))
             if is_new_item and current_requirement:
                 chunk_text = " ".join(current_requirement)
                 if len(chunk_text) > 15:
+                    norm_en = chunk_text
+                    if doc_lang != "en":
+                        norm_en = multilingual_service.translate_text(chunk_text, sl=doc_lang, tl="en")
+
                     requirements.append({
                         "req_id": f"REQ_{req_id:03d}",
                         "text": chunk_text[:500],
-                        "category_hint": self._infer_category(chunk_text)
+                        "normalized_english": norm_en[:500],
+                        "language": doc_lang,
+                        "category_hint": self._infer_category(norm_en)
                     })
                     req_id += 1
                 current_requirement = [line]
@@ -99,15 +122,23 @@ class TenderParser:
         if current_requirement:
             chunk_text = " ".join(current_requirement)
             if len(chunk_text) > 15:
+                norm_en = chunk_text
+                if doc_lang != "en":
+                    norm_en = multilingual_service.translate_text(chunk_text, sl=doc_lang, tl="en")
+
                 requirements.append({
                     "req_id": f"REQ_{req_id:03d}",
                     "text": chunk_text[:500],
-                    "category_hint": self._infer_category(chunk_text)
+                    "normalized_english": norm_en[:500],
+                    "language": doc_lang,
+                    "category_hint": self._infer_category(norm_en)
                 })
 
         return {
             "status": "success",
             "filename": filename,
+            "detected_language": doc_lang,
+            "language_name": doc_lang_name,
             "total_character_count": len(raw_text),
             "requirement_count": len(requirements),
             "extracted_requirements": requirements,
@@ -116,7 +147,9 @@ class TenderParser:
 
     def _infer_category(self, text: str) -> str:
         lower = text.lower()
-        if any(w in lower for w in ['cable', 'wire', 'conductor', 'transformer', 'switchgear', 'voltage', 'kv', 'ampere', 'electrical', 'led']):
+        if any(w in lower for w in ['water', 'drinking', 'beverage', 'bottle', 'mineral', 'potable', 'food']):
+            return "Food & Water"
+        elif any(w in lower for w in ['cable', 'wire', 'conductor', 'transformer', 'switchgear', 'voltage', 'kv', 'ampere', 'electrical', 'led']):
             return "Electrical"
         elif any(w in lower for w in ['cement', 'concrete', 'aggregate', 'bar', 'steel', 'brick', 'civil', 'pipe', 'building']):
             return "Civil / Construction"

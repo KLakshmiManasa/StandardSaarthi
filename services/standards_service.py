@@ -9,7 +9,7 @@ import json
 import pandas as pd
 import logging
 from typing import Dict, Any, List, Optional
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote
 
 logger = logging.getLogger("StandardsService")
 
@@ -227,7 +227,8 @@ class StandardsService:
         # Source URL Validation & Structured Authority Object
         raw_source_obj = std.get("source") if isinstance(std.get("source"), dict) else {}
         raw_specific_url = raw_source_obj.get("specificUrl") or std.get("source_url")
-        valid_specific_url = raw_specific_url.strip() if (raw_specific_url and is_external_bis_url(raw_specific_url)) else None
+        standard_search_url = f"https://standards.bis.gov.in/website/know-your-standards?searchTerm={quote(code)}"
+        valid_specific_url = raw_specific_url.strip() if (raw_specific_url and is_external_bis_url(raw_specific_url) and raw_specific_url.strip() != "https://standards.bis.gov.in/") else standard_search_url
 
         source = {
             "authority": "Bureau of Indian Standards (BIS)",
@@ -240,7 +241,7 @@ class StandardsService:
 
         source_authority = {
             "name": "Bureau of Indian Standards (BIS)",
-            "url": valid_specific_url or "https://standards.bis.gov.in/",
+            "url": valid_specific_url,
             "verified": True,
             "sourceType": "official"
         }
@@ -281,7 +282,7 @@ class StandardsService:
             "source_provenance": {
                 "source_organization": "Bureau of Indian Standards (BIS)",
                 "source_document": std.get("source_document", "BIS Standards Portal"),
-                "source_url": valid_specific_url or "https://standards.bis.gov.in/",
+                "source_url": valid_specific_url,
                 "has_verified_url": True,
                 "last_verified_date": std.get("last_verified_date", "2026-09-22"),
                 "verification_status": "VERIFIED"

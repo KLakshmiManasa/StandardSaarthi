@@ -1,13 +1,14 @@
 # 60-Second Spoken Technical Explanation — SIH 26108
 
-**"When a user enters a procurement requirement, our engine first passes the query through security sanitizers and query guardrails to ensure input safety and completeness.**
+**"When a procurement officer enters a tender requirement, StandardSaarthi first executes security sanitization and query guardrails to ensure input safety and identify missing technical parameters.**
 
-**Next, our NLP module extracts product types, material compositions, intended applications, and technical specifications.**
+**Next, our domain-specific NLP module extracts structured attributes: product types, material grades, intended applications, and technical specifications.**
 
-**A dense vector retriever using SentenceTransformers computes 384-dimensional embeddings to find semantically similar standards.**
+**A dense semantic retriever using SentenceTransformers computes 384-dimensional embeddings to match the description against official Bureau of Indian Standards scope documentation.**
 
-**Concurrently, our Knowledge Graph connects the extracted entities across 1-hop and 2-hop normative reference relationships in Neo4j.**
+**Concurrently, our statutory QCO Engine deterministically checks candidate standards against mandatory Quality Control Orders notified by Central Ministries.**
 
-**Our QCO Engine checks whether candidate standards are subject to mandatory Quality Control Orders issued under Ministry gazettes.**
+**Our Hybrid Ranker fuses semantic similarity, exact entity overlap, and mandatory regulatory weights. Crucially, if confidence is low, margin is narrow, or required attributes are absent, the system does not force a guess—it triggers confidence-gating, abstains, and surfaces closest candidates for human review.**
 
-**Finally, a hybrid ranker fuses dense vector similarity, entity match scores, graph relevance, and QCO mandatory weights into an explainable relevance score, returning verifiable BIS primary source links."**
+**Finally, the officer review layer enables the officer to accept or override the recommendation with a logged statutory justification, creating an immutable audit trail for tender defense."**
+

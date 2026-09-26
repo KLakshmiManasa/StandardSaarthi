@@ -23,7 +23,10 @@ def get_embedder():
     try:
         from sentence_transformers import SentenceTransformer
         print(f"[*] Loading SentenceTransformer model '{MODEL_NAME}'...")
-        model = SentenceTransformer(MODEL_NAME)
+        try:
+            model = SentenceTransformer(MODEL_NAME, local_files_only=True)
+        except Exception:
+            model = SentenceTransformer(MODEL_NAME)
         
         def embed_fn(texts: list[str]) -> np.ndarray:
             embeddings = model.encode(texts, show_progress_bar=False, normalize_embeddings=True)

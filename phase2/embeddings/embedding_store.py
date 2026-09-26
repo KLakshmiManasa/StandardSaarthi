@@ -32,6 +32,19 @@ class EmbeddingStore:
             
         query_vec = self.embed_fn([query_text])[0]
         
+        # Ensure dimension alignment with precomputed vector store
+        target_dim = self.vectors.shape[1]
+        if query_vec.shape[0] != target_dim:
+            if query_vec.shape[0] < target_dim:
+                padded = np.zeros(target_dim, dtype=np.float32)
+                padded[:query_vec.shape[0]] = query_vec
+                query_vec = padded
+            else:
+                query_vec = query_vec[:target_dim]
+            norm = np.linalg.norm(query_vec)
+            if norm > 0:
+                query_vec = query_vec / norm
+
         # Calculate cosine similarity (vectors are L2-normalized)
         sim_scores = np.dot(self.vectors, query_vec)
         

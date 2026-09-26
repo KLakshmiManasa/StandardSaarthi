@@ -5857,19 +5857,19 @@
   },
   {
     "is_code": "IS 3067",
-    "title": "Code of Practice for General Security Measures in Buildings",
-    "product_category": "Building Security",
-    "product_type": "Building Security",
-    "description": "Covers structural standards, material properties, and quality requirements for code of practice for general security measures in buildings in civil engineering projects.",
-    "materials": "Cement, Steel, Aggregates, PVC, Clay, Water",
-    "applications": "Construction and civil infrastructure in building security",
+    "title": "Code of Practice for General Design Details and Preparatory Work for Damp-Proofing and Water-Proofing of Buildings",
+    "product_category": "Damp-Proofing and Water-Proofing",
+    "product_type": "Damp-Proofing and Water-Proofing",
+    "description": "Covers general design details and preparatory work for damp-proofing and water-proofing of buildings in civil engineering projects.",
+    "materials": "Bitumen, Asphalt, Cement, Waterproofing Compounds, Polyethylene",
+    "applications": "Damp-proofing and water-proofing in civil building construction",
     "industries": "Civil Engineering & Procurement",
-    "keywords": "Building access perimeter safety; civil engineering; construction; concrete; infrastructure; building code",
+    "keywords": "Damp-proofing; water-proofing; building basement; roof treatment; civil engineering; construction; concrete; bitumen",
     "related_standards": "IS 1641",
     "clauses": [
       {
         "clause_no": "Scope & Field of Application",
-        "content": "Covers structural standards, material properties, and quality requirements for code of practice for general security measures in buildings in civil engineering projects."
+        "content": "Covers general design details and preparatory work for damp-proofing and water-proofing of buildings in civil engineering projects."
       },
       {
         "clause_no": "Normative References",
@@ -5895,15 +5895,15 @@
       "verified": true,
       "sourceType": "official_bis"
     },
-    "publicationYear": null,
-    "revisionNumber": 0,
-    "revisionLabel": "First Published Edition",
+    "publicationYear": 1988,
+    "revisionNumber": 1,
+    "revisionLabel": "First Revision",
     "reviewYear": null,
     "amendmentCount": 0,
     "supersedingStandard": null,
     "supersededBy": null,
-    "lifecycleStatus": "STATUS REQUIRES VERIFICATION",
-    "standardNumber": "IS 3067"
+    "lifecycleStatus": "CURRENT / VERIFIED",
+    "standardNumber": "IS 3067:1988"
   },
   {
     "is_code": "IS 6403",

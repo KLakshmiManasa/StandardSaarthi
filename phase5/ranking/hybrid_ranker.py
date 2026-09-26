@@ -102,6 +102,73 @@ class HybridRanker:
 
         return " ".join(reasons)
 
+    def evaluate_confidence_gate(
+        self,
+        recommendations: List[Dict[str, Any]],
+        entities: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """
+        Confidence Gating / Abstain Evaluation:
+        If no standard clearly matches with sufficient certainty, the system abstains from forcing
+        a top-1 recommendation to protect government procurement against wrong-citation risk.
+        Instead, it flags 'not confident enough' and surfaces closest candidates for officer discretion.
+        """
+        gate_cfg = self.config.get("confidence_gating", {})
+        if not gate_cfg.get("enabled", True):
+            return {"is_confident": True, "abstain": False, "reason": None}
+
+        if not recommendations:
+            return {
+                "is_confident": False,
+                "abstain": True,
+                "reason": "No candidate standards found in database.",
+                "message": "Not confident enough: No standards found matching the query."
+            }
+
+        top_rec = recommendations[0]
+        top_score = top_rec.get("relevance_score", 0.0)
+        top_conf = top_rec.get("confidence_level", "LOW")
+        min_thresh = gate_cfg.get("min_relevance_threshold", 0.50)
+
+        # 1. Top score below minimum confident citation threshold or LOW confidence
+        if top_score < min_thresh or (gate_cfg.get("low_confidence_abstain", True) and top_conf == "LOW"):
+            return {
+                "is_confident": False,
+                "abstain": True,
+                "threshold": min_thresh,
+                "top_score": top_score,
+                "reason": f"Top candidate relevance score ({top_score*100:.1f}%) is below confident citation threshold ({min_thresh*100:.1f}%).",
+                "message": "Not confident enough: No standard clearly matches this procurement description. Displaying closest candidates for officer verification instead of forcing a citation."
+            }
+
+        # 2. Borderline top score with ambiguous margin between top 1 and top 2
+        borderline_thresh = gate_cfg.get("borderline_threshold", 0.55)
+        margin_thresh = gate_cfg.get("margin_threshold", 0.03)
+        if len(recommendations) > 1 and top_score < borderline_thresh:
+            second_score = recommendations[1].get("relevance_score", 0.0)
+            score_diff = top_score - second_score
+            has_product_match = any("Product category matches" in r for r in top_rec.get("reasons", []))
+            if score_diff < margin_thresh and not has_product_match:
+                return {
+                    "is_confident": False,
+                    "abstain": True,
+                    "threshold": borderline_thresh,
+                    "top_score": top_score,
+                    "margin": score_diff,
+                    "reason": f"Borderline score ({top_score*100:.1f}%) with ambiguous margin ({score_diff*100:.1f}%) between top candidates.",
+                    "message": "Not confident enough: Competing candidate standards show comparable relevance without a decisive differentiator. Displaying closest candidates for officer review."
+                }
+
+        return {
+            "is_confident": True,
+            "abstain": False,
+            "threshold": min_thresh,
+            "top_score": top_score,
+            "reason": None,
+            "message": "High-confidence standard match identified."
+        }
+
+
 
 if __name__ == '__main__':
     ranker = HybridRanker()

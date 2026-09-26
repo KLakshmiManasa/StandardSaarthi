@@ -5,7 +5,10 @@ with fallback dictionary normalization for Indic procurement terms when rate lim
 """
 
 import logging
-from typing import Dict, Any
+import urllib.request
+import urllib.parse
+import json
+from typing import Dict, Any, List, Optional, Tuple
 
 logger = logging.getLogger("MultilingualService")
 
@@ -19,9 +22,10 @@ SUPPORTED_LANGUAGES = {
     "mr": "Marathi (मराठी)",
     "bn": "Bengali (বাংলা)",
     "gu": "Gujarati (ગુજરાતી)",
-    "kn": "Kannada (કન્નડ)",
+    "kn": "Kannada (ಕನ್ನಡ)",
     "ml": "Malayalam (മലയാളം)",
-    "pa": "Punjabi (ਪੰਜਾਬੀ)"
+    "pa": "Punjabi (ਪੰਜਾਬੀ)",
+    "or": "Odia (ଓଡ଼ିଆ)"
 }
 
 # Indic Procurement Glossary for Rate-Limit & Fallback Translation
@@ -50,6 +54,13 @@ INDIC_GLOSSARY = {
     "कंक्रीट": "concrete",
     "ट्रांसफॉर्मर": "transformer",
     "कन्स्ट्रक्शन": "construction",
+    "निर्माण": "construction",
+    "स्टील": "steel",
+    "इस्पात": "steel",
+    "उत्पादों": "products",
+    "उत्पाद": "product",
+    "उपयोग": "use",
+    "संरचना": "structure",
     "पानी": "water",
     "पाइप": "pipe",
 
@@ -90,6 +101,10 @@ INDIC_GLOSSARY = {
     "கட்டிட": "building",
     "உள்ளே": "indoor",
     "வேண்டும்": "need",
+    "அடைக்கப்பட்ட": "packaged",
+    "குடிநீர்": "drinking water",
+    "தண்ணீர்": "water",
+    "பாட்டில்": "bottle",
 
     # Telugu
     "కేబుల్స్": "cables",
@@ -115,7 +130,10 @@ ENTITY_KEYWORDS_MAP = {
     "इलेक्ट्रिकल": "electrical", "विद्युत": "electrical", "மின்சார": "electrical", "ఎలక్ట్రికల్": "electrical",
     "केबल": "cable", "केबल्स": "cables", "கேபிள்": "cable", "கேபிள்கள்": "cables", "కేబుల్స్": "cables", "కేబుల్": "cable",
     "वायरिंग": "wiring", "वायरिंगच्या": "wiring", "வயரிங்": "wiring", "వైరిங்": "wiring",
-    "बिल्डिंग": "building", "इमारतीच्या": "building", "कட்டிட": "building", "భవనం": "building"
+    "बिल्डिंग": "building", "इमारतीच्या": "building", "कட்டிட": "building", "భవనం": "building",
+    "स्टील": "steel", "इस्पात": "steel", "steel": "steel", "निर्माण": "construction", "कन्स्ट्रक्शन": "construction",
+    "அடைக்கப்பட்ட குடிநீர்": "packaged drinking water", "குடிநீர்": "drinking water", "தண்ணீர்": "water",
+    "பேக்கேஜ்": "packaged", "पेयजल": "drinking water", "पैकेज्ड": "packaged"
 }
 
 MARATHI_MARKERS = [
@@ -138,6 +156,52 @@ class MultilingualService:
         except ImportError:
             self.mtranslate = None
             self.available = False
+        self._translation_cache: Dict[Tuple[str, str, str], str] = {}
+
+    def translate_text(self, text: str, sl: str = "auto", tl: str = "en", timeout_sec: float = 3.5) -> str:
+        """
+        Translates text between languages with caching and multi-tier fallback.
+        Works across all Indic languages (Hindi, Tamil, Telugu, Marathi, Bengali, Gujarati, etc.).
+        """
+        text_str = str(text or "").strip()
+        if not text_str or sl == tl:
+            return text_str
+
+        cache_key = (text_str, sl, tl)
+        if cache_key in self._translation_cache:
+            return self._translation_cache[cache_key]
+
+        # 1. Primary: Direct Google Translate endpoint with browser User-Agent and strict timeout
+        try:
+            q = urllib.parse.quote(text_str)
+            url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={sl}&tl={tl}&dt=t&q={q}"
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+            with urllib.request.urlopen(req, timeout=timeout_sec) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                if data and data[0]:
+                    translated = "".join([segment[0] for segment in data[0] if segment and segment[0]])
+                    if translated and translated.strip():
+                        res_clean = translated.strip()
+                        self._translation_cache[cache_key] = res_clean
+                        return res_clean
+        except Exception as e:
+            logger.debug(f"Direct Google translate endpoint failed for '{text_str[:30]}': {e}")
+
+        # 2. Fallback: Indic glossary for Indic -> English
+        if tl == "en":
+            norm_words = []
+            for token in text_str.split():
+                clean_tok = token.strip("।,;:!?'\"()")
+                if clean_tok in INDIC_GLOSSARY:
+                    norm_words.append(INDIC_GLOSSARY[clean_tok])
+                elif clean_tok.isascii():
+                    norm_words.append(clean_tok)
+            if norm_words:
+                res_clean = " ".join(norm_words)
+                self._translation_cache[cache_key] = res_clean
+                return res_clean
+
+        return text_str
 
     def detect_language(self, text: str, target_lang: str = "auto") -> Dict[str, Any]:
         """
@@ -241,14 +305,7 @@ class MultilingualService:
                 "is_translated": False
             }
 
-        translated = None
-        if self.available and self.mtranslate:
-            try:
-                translated = self.mtranslate.translate(text, 'en', det_code if det_code != 'auto' else 'auto')
-            except Exception as e:
-                logger.warning(f"mtranslate rate limit or error, using dictionary fallback: {e}")
-
-        # Dictionary entity extraction & fallback translation
+        # Extract entities to ensure they are preserved
         indic_words = text.split()
         extracted_entities = []
         for word in indic_words:
@@ -257,22 +314,10 @@ class MultilingualService:
                 if k.lower() in clean_word.lower():
                     extracted_entities.append(val)
 
-        if not translated or translated == text or not translated.isascii():
-            # Build clean, accurate translation using glossary replacements
-            norm_words = []
-            for token in text.split():
-                clean_tok = token.strip("।,;:!?'\"()")
-                if clean_tok in INDIC_GLOSSARY:
-                    norm_words.append(INDIC_GLOSSARY[clean_tok])
-                elif clean_tok.isascii():
-                    norm_words.append(clean_tok)
+        # Primary translation using translate_text
+        translated = self.translate_text(text, sl=det_code if det_code != "auto" else "auto", tl="en")
 
-            if norm_words:
-                translated = "I need " + " ".join(norm_words) + " for electrical procurement"
-            else:
-                translated = "I need cables for electrical wiring inside a building, with copper conductors and PVC insulation."
-
-        # Verify that key entities present in the Indic text are preserved in translated English
+        # Verify that key technical entities present in Indic text are preserved
         trans_lower = (translated or "").lower()
         missing_entities = [e for e in dict.fromkeys(extracted_entities) if e.lower() not in trans_lower]
         if missing_entities:
@@ -296,5 +341,67 @@ class MultilingualService:
             "detection_details": lang_info,
             "is_translated": True
         }
+
+    def localize_results(self, res: Dict[str, Any], target_lang: str = "en") -> Dict[str, Any]:
+        """
+        Translates recommendation titles, scopes, reasons, and status messages
+        into the user's input/selected language when non-English.
+        """
+        if not target_lang or target_lang in ["en", "auto"]:
+            return res
+
+        try:
+            # 1. Localize top-level message if present (e.g. Confidence-gating / Abstain explanation)
+            if res.get("message"):
+                res["message_localized"] = self.translate_text(res["message"], sl="en", tl=target_lang, timeout_sec=3.5)
+
+            if res.get("clarification_prompt"):
+                res["clarification_prompt_localized"] = self.translate_text(res["clarification_prompt"], sl="en", tl=target_lang, timeout_sec=3.5)
+
+            # 2. Localize extracted entities (product, category, application, etc.)
+            entities = res.get("entities")
+            if entities and isinstance(entities, dict):
+                entities_loc = {}
+                for k, val in entities.items():
+                    if isinstance(val, str) and val.strip():
+                        entities_loc[k] = self.translate_text(val, sl="en", tl=target_lang, timeout_sec=3.5)
+                    elif isinstance(val, list):
+                        entities_loc[k] = [self.translate_text(str(item), sl="en", tl=target_lang, timeout_sec=3.5) for item in val]
+                    else:
+                        entities_loc[k] = val
+                res["entities_localized"] = entities_loc
+
+            # 3. Batch localize recommendations
+            recs = res.get("recommendations", [])
+            if recs:
+                # Batch translate titles in one single request
+                titles = [r.get("title", "") for r in recs]
+                combined_titles = " \n ".join(titles)
+                trans_titles_raw = self.translate_text(combined_titles, sl="en", tl=target_lang, timeout_sec=3.5)
+                trans_titles = [line.strip() for line in trans_titles_raw.split("\n")]
+                for idx, r in enumerate(recs):
+                    if idx < len(trans_titles) and trans_titles[idx]:
+                        r["title_localized"] = trans_titles[idx]
+                    else:
+                        r["title_localized"] = r.get("title", "")
+
+                # Translate scope for top candidates (concise first sentence or up to 200 chars for speed & reliability)
+                for r in recs[:3]:
+                    scope_text = str(r.get("scope") or "").strip()
+                    if scope_text and scope_text != "Not available in verified database":
+                        first_sentence = scope_text.split(".")[0].strip() if "." in scope_text else scope_text[:200]
+                        r["scope_localized"] = self.translate_text(first_sentence, sl="en", tl=target_lang, timeout_sec=3.5)
+
+                # Localize reasons for top 2 candidates
+                for r in recs[:2]:
+                    reasons = r.get("ranking_reasons") or r.get("reasons") or []
+                    if reasons:
+                        combined_r = " \n ".join(reasons[:2])
+                        trans_r_raw = self.translate_text(combined_r, sl="en", tl=target_lang, timeout_sec=3.5)
+                        r["ranking_reasons_localized"] = [line.strip() for line in trans_r_raw.split("\n")]
+        except Exception as e:
+            logger.warning(f"Error during result localization: {e}")
+
+        return res
 
 multilingual_service = MultilingualService()
