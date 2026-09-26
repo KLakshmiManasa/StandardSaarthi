@@ -5,6 +5,7 @@ amendments, superseding standard warnings, categorized graph relationships, and 
 """
 
 import os
+import re
 import json
 import pandas as pd
 import logging
@@ -157,6 +158,16 @@ class StandardsService:
                 if k.lower() == is_code.lower().strip():
                     std = v
                     break
+
+        if not std:
+            # Strip trailing year or colon year (e.g. 'IS 14543:2024' -> 'IS 14543')
+            stripped = re.sub(r'[:\s]+\d{4}$', '', is_code.strip())
+            std = self.standards_map.get(stripped)
+            if not std:
+                for k, v in self.standards_map.items():
+                    if k.lower() == stripped.lower():
+                        std = v
+                        break
 
         if not std:
             return None

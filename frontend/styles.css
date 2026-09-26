@@ -910,6 +910,80 @@ textarea:focus, input:focus, select:focus {
     margin-bottom: 0.5rem;
 }
 
+/* Upload Dropzone & Document Styling */
+.upload-dropzone {
+    border: 2px dashed #93c5fd;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-bottom: 1rem;
+}
+
+.upload-dropzone:hover, .upload-dropzone.drag-active {
+    border-color: #2563eb;
+    background: #eff6ff;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.upload-dropzone h3 {
+    margin: 0.5rem 0 0.25rem 0;
+    font-size: 1.2rem;
+    color: #1e3a8a;
+}
+
+.upload-dropzone p {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.file-info-card {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.file-info-details {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.file-info-icon {
+    font-size: 1.5rem;
+}
+
+/* Officer Determination / Audit Inspect Card */
+.officer-determination-card {
+    border: 2px solid #2563eb !important;
+    background: #f8fafc !important;
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.editable-std-input {
+    border: 2px solid #2563eb !important;
+    background: #ffffff !important;
+    font-weight: 700;
+    color: #1e40af;
+    font-size: 1rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 6px;
+    width: 100%;
+}
+
+
 
 
 

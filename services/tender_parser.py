@@ -31,13 +31,15 @@ class TenderParser:
         text = ""
         try:
             import pypdf
-            reader = pypdf.PdfReader(io.BytesIO(file_bytes))
+            reader = pypdf.PdfReader(io.BytesIO(file_bytes), strict=False)
             for page in reader.pages:
                 t = page.extract_text()
                 if t:
                     text += t + "\n"
         except Exception as e:
-            logger.warning(f"pypdf extraction failed, trying pdfplumber: {e}")
+            logger.warning(f"pypdf extraction failed, trying fallback: {e}")
+
+        if not text.strip():
             try:
                 import pdfplumber
                 with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
@@ -46,8 +48,26 @@ class TenderParser:
                         if t:
                             text += t + "\n"
             except Exception as e2:
-                logger.error(f"pdfplumber extraction failed: {e2}")
-                raise ValueError("Could not extract text from PDF document.")
+                logger.debug(f"pdfplumber not available or failed: {e2}")
+
+        if not text.strip():
+            try:
+                # Robust stream regex text extraction
+                raw_matches = re.findall(rb'\(([^\(\)]{2,})\)\s*T[jJ]', file_bytes)
+                extracted_pieces = [m.decode('utf-8', errors='ignore') for m in raw_matches if len(m) > 2]
+                if extracted_pieces:
+                    text = " ".join(extracted_pieces)
+                else:
+                    clean_str = "".join([chr(b) if 32 <= b <= 126 or b in [10, 13, 9] else " " for b in file_bytes])
+                    words = [w for w in clean_str.split() if len(w) > 3 and not w.startswith(('/', '%', '<', '>'))]
+                    if len(words) > 10:
+                        text = " ".join(words[:500])
+            except Exception as e3:
+                logger.error(f"Fallback PDF stream extraction failed: {e3}")
+
+        if not text.strip():
+            raise ValueError("Could not extract legible text from PDF document. Please ensure the PDF contains selectable text or upload as TXT/DOCX.")
+
         return text.strip()
 
     def _extract_docx(self, file_bytes: bytes) -> str:
@@ -133,6 +153,25 @@ class TenderParser:
                     "language": doc_lang,
                     "category_hint": self._infer_category(norm_en)
                 })
+                req_id += 1
+
+        # Fallback paragraph or sentence segmentation so any document yields requirement items
+        if not requirements and raw_lines:
+            paragraphs = [p.strip() for p in raw_text.split('\n\n') if len(p.strip()) > 15]
+            if not paragraphs:
+                paragraphs = [line for line in raw_lines if len(line) > 15]
+            for p in paragraphs[:15]:
+                norm_en = p
+                if doc_lang != "en":
+                    norm_en = multilingual_service.translate_text(p, sl=doc_lang, tl="en")
+                requirements.append({
+                    "req_id": f"REQ_{req_id:03d}",
+                    "text": p[:500],
+                    "normalized_english": norm_en[:500],
+                    "language": doc_lang,
+                    "category_hint": self._infer_category(norm_en)
+                })
+                req_id += 1
 
         return {
             "status": "success",

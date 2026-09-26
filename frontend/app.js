@@ -162,16 +162,19 @@ function initFileUpload() {
 
     dropzone.addEventListener('dragover', (e) => {
         e.preventDefault();
+        dropzone.classList.add('drag-active');
         dropzone.style.borderColor = '#2563eb';
     });
 
     dropzone.addEventListener('dragleave', () => {
-        dropzone.style.borderColor = '#cbd5e1';
+        dropzone.classList.remove('drag-active');
+        dropzone.style.borderColor = '#93c5fd';
     });
 
     dropzone.addEventListener('drop', (e) => {
         e.preventDefault();
-        dropzone.style.borderColor = '#cbd5e1';
+        dropzone.classList.remove('drag-active');
+        dropzone.style.borderColor = '#93c5fd';
         if (e.dataTransfer.files.length > 0) handleSelectedFile(e.dataTransfer.files[0]);
     });
 }
@@ -179,9 +182,27 @@ function initFileUpload() {
 function handleSelectedFile(file) {
     selectedFile = file;
     const nameLabel = document.getElementById('file-selected-name');
+    const actionBox = document.getElementById('upload-action-box');
     const uploadBtn = document.getElementById('btn-upload');
-    nameLabel.innerHTML = `<strong>Selected File:</strong> ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-    uploadBtn.style.display = 'inline-block';
+
+    if (nameLabel) {
+        nameLabel.innerHTML = `
+            <div class="file-info-card">
+                <div class="file-info-details">
+                    <span class="file-info-icon">📄</span>
+                    <div>
+                        <div style="font-weight:700; color:#1e3a8a; font-size:0.95rem;">${file.name}</div>
+                        <div style="font-size:0.8rem; color:#64748b;">${(file.size / 1024).toFixed(1)} KB • Ready for extraction</div>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="event.stopPropagation(); document.getElementById('tender-file-input').click()">Change File</button>
+                </div>
+            </div>
+        `;
+    }
+    if (actionBox) actionBox.style.display = 'block';
+    if (uploadBtn) uploadBtn.style.display = 'inline-block';
     showToast(`File selected: ${file.name}`, 'info');
 }
 
@@ -264,6 +285,12 @@ async function runAnalysisModeB() {
 // ----------------------------------------------------
 async function uploadTenderDocument() {
     if (!selectedFile) {
+        const fileInput = document.getElementById('tender-file-input');
+        if (fileInput && fileInput.files.length > 0) {
+            selectedFile = fileInput.files[0];
+        }
+    }
+    if (!selectedFile) {
         showToast('Please select a PDF, DOCX, or TXT file first.', 'warning');
         return;
     }
@@ -280,10 +307,13 @@ async function uploadTenderDocument() {
             body: formData
         });
         const data = await resp.json();
+        if (!resp.ok) {
+            throw new Error(data.detail || data.error || 'Failed to parse tender document.');
+        }
         renderTenderMatrix(data);
         showToast(`Document parsed into ${data.requirement_count} requirement items!`, 'success');
     } catch (err) {
-        showToast('Tender document upload/extraction failed.', 'error');
+        showToast(`Tender document parsing failed: ${err.message}`, 'error');
         console.error(err);
     } finally {
         stopLoadingProgress();
@@ -1027,6 +1057,19 @@ async function loadStandardDetailsPage(isCode) {
         const stdNum = details.standardNumber || details.isNumber || stdCode;
         document.getElementById('detail-code-title').innerText = `${stdNum} Details & Lifecycle`;
 
+        const existingReview = recordedOfficerReviews[stdCode] || null;
+        let existingAuditBadgeHtml = '';
+        let currentOverrideVal = stdCode;
+        let isOverridden = false;
+        let existingJustification = '';
+        if (existingReview) {
+            isOverridden = (existingReview.decision === 'OVERRIDDEN');
+            currentOverrideVal = existingReview.final_standard || stdCode;
+            existingJustification = existingReview.justification || '';
+            const bClass = isOverridden ? 'badge-officer-override' : 'badge-officer-accepted';
+            existingAuditBadgeHtml = `<span class="${bClass}">✓ RECORDED: ${existingReview.decision} (${existingReview.audit_id})</span>`;
+        }
+
         const srcObj = details.source || {};
         const authorityName = srcObj.authority || "Bureau of Indian Standards (BIS)";
         const kysUrl = `https://standards.bis.gov.in/website/know-your-standards?searchTerm=${encodeURIComponent(stdCode)}`;
@@ -1166,6 +1209,82 @@ async function loadStandardDetailsPage(isCode) {
                     ${sourceButtonHtml}
                     ${verifiedBadgeHtml}
                     ${unavailableBadgeHtml}
+                </div>
+            </div>
+
+            <!-- STATUTORY PROCUREMENT OFFICER DETERMINATION & EDIT STANDARD NUMBER -->
+            <div class="card officer-determination-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+                    <div>
+                        <h4 style="margin:0; color:#1e40af; font-size:1.15rem; display:flex; align-items:center; gap:0.5rem;">
+                            ⚖️ Statutory Procurement Officer Determination & Standard Override
+                        </h4>
+                        <p style="margin:0.25rem 0 0 0; font-size:0.85rem; color:#64748b;">
+                            GFR Rule 144(vii) Mandate: Review or edit/overwrite the designated standard number and record official determination into the Audit Trail.
+                        </p>
+                    </div>
+                    <div id="inspect-audit-badge">
+                        ${existingAuditBadgeHtml}
+                    </div>
+                </div>
+
+                <div style="background:white; border:1px solid #cbd5e1; border-radius:8px; padding:1.25rem;">
+                    <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+                        <div class="form-group">
+                            <label style="font-weight:600; font-size:0.88rem; color:#334155;">Original Standard Number:</label>
+                            <input type="text" id="inspect-std-original" value="${stdCode}" readonly style="background:#f1f5f9; font-weight:700; color:#334155; padding:0.6rem 0.85rem; border:1px solid #cbd5e1; border-radius:6px; width:100%;">
+                        </div>
+                        <div class="form-group">
+                            <label for="inspect-std-override-number" style="font-weight:700; font-size:0.88rem; color:#1e40af;">
+                                ✏️ Designated Standard Number (Editable / Overwrite Option):
+                            </label>
+                            <input type="text" id="inspect-std-override-number" class="editable-std-input" value="${currentOverrideVal}" placeholder="e.g. IS 13428:2005" oninput="handleInspectOverrideInput('${stdCode.replace(/'/g, "\\'")}')">
+                            <small style="color:#64748b; font-size:0.78rem;">Officer can freely edit or overwrite the IS standard number here.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:1rem;">
+                        <label style="font-weight:600; font-size:0.88rem;">Officer Determination Action:</label>
+                        <div class="determination-options" style="display:flex; gap:1.5rem; margin-top:0.4rem;">
+                            <label class="determination-option" style="cursor:pointer; display:flex; align-items:center; gap:0.4rem;">
+                                <input type="radio" name="inspect-officer-decision" id="inspect-decision-accept" value="ACCEPTED" ${isOverridden ? '' : 'checked'} onchange="handleInspectDecisionChange('${stdCode.replace(/'/g, "\\'")}')">
+                                <span><strong>ACCEPT</strong> Current Standard (${stdCode})</span>
+                            </label>
+                            <label class="determination-option" style="cursor:pointer; display:flex; align-items:center; gap:0.4rem;">
+                                <input type="radio" name="inspect-officer-decision" id="inspect-decision-override" value="OVERRIDDEN" ${isOverridden ? 'checked' : ''} onchange="handleInspectDecisionChange('${stdCode.replace(/'/g, "\\'")}')">
+                                <span><strong>OVERRIDE / EDIT</strong> Standard Number</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.75rem; margin-top:1rem;">
+                        <div class="form-group">
+                            <label style="font-size:0.82rem; font-weight:600;">Reviewing Official Name & ID:</label>
+                            <input type="text" id="inspect-officer-name" value="Er. Rajesh Kumar (EMP-88412)" style="padding:0.5rem; border:1px solid #cbd5e1; border-radius:6px; width:100%;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size:0.82rem; font-weight:600;">Designation / Role:</label>
+                            <input type="text" id="inspect-officer-desig" value="Executive Engineer (E&M)" style="padding:0.5rem; border:1px solid #cbd5e1; border-radius:6px; width:100%;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size:0.82rem; font-weight:600;">Department / Organization:</label>
+                            <input type="text" id="inspect-officer-dept" value="GeM / Central Procurement Cell" style="padding:0.5rem; border:1px solid #cbd5e1; border-radius:6px; width:100%;">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:1rem;">
+                        <label for="inspect-officer-justification" style="font-size:0.85rem; font-weight:600; color:#1e40af;">
+                            Statutory Audit Justification (Mandatory under GFR Rule 144):
+                        </label>
+                        <textarea id="inspect-officer-justification" rows="2" placeholder="State reason for accepting or overriding the standard number (e.g. Schedule duty rating, mineral content parameters, site operating conditions under GFR 144(vii))..." style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:6px; font-family:inherit;">${existingJustification}</textarea>
+                    </div>
+
+                    <div style="margin-top:1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
+                        <a href="#/audit" class="btn btn-outline btn-sm">📋 View Full Officer Audit Trail Register</a>
+                        <button class="btn btn-primary" onclick="submitInspectOfficerDetermination('${encodeURIComponent(stdCode)}', '${encodeURIComponent(details.title)}')">
+                            💾 Save Determination & Record in Audit Trail
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
@@ -1439,15 +1558,31 @@ function openReviewModal(isCode, title) {
     const modal = document.getElementById('review-modal-overlay');
     if (!modal) return;
     
-    const qText = currentAnalysisResult ? currentAnalysisResult.query : 'Current procurement specification';
+    const qText = currentAnalysisResult ? (currentAnalysisResult.user_original_query || currentAnalysisResult.query) : 'Procurement Requirement Specification';
     document.getElementById('review-query-text').innerText = qText;
-    document.getElementById('review-target-std').innerText = `${isCode} — ${title}`;
+    document.getElementById('review-target-std').innerText = `${isCode} — ${title || 'Indian Standard'}`;
     document.getElementById('decision-accept').checked = true;
-    document.getElementById('override-field-group').style.display = 'none';
-    document.getElementById('override-standard-code').value = '';
+    
+    const overrideInput = document.getElementById('override-standard-code');
+    if (overrideInput) {
+        overrideInput.value = isCode;
+    }
     document.getElementById('review-justification').value = '';
     
     modal.classList.add('active');
+}
+
+function handleOverrideInputChange() {
+    const overrideInput = document.getElementById('override-standard-code');
+    if (!overrideInput || !activeReviewTarget) return;
+    const currentVal = overrideInput.value.trim();
+    if (currentVal && currentVal !== activeReviewTarget.isCode) {
+        const rad = document.getElementById('decision-override');
+        if (rad) rad.checked = true;
+    } else {
+        const rad = document.getElementById('decision-accept');
+        if (rad) rad.checked = true;
+    }
 }
 
 function closeReviewModal() {
@@ -1458,14 +1593,19 @@ function closeReviewModal() {
 
 function toggleOverrideField() {
     const isOverride = document.getElementById('decision-override').checked;
-    document.getElementById('override-field-group').style.display = isOverride ? 'block' : 'none';
+    const overrideInput = document.getElementById('override-standard-code');
+    if (!isOverride && overrideInput && activeReviewTarget) {
+        overrideInput.value = activeReviewTarget.isCode;
+    } else if (isOverride && overrideInput) {
+        overrideInput.focus();
+    }
 }
 
 async function submitOfficerReview() {
     if (!activeReviewTarget) return;
     const isCode = activeReviewTarget.isCode;
     const decision = document.querySelector('input[name="officer-decision"]:checked')?.value || 'ACCEPTED';
-    const overrideCode = document.getElementById('override-standard-code').value.trim();
+    const overrideCode = document.getElementById('override-standard-code')?.value.trim();
     const finalStd = (decision === 'OVERRIDDEN' && overrideCode) ? overrideCode : isCode;
     const officerName = document.getElementById('officer-name')?.value.trim() || 'Er. Rajesh Kumar (EMP-88412)';
     const officerDesig = document.getElementById('officer-desig')?.value.trim() || 'Executive Engineer (E&M)';
@@ -1484,7 +1624,7 @@ async function submitOfficerReview() {
 
     const payload = {
         analysis_id: currentAnalysisResult?.id || null,
-        query: currentAnalysisResult?.query || '',
+        query: currentAnalysisResult?.query || activeReviewTarget.title || 'Procurement requirement',
         recommended_standard: isCode,
         decision: decision,
         final_standard: finalStd,
@@ -1517,6 +1657,113 @@ async function submitOfficerReview() {
     }
 }
 
+// Inspect Page Determination Handlers
+function handleInspectOverrideInput(stdCode) {
+    const input = document.getElementById('inspect-std-override-number');
+    if (!input) return;
+    const val = input.value.trim();
+    if (val && val !== stdCode) {
+        const rad = document.getElementById('inspect-decision-override');
+        if (rad) rad.checked = true;
+    } else {
+        const rad = document.getElementById('inspect-decision-accept');
+        if (rad) rad.checked = true;
+    }
+}
+
+function handleInspectDecisionChange(stdCode) {
+    const isOverride = document.getElementById('inspect-decision-override')?.checked;
+    const input = document.getElementById('inspect-std-override-number');
+    if (!isOverride && input) {
+        input.value = stdCode;
+    } else if (isOverride && input) {
+        input.focus();
+    }
+}
+
+async function submitInspectOfficerDetermination(stdCodeEnc, titleEnc) {
+    const isCode = decodeURIComponent(stdCodeEnc);
+    const title = decodeURIComponent(titleEnc);
+    
+    const decision = document.querySelector('input[name="inspect-officer-decision"]:checked')?.value || 'ACCEPTED';
+    const overrideCode = document.getElementById('inspect-std-override-number')?.value.trim();
+    const finalStd = (decision === 'OVERRIDDEN' && overrideCode) ? overrideCode : isCode;
+    const officerName = document.getElementById('inspect-officer-name')?.value.trim() || 'Er. Rajesh Kumar (EMP-88412)';
+    const officerDesig = document.getElementById('inspect-officer-desig')?.value.trim() || 'Executive Engineer (E&M)';
+    const officerDept = document.getElementById('inspect-officer-dept')?.value.trim() || 'GeM / Central Procurement Cell';
+    const justification = document.getElementById('inspect-officer-justification')?.value.trim();
+
+    if (!justification) {
+        showToast('Statutory audit justification is required to record determination.', 'warning');
+        return;
+    }
+
+    if (decision === 'OVERRIDDEN' && !overrideCode) {
+        showToast('Please specify the designated alternative standard code.', 'warning');
+        return;
+    }
+
+    const payload = {
+        analysis_id: currentAnalysisResult?.id || null,
+        query: `Inspect Determination for ${isCode} - ${title}`,
+        recommended_standard: isCode,
+        decision: decision,
+        final_standard: finalStd,
+        officer_name: officerName,
+        officer_designation: officerDesig,
+        department: officerDept,
+        justification: justification
+    };
+
+    try {
+        const resp = await fetch('/api/audit/review', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (!resp.ok) throw new Error('Failed to record review determination.');
+        const auditRecord = await resp.json();
+        recordedOfficerReviews[isCode] = auditRecord;
+
+        const bClass = (decision === 'OVERRIDDEN') ? 'badge-officer-override' : 'badge-officer-accepted';
+        const badgeEl = document.getElementById('inspect-audit-badge');
+        if (badgeEl) {
+            badgeEl.innerHTML = `<span class="${bClass}">✓ RECORDED: ${auditRecord.decision} (${auditRecord.audit_id})</span>`;
+        }
+
+        showToast(`Determination successfully logged into Statutory Audit Trail: ${auditRecord.audit_id}`, 'success');
+    } catch (err) {
+        showToast('Error recording audit determination. Please verify backend connection.', 'error');
+        console.error(err);
+    }
+}
+
+function inspectAndEditAuditRecord(auditId, recommendedStd, finalStd, query, justification) {
+    activeReviewTarget = { isCode: recommendedStd, title: finalStd };
+    const modal = document.getElementById('review-modal-overlay');
+    if (!modal) return;
+    
+    document.getElementById('review-query-text').innerText = query || 'Procurement Requirement Specification';
+    document.getElementById('review-target-std').innerText = `${recommendedStd} (Audit ID: ${auditId})`;
+    
+    const overrideInput = document.getElementById('override-standard-code');
+    if (overrideInput) {
+        overrideInput.value = finalStd || recommendedStd;
+    }
+    
+    if (finalStd && finalStd !== recommendedStd) {
+        const rad = document.getElementById('decision-override');
+        if (rad) rad.checked = true;
+    } else {
+        const rad = document.getElementById('decision-accept');
+        if (rad) rad.checked = true;
+    }
+    
+    document.getElementById('review-justification').value = justification || '';
+    modal.classList.add('active');
+    showToast(`Inspecting Audit Record ${auditId} - you can edit the standard number.`, 'info');
+}
+
 async function loadAuditTrail() {
     const container = document.getElementById('audit-trail-container');
     if (!container) return;
@@ -1528,7 +1775,7 @@ async function loadAuditTrail() {
                 <div class="empty-state">
                     <div class="empty-icon-label">[No Determinations Logged]</div>
                     <h3>No Officer Determinations in Audit Trail</h3>
-                    <p>Perform an analysis and click 'Officer Review & Log Decision' to record formal determinations.</p>
+                    <p>Perform an analysis and click 'Officer Review & Log Decision' or inspect any standard to record formal determinations.</p>
                     <a href="#/analyze" class="btn btn-primary">Start Analysis</a>
                 </div>
             `;
@@ -1548,6 +1795,7 @@ async function loadAuditTrail() {
                             <th>Final Standard</th>
                             <th>Reviewing Official</th>
                             <th>Statutory Justification</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1560,7 +1808,7 @@ async function loadAuditTrail() {
                 <tr>
                     <td><span class="audit-id-badge">${log.audit_id}</span></td>
                     <td style="white-space:nowrap; font-size:0.82rem; color:#64748b;">${log.timestamp}</td>
-                    <td style="max-width:260px; font-weight:500;">"${log.query}"</td>
+                    <td style="max-width:240px; font-weight:500;">"${log.query}"</td>
                     <td><strong>${log.recommended_standard}</strong></td>
                     <td><span class="${badgeClass}">${log.decision}</span></td>
                     <td><strong style="color:${isAccept ? '#065f46' : '#1e40af'}">${log.final_standard}</strong></td>
@@ -1569,7 +1817,12 @@ async function loadAuditTrail() {
                         <div style="font-size:0.78rem; color:#2563eb; font-weight:500;">${log.officer_designation || ''}</div>
                         <div style="font-size:0.75rem; color:#64748b;">${log.department}</div>
                     </td>
-                    <td style="max-width:280px; font-size:0.84rem; color:#475569;">${log.justification}</td>
+                    <td style="max-width:240px; font-size:0.84rem; color:#475569;">${log.justification}</td>
+                    <td style="white-space:nowrap;">
+                        <button class="btn btn-sm btn-outline" onclick="inspectAndEditAuditRecord('${log.audit_id}', '${(log.recommended_standard || '').replace(/'/g, "\\'")}', '${(log.final_standard || '').replace(/'/g, "\\'")}', '${(log.query || '').replace(/'/g, "\\'")}', '${(log.justification || '').replace(/'/g, "\\'")}')">
+                            ✏️ Edit Standard Number
+                        </button>
+                    </td>
                 </tr>
             `;
         });
@@ -1617,9 +1870,16 @@ window.closeWhyModal = closeWhyModal;
 window.openReviewModal = openReviewModal;
 window.closeReviewModal = closeReviewModal;
 window.toggleOverrideField = toggleOverrideField;
+window.handleOverrideInputChange = handleOverrideInputChange;
 window.submitOfficerReview = submitOfficerReview;
+window.handleInspectOverrideInput = handleInspectOverrideInput;
+window.handleInspectDecisionChange = handleInspectDecisionChange;
+window.submitInspectOfficerDetermination = submitInspectOfficerDetermination;
+window.inspectAndEditAuditRecord = inspectAndEditAuditRecord;
 window.loadAuditTrail = loadAuditTrail;
 window.handleOutputLanguageChange = handleOutputLanguageChange;
+window.uploadTenderDocument = uploadTenderDocument;
+
 
 
 

@@ -193,15 +193,19 @@
 
                 <!-- MODE C FORM -->
                 <div id="mode-c" class="mode-panel">
-                    <div class="upload-dropzone" id="dropzone">
-                        <div class="upload-icon-label">[Document Attachment]</div>
+                    <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('tender-file-input').click()">
+                        <div class="upload-icon-label">📁 Procurement Document Ingestion</div>
                         <h3>Upload Tender Specification Document</h3>
-                        <p>Supported file formats: PDF, DOCX, TXT</p>
+                        <p>Drag & drop your tender document here, or click to browse files (Supported: PDF, DOCX, TXT)</p>
                         <input type="file" id="tender-file-input" accept=".pdf,.docx,.txt" style="display:none">
-                        <button class="btn btn-secondary" onclick="document.getElementById('tender-file-input').click()">Select File</button>
+                        <button type="button" class="btn btn-secondary" onclick="event.stopPropagation(); document.getElementById('tender-file-input').click()">Select File from Computer</button>
                     </div>
                     <div id="file-selected-name" class="file-info"></div>
-                    <button class="btn btn-primary" id="btn-upload" onclick="uploadTenderDocument()" style="display:none; margin-top:15px;">Upload & Extract Requirements</button>
+                    <div id="upload-action-box" style="display:none; margin-top:1rem; text-align:center;">
+                        <button class="btn btn-primary btn-lg" id="btn-upload" onclick="uploadTenderDocument()" style="padding:0.75rem 2rem; font-size:1rem; font-weight:600;">
+                            🚀 Upload & Extract Requirements
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -364,12 +368,21 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Procurement Requirement:</label>
+                    <label>Procurement Requirement / Item:</label>
                     <div id="review-query-text" class="review-box-query"></div>
                 </div>
-                <div class="form-group">
-                    <label>System Candidate / Recommendation:</label>
-                    <div id="review-target-std" class="review-box-std"></div>
+                <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label>System Citation / Candidate:</label>
+                        <div id="review-target-std" class="review-box-std" style="font-weight:700;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="override-standard-code" style="color:#1e40af; font-weight:700;">
+                            ✏️ Designated Standard Number (Editable / Overwrite):
+                        </label>
+                        <input type="text" id="override-standard-code" class="editable-std-input" placeholder="e.g. IS 7098 (Part 1):1988" oninput="handleOverrideInputChange()">
+                        <small style="color:#64748b; font-size:0.78rem;">Officer can freely edit or overwrite the IS code here.</small>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Officer Determination Action:</label>
@@ -380,13 +393,9 @@
                         </label>
                         <label class="determination-option">
                             <input type="radio" name="officer-decision" id="decision-override" value="OVERRIDDEN" onchange="toggleOverrideField()">
-                            <span><strong>OVERRIDE</strong> with Alternative Standard</span>
+                            <span><strong>OVERRIDE / EDIT</strong> Standard Number</span>
                         </label>
                     </div>
-                </div>
-                <div id="override-field-group" class="form-group" style="display:none;">
-                    <label for="override-standard-code">Designated Alternative Standard (IS Code):</label>
-                    <input type="text" id="override-standard-code" placeholder="e.g. IS 7098 (Part 1):1988">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
