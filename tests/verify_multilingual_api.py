@@ -5,7 +5,11 @@ import io
 import json
 import requests
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+try:
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 
 # Test 1: Mode A with Tamil Query
 print("--- TEST 1: POST /api/analyze with Tamil Query ---")

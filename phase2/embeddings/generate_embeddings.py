@@ -14,26 +14,29 @@ VECTOR_INDEX_DIR = os.path.join(BASE_DIR, 'indexes', 'vector')
 VECTORS_FILE = os.path.join(VECTOR_INDEX_DIR, 'standard_vectors.npy')
 METADATA_FILE = os.path.join(VECTOR_INDEX_DIR, 'metadata.json')
 
+LOCAL_MODEL_DIR = os.path.join(BASE_DIR, 'models', 'all-MiniLM-L6-v2')
 MODEL_NAME = 'all-MiniLM-L6-v2'
 
 def get_embedder():
     """
     Loads SentenceTransformer model ('all-MiniLM-L6-v2').
+    Prefers local project folder ('models/all-MiniLM-L6-v2') in offline mode for demo readiness.
     Raises RuntimeError if sentence-transformers cannot load (TF-IDF fallback removed).
     """
     try:
         from sentence_transformers import SentenceTransformer
-        print(f"[*] Loading SentenceTransformer model '{MODEL_NAME}'...")
+        model_source = LOCAL_MODEL_DIR if os.path.exists(LOCAL_MODEL_DIR) else MODEL_NAME
+        print(f"[*] Loading SentenceTransformer model from '{model_source}' (offline preference)...")
         try:
-            model = SentenceTransformer(MODEL_NAME, local_files_only=True)
+            model = SentenceTransformer(model_source, local_files_only=True)
         except Exception:
-            model = SentenceTransformer(MODEL_NAME)
+            model = SentenceTransformer(model_source)
         
         def embed_fn(texts: list[str]) -> np.ndarray:
             embeddings = model.encode(texts, show_progress_bar=False, normalize_embeddings=True)
             return np.array(embeddings, dtype=np.float32)
             
-        return embed_fn, f"sentence_transformers/{MODEL_NAME}"
+        return embed_fn, "sentence_transformers/all-MiniLM-L6-v2"
     except Exception as e:
         error_msg = (
             f"Failed to load SentenceTransformer model '{MODEL_NAME}': {e}. "

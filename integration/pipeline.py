@@ -136,8 +136,22 @@ class IntegrationPipeline:
             sector_filter_applied = False
 
         if not self.vector_available:
-            warnings.append("Vector database service degraded; falling back to graph lookups.")
-            vector_candidates = []
+            elapsed_ms = round((time.time() - start_time) * 1000, 2)
+            return {
+                "status": "error",
+                "query": user_raw,
+                "message": f"Embedding model unavailable: {self.vector_error or 'sentence-transformers is not loaded'}. Recommendations blocked.",
+                "entities": entity_summary,
+                "recommendations": [],
+                "warnings": ["Recommendation blocked: dense vector embedding model is unavailable."],
+                "processing": {
+                    "retrieval_method": "Unavailable",
+                    "candidate_count": 0,
+                    "latency_ms": elapsed_ms,
+                    "dataset_version": "v0.1-pilot",
+                    "engine_version": "0.7.0-integrated"
+                }
+            }
         else:
             vector_candidates = self.vector_retriever.retrieve_candidates(sanitized_text, top_k=top_k*2, sector=sector_filter)
             if not vector_candidates and sector_filter is not None:

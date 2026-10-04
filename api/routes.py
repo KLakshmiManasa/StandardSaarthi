@@ -468,4 +468,6 @@ def read_frontend_static(filename: str):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run("api.routes:app", host="0.0.0.0", port=8000, reload=False)
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", "8000"))
+    uvicorn.run("api.routes:app", host=host, port=port, reload=False)

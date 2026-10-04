@@ -32,6 +32,9 @@ env.bak/
 venv.bak/
 .venv/
 
+# Local model weights
+models/
+
 # Testing and coverage
 .pytest_cache/
 .coverage

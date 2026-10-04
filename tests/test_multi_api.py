@@ -3,7 +3,11 @@ import sys
 import io
 import requests
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+try:
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 
 test_cases = [
     ("hi", "भवन निर्माण के लिए टीएमटी स्टील बार"),
