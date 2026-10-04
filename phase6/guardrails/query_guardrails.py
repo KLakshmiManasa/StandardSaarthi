@@ -85,7 +85,7 @@ class QueryGuardrails:
                 has_spec = True
 
         # Check if cable/wire query
-        is_cable_query = any(w in q_lower for w in ["cable", "wire", "conductor", "केबल", "तार", "கேபிள்", "கம்பி", "వైరింగ్", "కేబుల్"]) or "electrical" in category
+        is_cable_query = (any(w in q_lower for w in ["cable", "wire", "conductor", "केबल", "तार", "கேபிள்", "கம்பி", "వైరింగ్", "కేబుల్"]) or ("cable" in prod_name or "wire" in prod_name)) and not any(w in q_lower for w in ["electrode", "transformer", "switchgear", "earthing", "grounding", "insulator", "mcb", "fan"])
         is_specific_product = valid_prod and prod_name not in ["cable", "wire", "flexible cable", "power cable", "general equipment", "general item", "general procurement item", ""]
 
         is_ambiguous = False
