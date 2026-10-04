@@ -26,6 +26,13 @@ def check_health() -> Dict[str, Any]:
     else:
         overall_status = "critical"
 
+    # Retrieve embedding model details
+    model_name = "sentence_transformers/all-MiniLM-L6-v2"
+    if hasattr(pipeline, "vector_retriever") and hasattr(pipeline.vector_retriever, "engine"):
+        store = getattr(pipeline.vector_retriever.engine, "store", None)
+        if store and hasattr(store, "model_name"):
+            model_name = store.model_name
+
     return {
         "status": overall_status,
         "services": {
@@ -33,6 +40,10 @@ def check_health() -> Dict[str, Any]:
             "vector_retriever": vector_ok,
             "graph": graph_ok,
             "qco_engine": True
+        },
+        "embedding_model": {
+            "name": model_name,
+            "loaded": vector_ok
         },
         "version": "0.7.0-integrated"
     }

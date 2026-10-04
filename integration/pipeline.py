@@ -28,12 +28,14 @@ class IntegrationPipeline:
         self.nlp_extractor = NLPEntityExtractor()
 
         # Initialize core AI components with fallback error handling
+        self.vector_error = None
         try:
             self.vector_retriever = Phase5VectorRetriever()
             self.vector_available = True
         except Exception as e:
             logger.error(f"Vector Retriever initialization failed: {e}")
             self.vector_available = False
+            self.vector_error = str(e)
 
         try:
             self.graph_rag = GraphRAGRetriever()

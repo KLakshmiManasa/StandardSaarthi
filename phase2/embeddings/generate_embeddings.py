@@ -1,7 +1,7 @@
 """
 SIH 26108 — Generate Dense Embeddings Script
 Computes dense vector representations for all verified Indian Standards search documents.
-Model: SentenceTransformers ('all-MiniLM-L6-v2') or TF-IDF + TruncatedSVD dense fallback.
+Model: SentenceTransformers ('all-MiniLM-L6-v2').
 """
 
 import os
@@ -18,7 +18,8 @@ MODEL_NAME = 'all-MiniLM-L6-v2'
 
 def get_embedder():
     """
-    Attempts to load SentenceTransformer model, falls back to scikit-learn TF-IDF + SVD.
+    Loads SentenceTransformer model ('all-MiniLM-L6-v2').
+    Raises RuntimeError if sentence-transformers cannot load (TF-IDF fallback removed).
     """
     try:
         from sentence_transformers import SentenceTransformer
@@ -32,24 +33,15 @@ def get_embedder():
             embeddings = model.encode(texts, show_progress_bar=False, normalize_embeddings=True)
             return np.array(embeddings, dtype=np.float32)
             
-        return embed_fn, "sentence_transformers/all-MiniLM-L6-v2"
+        return embed_fn, f"sentence_transformers/{MODEL_NAME}"
     except Exception as e:
-        print(f"[!] SentenceTransformer load notice ({e}). Using scikit-learn TF-IDF + SVD Dense Fallback...")
-        from sklearn.feature_extraction.text import TfidfVectorizer
-        from sklearn.decomposition import TruncatedSVD
-        
-        def fallback_embed_fn(texts: list[str]) -> np.ndarray:
-            vec = TfidfVectorizer(ngram_range=(1, 2), max_features=5000)
-            tfidf = vec.fit_transform(texts)
-            n_comp = min(128, tfidf.shape[1] - 1) if tfidf.shape[1] > 1 else 1
-            svd = TruncatedSVD(n_components=n_comp, random_state=42)
-            dense = svd.fit_transform(tfidf)
-            # Normalize L2
-            norms = np.linalg.norm(dense, axis=1, keepdims=True)
-            norms[norms == 0] = 1.0
-            return (dense / norms).astype(np.float32)
-            
-        return fallback_embed_fn, "scikit-learn/TFIDF-SVD-Dense"
+        error_msg = (
+            f"Failed to load SentenceTransformer model '{MODEL_NAME}': {e}. "
+            f"sentence-transformers is required; TF-IDF fallback has been removed. "
+            f"The application cannot start without sentence-transformers."
+        )
+        print(f"[!] {error_msg}")
+        raise RuntimeError(error_msg) from e
 
 
 def generate_embeddings(force_rebuild: bool = False):

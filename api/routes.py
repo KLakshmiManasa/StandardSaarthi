@@ -41,6 +41,15 @@ app.add_exception_handler(Exception, global_exception_handler)
 # Register Health Router
 app.include_router(health_router)
 
+@app.on_event("startup")
+def verify_startup_requirements():
+    if not getattr(pipeline, "vector_available", False):
+        err = getattr(pipeline, "vector_error", "sentence-transformers failed to load")
+        raise RuntimeError(
+            f"FATAL STARTUP ERROR: sentence-transformers embedding model failed to load ({err}). "
+            f"The application cannot start without sentence-transformers."
+        )
+
 @app.get("/health")
 def get_health():
     return check_health()

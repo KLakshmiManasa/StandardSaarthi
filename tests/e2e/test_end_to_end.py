@@ -40,6 +40,9 @@ def test_e2e_health_check(client):
     data = response.json()
     assert data["status"] in ["healthy", "degraded"]
     assert data["services"]["api"] is True
+    assert "embedding_model" in data
+    assert data["embedding_model"]["loaded"] is True
+    assert "name" in data["embedding_model"]
 
 def test_e2e_relationships_endpoint(client):
     response = client.get("/api/standards/IS 694:2010/relationships")
