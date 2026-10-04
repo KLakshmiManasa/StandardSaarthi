@@ -8,7 +8,7 @@ import html
 import re
 from typing import Dict, Any, Tuple
 
-MAX_QUERY_LENGTH = 2000
+MAX_QUERY_LENGTH = 10000
 
 PROMPT_INJECTION_PATTERNS = [
     r'ignore (?:all )?previous instructions',
