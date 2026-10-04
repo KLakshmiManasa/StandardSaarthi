@@ -21,7 +21,7 @@ PROCUREMENT_MARKERS = [
     "cable", "wire", "conductor", "transformer", "cement", "rebar", "steel",
     "pipe", "tile", "brick", "medical", "syringe", "glove", "mask", "jacket",
     "fabric", "tire", "flange", "valve", "pump", "gearbox", "bearing", "mixer",
-    "geyser", "fan", "footwear", "earthing", "electrode", "grounding", "plate",
+    "geyser", "fan", "footwear", "earthing", "electrode", "grounding", "plate", "switchgear",
     "chemical", "hospital", "building", "structure", "foundation", "is", "code", "qco", "bis", "grade", "mm", "kv",
     "water", "drinking water", "packaged water", "mineral water", "potable water", "carboy", "polycarbonate", "container", "bottle", "liter", "litre",
     "केबल", "तार", "वायर", "कॉपर", "तांबा", "कंडक्टर", "पीवीसी", "इंसुलेशन", "इलेक्ट्रिकल", "वायरिंग", "बिल्डिंग",
@@ -84,9 +84,18 @@ class QueryGuardrails:
             if entities.get("technical_attributes") or entities.get("volume") or entities.get("container"):
                 has_spec = True
 
-        # Check if cable/wire query
-        is_cable_query = (any(w in q_lower for w in ["cable", "wire", "conductor", "केबल", "तार", "கேபிள்", "கம்பி", "వైరింగ్", "కేబుల్"]) or ("cable" in prod_name or "wire" in prod_name)) and not any(w in q_lower for w in ["electrode", "transformer", "switchgear", "earthing", "grounding", "insulator", "mcb", "fan"])
-        is_specific_product = valid_prod and prod_name not in ["cable", "wire", "flexible cable", "power cable", "general equipment", "general item", "general procurement item", ""]
+        # Check if cable/wire query: ONLY require cable parameters when the detected product type is a cable or wire
+        detected_as_cable = any(k in prod_name for k in ["cable", "wire", "conductor", "cord"])
+        if not valid_prod:
+            detected_as_cable = any(w in words for w in ["cable", "cables", "wire", "wires", "conductor", "conductors", "केबल", "तार", "கேபிள்", "கம்பி", "కేబుల్"])
+
+        # Never treat non-cable electrical products as cable queries
+        is_known_equipment = any(w in q_lower for w in ["electrode", "transformer", "switchgear", "earthing", "grounding", "insulator", "mcb", "fan", "panel", "pipe"])
+        if is_known_equipment or any(k in prod_name for k in ["electrode", "transformer", "switchgear", "earthing", "grounding", "insulator", "mcb", "fan", "pipe"]):
+            detected_as_cable = False
+
+        is_cable_query = detected_as_cable
+        is_specific_product = (valid_prod and prod_name not in ["cable", "wire", "flexible cable", "power cable", "general equipment", "general item", "general procurement item", ""]) or is_known_equipment
 
         is_ambiguous = False
         if not has_code:

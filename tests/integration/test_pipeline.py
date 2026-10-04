@@ -37,3 +37,24 @@ def test_pipeline_no_qco_mapping():
         if rec["is_code"] == "IS 3043":
             assert rec["qco"]["applicable"] is False
             assert rec["qco"]["reference"] is None
+
+def test_guardrail_earthing_electrode_not_rejected():
+    res = pipeline.recommend("Earthing pipe electrode for electrical installation safety")
+    assert res["status"] == "success"
+    assert len(res.get("recommendations", [])) > 0
+
+def test_guardrail_transformer_not_rejected():
+    res = pipeline.recommend("Distribution transformer for substation installation")
+    assert res["status"] == "success"
+    assert len(res.get("recommendations", [])) > 0
+
+def test_guardrail_switchgear_not_rejected():
+    res = pipeline.recommend("Air insulated switchgear panel for electrical substation")
+    assert res["status"] == "success"
+    assert len(res.get("recommendations", [])) > 0
+
+def test_guardrail_vague_cable_query_requires_clarification():
+    res = pipeline.recommend("Requirement for electrical cable for office project")
+    assert res["status"] == "needs_clarification"
+    assert "missing_fields" in res
+
