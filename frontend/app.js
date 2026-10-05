@@ -6,6 +6,7 @@ let recordedOfficerReviews = {};
 let currentActiveLanguage = 'en';
 
 // Current Authenticated User & RBAC State
+let isLoggedIn = localStorage.getItem('standard_saarthi_logged_in') === 'true';
 let currentUser = JSON.parse(localStorage.getItem('standard_saarthi_user')) || {
     username: 'officer@gem.gov.in',
     name: 'Er. Rajesh Kumar',
@@ -42,11 +43,10 @@ function handleRoute() {
     let routeName = rawRoute.split('?')[0].replace(/\/$/, '') || '/';
     let param = null;
 
-    // RBAC Security Route Protection
-    if (routeName === '/admin' && (!currentUser || currentUser.role !== 'admin')) {
-        showToast('Access Restricted: System Administrator privileges required for Diagnostics.', 'error');
-        navigateTo('#/');
-        return;
+    // Gate unauthenticated access: force login view on initial land or when not logged in
+    if (!isLoggedIn && routeName !== '/login') {
+        routeName = '/login';
+        window.history.replaceState(null, '', '#/login');
     }
 
     if (rawRoute.startsWith('/standards/')) {
@@ -59,6 +59,20 @@ function handleRoute() {
 
     // Deactivate nav links
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+    // If on login route
+    if (routeName === '/login') {
+        showView('view-login');
+        updateUserUI();
+        return;
+    }
+
+    // RBAC Security Route Protection
+    if (routeName === '/admin' && (!currentUser || currentUser.role !== 'admin')) {
+        showToast('Access Restricted: System Administrator privileges required for Diagnostics.', 'error');
+        navigateTo('#/');
+        return;
+    }
 
     // Highlight active nav link based on current route
     const activeNav = document.querySelector(`.nav-link[data-route="${routeName}"]`) || 
@@ -2016,24 +2030,45 @@ window.logoutUser = logoutUser;
 // AUTHENTICATION & ROLE-BASED ACCESS CONTROL (RBAC)
 // ----------------------------------------------------
 function updateUserUI() {
+    const mainNav = document.getElementById('main-nav');
     const avatarEl = document.getElementById('user-badge-avatar');
     const nameEl = document.getElementById('user-badge-name');
     const roleEl = document.getElementById('user-badge-role');
     const navAdminLink = document.getElementById('nav-admin-link');
+    const userBadge = document.getElementById('user-profile-badge');
 
-    if (avatarEl) avatarEl.textContent = currentUser.avatar || (currentUser.role === 'admin' ? '🛡️' : '👨‍💼');
-    if (nameEl) nameEl.textContent = currentUser.name || currentUser.username;
-    if (roleEl) {
-        roleEl.textContent = (currentUser.role || 'officer').toUpperCase();
-        roleEl.className = currentUser.role === 'admin' ? 'badge-role-admin' : 'badge-role-officer';
+    const isLoginView = !isLoggedIn || window.location.hash === '#/login';
+
+    if (mainNav) {
+        mainNav.style.display = isLoginView ? 'none' : 'block';
     }
 
-    if (navAdminLink) {
-        navAdminLink.style.display = currentUser.role === 'admin' ? 'inline-flex' : 'none';
+    if (isLoginView && !isLoggedIn) {
+        if (avatarEl) avatarEl.textContent = '🔒';
+        if (nameEl) nameEl.textContent = 'Sign In';
+        if (roleEl) {
+            roleEl.textContent = 'PORTAL';
+            roleEl.className = 'badge-role-officer';
+        }
+        if (navAdminLink) navAdminLink.style.display = 'none';
+    } else {
+        if (avatarEl) avatarEl.textContent = currentUser.avatar || (currentUser.role === 'admin' ? '🛡️' : '👨‍💼');
+        if (nameEl) nameEl.textContent = currentUser.name || currentUser.username;
+        if (roleEl) {
+            roleEl.textContent = (currentUser.role || 'officer').toUpperCase();
+            roleEl.className = currentUser.role === 'admin' ? 'badge-role-admin' : 'badge-role-officer';
+        }
+        if (navAdminLink) {
+            navAdminLink.style.display = currentUser.role === 'admin' ? 'inline-flex' : 'none';
+        }
     }
 }
 
 function openLoginModal() {
+    if (!isLoggedIn || window.location.hash === '#/login') {
+        navigateTo('#/login');
+        return;
+    }
     const modal = document.getElementById('login-modal-overlay');
     if (modal) modal.style.display = 'flex';
     syncLoginFields(currentUser.role || 'officer');
@@ -2045,16 +2080,22 @@ function closeLoginModal() {
 }
 
 function selectDemoRole(role) {
-    const btnOfficer = document.getElementById('btn-role-officer');
-    const btnAdmin = document.getElementById('btn-role-admin');
+    const btnOfficerModal = document.getElementById('btn-role-officer');
+    const btnAdminModal = document.getElementById('btn-role-admin');
+    const btnOfficerPage = document.getElementById('btn-page-role-officer');
+    const btnAdminPage = document.getElementById('btn-page-role-admin');
+
     const usernameInput = document.getElementById('login-username');
     const passwordInput = document.getElementById('login-password');
     const roleSelect = document.getElementById('login-role-select');
     const privilegesDesc = document.getElementById('role-privileges-desc');
 
     if (role === 'admin') {
-        if (btnOfficer) btnOfficer.classList.remove('active');
-        if (btnAdmin) btnAdmin.classList.add('active');
+        if (btnOfficerModal) btnOfficerModal.classList.remove('active');
+        if (btnAdminModal) btnAdminModal.classList.add('active');
+        if (btnOfficerPage) btnOfficerPage.classList.remove('active');
+        if (btnAdminPage) btnAdminPage.classList.add('active');
+
         if (usernameInput) usernameInput.value = 'admin@gem.gov.in';
         if (passwordInput) passwordInput.value = 'admin123';
         if (roleSelect) roleSelect.value = 'admin';
@@ -2065,8 +2106,11 @@ function selectDemoRole(role) {
             privilegesDesc.style.color = '#991b1b';
         }
     } else {
-        if (btnAdmin) btnAdmin.classList.remove('active');
-        if (btnOfficer) btnOfficer.classList.add('active');
+        if (btnAdminModal) btnAdminModal.classList.remove('active');
+        if (btnOfficerModal) btnOfficerModal.classList.add('active');
+        if (btnAdminPage) btnAdminPage.classList.remove('active');
+        if (btnOfficerPage) btnOfficerPage.classList.add('active');
+
         if (usernameInput) usernameInput.value = 'officer@gem.gov.in';
         if (passwordInput) passwordInput.value = 'officer123';
         if (roleSelect) roleSelect.value = 'officer';
@@ -2102,16 +2146,15 @@ async function handleLoginSubmit(event) {
         const data = await response.json();
         if (response.ok && (data.user || data.username || data.role)) {
             currentUser = data.user || data;
+            isLoggedIn = true;
+            localStorage.setItem('standard_saarthi_logged_in', 'true');
             localStorage.setItem('standard_saarthi_user', JSON.stringify(currentUser));
             updateUserUI();
             closeLoginModal();
             showToast(`Welcome, ${currentUser.name}! Logged in as ${(currentUser.role || 'officer').toUpperCase()}`, 'success');
             
-            if (currentUser.role === 'admin' && window.location.hash === '#/admin') {
-                handleRoute();
-            } else if (currentUser.role !== 'admin' && window.location.hash === '#/admin') {
-                navigateTo('#/');
-            }
+            // Redirect to Home Page
+            navigateTo('#/');
         } else {
             showToast(data.detail || 'Login failed', 'error');
         }
@@ -2125,20 +2168,21 @@ async function handleLoginSubmit(event) {
             department: isAdminRole ? 'IT & Standards Admin' : 'Procurement Cell, GeM',
             avatar: isAdminRole ? '🛡️' : '👨‍💼'
         };
+        isLoggedIn = true;
+        localStorage.setItem('standard_saarthi_logged_in', 'true');
         localStorage.setItem('standard_saarthi_user', JSON.stringify(currentUser));
         updateUserUI();
         closeLoginModal();
-        showToast(`Logged in as ${currentUser.role.toUpperCase()}`, 'success');
+        showToast(`Welcome, ${currentUser.name}! Logged in as ${currentUser.role.toUpperCase()}`, 'success');
         
-        if (currentUser.role === 'admin' && window.location.hash === '#/admin') {
-            handleRoute();
-        } else if (currentUser.role !== 'admin' && window.location.hash === '#/admin') {
-            navigateTo('#/');
-        }
+        // Redirect to Home Page
+        navigateTo('#/');
     }
 }
 
 function logoutUser() {
+    isLoggedIn = false;
+    localStorage.setItem('standard_saarthi_logged_in', 'false');
     currentUser = {
         username: 'officer@gem.gov.in',
         name: 'Er. Rajesh Kumar',
@@ -2148,11 +2192,10 @@ function logoutUser() {
     };
     localStorage.setItem('standard_saarthi_user', JSON.stringify(currentUser));
     updateUserUI();
-    showToast('Logged out. Switched back to Standard Procurement Officer role.', 'info');
-    if (window.location.hash === '#/admin') {
-        navigateTo('#/');
-    }
+    showToast('Logged out successfully. Switched back to Sign In page.', 'info');
+    navigateTo('#/login');
 }
+
 
 
 
