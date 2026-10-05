@@ -452,7 +452,7 @@ def get_evaluation_dashboard():
 def read_root():
     index_path = os.path.join(FRONTEND_DIR, "index.html")
     if os.path.exists(index_path):
-        return FileResponse(index_path)
+        return FileResponse(index_path, headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
     return {"message": "StandardSaarthi API active"}
 
 @app.get("/{filename}")
@@ -462,7 +462,7 @@ def read_frontend_static(filename: str):
         raise HTTPException(status_code=404, detail="Not Found")
     file_path = os.path.join(FRONTEND_DIR, filename)
     if os.path.exists(file_path) and os.path.isfile(file_path):
-        return FileResponse(file_path)
+        return FileResponse(file_path, headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
     raise HTTPException(status_code=404, detail="File Not Found")
 
 
