@@ -237,6 +237,23 @@
                         <h3 id="recommendations-heading">Recommended Primary Standards</h3>
                         <button class="btn btn-sm btn-primary" id="btn-download-pdf" onclick="downloadPdfReport()">Download Official PDF Report</button>
                     </div>
+
+                    <!-- Filter Option Bar for Analysis Results / Report -->
+                    <div id="results-filter-bar" class="search-bar-row" style="margin-bottom:1.25rem; display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:0.75rem 1rem; border-radius:8px; border:1px solid #e2e8f0;">
+                        <div style="flex:1; min-width:240px;">
+                            <input type="text" id="results-search-input" placeholder="🔍 Search report by IS code, title, or keyword..." onkeyup="filterAnalysisResults()" style="width:100%; padding:0.5rem 0.85rem; border:1px solid #cbd5e1; border-radius:6px; font-size:0.88rem;">
+                        </div>
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <label for="results-qco-filter" style="font-size:0.85rem; font-weight:600; color:#475569; white-space:nowrap;">Filter Report:</label>
+                            <select id="results-qco-filter" onchange="filterAnalysisResults()" style="padding:0.5rem 0.85rem; border:1px solid #cbd5e1; border-radius:6px; font-size:0.88rem; background:#ffffff; font-weight:500;">
+                                <option value="all">All Standards</option>
+                                <option value="qco">Mandatory QCO Only</option>
+                                <option value="active">Active / Current Only</option>
+                                <option value="high_score">High Relevance (>70%)</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div id="recommendations-list"></div>
                 </div>
 
@@ -427,6 +444,6 @@
         <p><strong>StandardSaarthi</strong> — AI-powered standards intelligence for smarter procurement.</p>
     </footer>
 
-    <script src="app.js?v=1.0.3"></script>
+    <script src="app.js?v=1.0.4"></script>
 </body>
 </html>

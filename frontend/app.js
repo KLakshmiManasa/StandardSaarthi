@@ -845,8 +845,69 @@ function renderAnalysisResults(data) {
         return;
     }
 
+    // Reset filter bar controls
+    const searchInput = document.getElementById('results-search-input');
+    const qcoFilter = document.getElementById('results-qco-filter');
+    if (searchInput) searchInput.value = '';
+    if (qcoFilter) qcoFilter.value = 'all';
+
+    filterAnalysisResults();
+}
+
+function filterAnalysisResults() {
+    if (!currentAnalysisResult || !currentAnalysisResult.recommendations) return;
+
+    const searchInput = document.getElementById('results-search-input');
+    const qcoFilter = document.getElementById('results-qco-filter');
+    
+    const queryTerm = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    const filterType = qcoFilter ? qcoFilter.value : 'all';
+
+    const lang = currentActiveLanguage || 'en';
+    const isIndic = (lang !== 'en');
+    const t = (k) => (UI_I18N[lang] && UI_I18N[lang][k]) || UI_I18N['en'][k] || k;
+
+    const allRecs = currentAnalysisResult.recommendations || [];
+    const isAbstained = (currentAnalysisResult.status === 'abstain' || currentAnalysisResult.confidence_gated);
+
+    const filteredRecs = allRecs.filter(r => {
+        // Keyword Search Filter
+        if (queryTerm) {
+            const isCodeMatch = (r.is_code || '').toLowerCase().includes(queryTerm);
+            const titleMatch = (r.title || '').toLowerCase().includes(queryTerm);
+            const titleLocMatch = (r.title_localized || '').toLowerCase().includes(queryTerm);
+            const scopeMatch = (r.scope || '').toLowerCase().includes(queryTerm);
+            const scopeLocMatch = (r.scope_localized || '').toLowerCase().includes(queryTerm);
+            if (!isCodeMatch && !titleMatch && !titleLocMatch && !scopeMatch && !scopeLocMatch) {
+                return false;
+            }
+        }
+
+        // Compliance / Score Dropdown Filter
+        if (filterType === 'qco') {
+            const isQco = r.qco_compliance && r.qco_compliance.qco_mandatory;
+            if (!isQco) return false;
+        } else if (filterType === 'active') {
+            const isSuperseded = (r.lifecycle_status === 'SUPERSEDED' || (r.superseded_by && r.superseded_by !== 'None'));
+            if (isSuperseded) return false;
+        } else if (filterType === 'high_score') {
+            const scorePct = (r.relevance_score || 0.5);
+            if (scorePct < 0.7) return false;
+        }
+
+        return true;
+    });
+
+    const recsList = document.getElementById('recommendations-list');
+    if (!recsList) return;
+
+    if (!filteredRecs.length) {
+        recsList.innerHTML = `<p class="placeholder-text" style="padding:1.5rem; text-align:center; color:#64748b;">No matching standards found for active filters.</p>`;
+        return;
+    }
+
     let recsHtml = '';
-    recs.forEach((r, idx) => {
+    filteredRecs.forEach((r, idx) => {
         const isQco = r.qco_compliance && r.qco_compliance.qco_mandatory;
         let badge = '';
         if (isAbstained || r.citation_status === 'CLOSEST_CANDIDATE') {
@@ -913,6 +974,7 @@ function renderAnalysisResults(data) {
             </div>
         `;
     });
+
     recsList.innerHTML = recsHtml;
 }
 
@@ -1879,6 +1941,7 @@ window.inspectAndEditAuditRecord = inspectAndEditAuditRecord;
 window.loadAuditTrail = loadAuditTrail;
 window.handleOutputLanguageChange = handleOutputLanguageChange;
 window.uploadTenderDocument = uploadTenderDocument;
+window.filterAnalysisResults = filterAnalysisResults;
 
 
 
