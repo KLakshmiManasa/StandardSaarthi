@@ -88,6 +88,33 @@ a {
     gap: 1rem;
 }
 
+.global-lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.global-lang-dropdown {
+    background: #0f172a;
+    color: #ffffff;
+    border: 1px solid #3b82f6;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+
+.global-lang-dropdown option {
+    background: #0f172a;
+    color: #ffffff;
+}
+
 .status-badge {
     background: rgba(255, 255, 255, 0.1);
     padding: 0.4rem 0.8rem;

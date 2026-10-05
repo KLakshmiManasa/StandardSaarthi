@@ -1926,6 +1926,48 @@ async function handleOutputLanguageChange(newLang) {
     }
 }
 
+// Global Application Language Switcher
+function handleGlobalLanguageChange(lang) {
+    currentActiveLanguage = lang;
+    
+    // Sync analyze workspace dropdowns
+    const outLangSelect = document.getElementById('output-language-select');
+    if (outLangSelect) {
+        outLangSelect.value = lang;
+    }
+    
+    const inLangSelect = document.getElementById('language-select');
+    if (inLangSelect && inLangSelect.value !== 'auto') {
+        inLangSelect.value = lang;
+    }
+
+    const globalSelect = document.getElementById('global-language-select');
+    if (globalSelect) {
+        globalSelect.value = lang;
+    }
+
+    const langNameMap = {
+        'en': 'English',
+        'hi': 'Hindi (हिंदी)',
+        'ta': 'Tamil (தமிழ்)',
+        'te': 'Telugu (తెలుగు)',
+        'mr': 'Marathi (मराठी)',
+        'bn': 'Bengali (বাংলা)',
+        'gu': 'Gujarati (ગુજરાતી)',
+        'kn': 'Kannada (ಕನ್ನಡ)',
+        'ml': 'Malayalam (മലയാളം)',
+        'pa': 'Punjabi (ਪੰਜਾਬੀ)',
+        'or': 'Odia (ଓଡ଼ିଆ)'
+    };
+
+    showToast(`App language set to ${langNameMap[lang] || lang.toUpperCase()}`, 'info');
+
+    // Trigger analysis result re-localization if an active session exists
+    if (currentAnalysisResult) {
+        handleOutputLanguageChange(lang);
+    }
+}
+
 // Global Window Bindings
 window.openWhyModal = openWhyModal;
 window.closeWhyModal = closeWhyModal;
@@ -1942,6 +1984,7 @@ window.loadAuditTrail = loadAuditTrail;
 window.handleOutputLanguageChange = handleOutputLanguageChange;
 window.uploadTenderDocument = uploadTenderDocument;
 window.filterAnalysisResults = filterAnalysisResults;
+window.handleGlobalLanguageChange = handleGlobalLanguageChange;
 
 
 
