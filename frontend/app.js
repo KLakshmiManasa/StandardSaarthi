@@ -26,6 +26,7 @@ function handleRoute() {
     const hash = window.location.hash || '#/';
     let rawRoute = hash.replace('#', '').trim();
     if (!rawRoute) rawRoute = '/';
+    if (!rawRoute.startsWith('/')) rawRoute = '/' + rawRoute;
 
     // Extract base route name (e.g. /audit from /audit?foo=bar or /audit/)
     let routeName = rawRoute.split('?')[0].replace(/\/$/, '') || '/';
@@ -40,13 +41,12 @@ function handleRoute() {
     document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
 
     // Deactivate nav links
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-        const dataRoute = link.getAttribute('data-route');
-        if (dataRoute === routeName || dataRoute === `/${routeName.split('/')[1]}`) {
-            link.classList.add('active');
-        }
-    });
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+    // Highlight active nav link based on current route
+    const activeNav = document.querySelector(`.nav-link[data-route="${routeName}"]`) || 
+                      document.querySelector(`.nav-link[data-route="/${routeName.split('/')[1]}"]`);
+    if (activeNav) activeNav.classList.add('active');
 
     // Handle view rendering
     if (routeName === '/' || routeName === '') {
