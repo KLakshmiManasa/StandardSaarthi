@@ -121,8 +121,8 @@ class StandardsService:
         Returns catalog list of standards filtered by sector or text search.
         """
         results = []
-        q_lower = (query or "").lower().strip()
-        sec_lower = (sector or "").lower().strip()
+        q_lower = query.lower().strip() if isinstance(query, str) else ""
+        sec_lower = sector.lower().strip() if isinstance(sector, str) else ""
 
         for code, std in self.standards_map.items():
             if sec_lower and std.get("sector", "").lower() != sec_lower:

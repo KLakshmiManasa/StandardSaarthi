@@ -58,8 +58,11 @@ function handleRoute() {
     updateUserUI();
 
     // RBAC Security Route Protection
-    if (routeName === '/admin' && (!currentUser || currentUser.role !== 'admin')) {
-        showToast('Access Restricted: System Administrator privileges required for Diagnostics.', 'error');
+    const isAdmin = currentUser && currentUser.role === 'admin';
+    const isAdminRoute = routeName.startsWith('/admin');
+
+    if (isAdminRoute && !isAdmin) {
+        showToast('Access Denied (403): System Administrator privileges required.', 'error');
         navigateTo('#/');
         return;
     }
@@ -72,11 +75,22 @@ function handleRoute() {
     // Handle view rendering
     if (routeName === '/login') {
         openLoginModal();
-        showView('view-home');
-        loadHomeRecent();
+        if (isAdmin) {
+            showView('view-admin');
+            loadAdminDashboard();
+        } else {
+            showView('view-home');
+            loadHomeRecent();
+            loadOfficerStats();
+        }
     } else if (routeName === '/' || routeName === '') {
+        if (isAdmin) {
+            navigateTo('#/admin');
+            return;
+        }
         showView('view-home');
         loadHomeRecent();
+        loadOfficerStats();
     } else if (routeName === '/analyze') {
         showView('view-analyze');
         const urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
@@ -99,15 +113,41 @@ function handleRoute() {
     } else if (routeName === '/history') {
         showView('view-history');
         loadHistory();
-    } else if (routeName === '/reports') {
-        showView('view-reports');
-        loadReports();
+    } else if (routeName === '/profile') {
+        showView('view-profile');
+        loadUserProfile();
     } else if (routeName === '/admin') {
         showView('view-admin');
-        loadAdminMetrics();
+        loadAdminDashboard();
+    } else if (routeName === '/admin/users') {
+        showView('view-admin-users');
+        loadAdminUsers();
+    } else if (routeName === '/admin/standards') {
+        showView('view-admin-standards');
+        loadAdminStandards();
+    } else if (routeName === '/admin/qcos') {
+        showView('view-admin-qcos');
+        loadAdminQCOs();
+    } else if (routeName === '/admin/monitoring') {
+        showView('view-admin-monitoring');
+        loadAdminMonitoring();
+    } else if (routeName === '/admin/audit') {
+        showView('view-admin-audit');
+        loadAdminAuditLogs();
+    } else if (routeName === '/admin/reports') {
+        showView('view-admin-reports');
+        loadAdminReports();
+    } else if (routeName === '/admin/profile') {
+        showView('view-admin-profile');
     } else {
-        showView('view-home');
-        loadHomeRecent();
+        if (isAdmin) {
+            showView('view-admin');
+            loadAdminDashboard();
+        } else {
+            showView('view-home');
+            loadHomeRecent();
+            loadOfficerStats();
+        }
     }
 }
 
@@ -2019,22 +2059,43 @@ window.selectDemoRole = selectDemoRole;
 window.syncRoleFromSelect = syncRoleFromSelect;
 window.handleLoginSubmit = handleLoginSubmit;
 window.logoutUser = logoutUser;
+window.loadOfficerStats = loadOfficerStats;
+window.loadUserProfile = loadUserProfile;
+window.loadAdminDashboard = loadAdminDashboard;
+window.loadAdminUsers = loadAdminUsers;
+window.loadAdminStandards = loadAdminStandards;
+window.loadAdminQCOs = loadAdminQCOs;
+window.loadAdminMonitoring = loadAdminMonitoring;
+window.loadAdminAuditLogs = loadAdminAuditLogs;
+window.loadAdminReports = loadAdminReports;
 
 // ----------------------------------------------------
 // AUTHENTICATION & ROLE-BASED ACCESS CONTROL (RBAC)
 // ----------------------------------------------------
+function getAuthHeaders() {
+    return {
+        'Content-Type': 'application/json',
+        'X-User-Role': currentUser ? currentUser.role : 'officer',
+        'X-User-Token': currentUser ? (currentUser.token || '') : ''
+    };
+}
+
 function updateUserUI() {
-    const mainNav = document.getElementById('main-nav');
     const avatarEl = document.getElementById('user-badge-avatar');
     const nameEl = document.getElementById('user-badge-name');
     const roleEl = document.getElementById('user-badge-role');
-    const navAdminLink = document.getElementById('nav-admin-link');
-
-    if (mainNav) {
-        mainNav.style.display = 'block';
-    }
+    const navGroupOfficer = document.getElementById('nav-group-officer');
+    const navGroupAdmin = document.getElementById('nav-group-admin');
 
     const isAdmin = currentUser && currentUser.role === 'admin';
+
+    // Toggle navigation groups based on role
+    if (navGroupOfficer) {
+        navGroupOfficer.style.display = isAdmin ? 'none' : 'flex';
+    }
+    if (navGroupAdmin) {
+        navGroupAdmin.style.display = isAdmin ? 'flex' : 'none';
+    }
 
     // Update Header Badge
     if (avatarEl) avatarEl.textContent = currentUser.avatar || (isAdmin ? '🛡️' : '👨‍💼');
@@ -2043,15 +2104,6 @@ function updateUserUI() {
         roleEl.textContent = (currentUser.role || 'officer').toUpperCase();
         roleEl.className = isAdmin ? 'badge-role-admin' : 'badge-role-officer';
     }
-
-    // Toggle Admin-Only UI Elements
-    document.querySelectorAll('.nav-admin-only').forEach(el => {
-        if (el.tagName === 'A') {
-            el.style.display = isAdmin ? 'inline-flex' : 'none';
-        } else {
-            el.style.display = isAdmin ? 'block' : 'none';
-        }
-    });
 }
 
 function openLoginModal() {
@@ -2068,9 +2120,6 @@ function closeLoginModal() {
 function selectDemoRole(role) {
     const btnOfficerModal = document.getElementById('btn-role-officer');
     const btnAdminModal = document.getElementById('btn-role-admin');
-    const btnOfficerPage = document.getElementById('btn-page-role-officer');
-    const btnAdminPage = document.getElementById('btn-page-role-admin');
-
     const usernameInput = document.getElementById('login-username');
     const passwordInput = document.getElementById('login-password');
     const roleSelect = document.getElementById('login-role-select');
@@ -2079,8 +2128,6 @@ function selectDemoRole(role) {
     if (role === 'admin') {
         if (btnOfficerModal) btnOfficerModal.classList.remove('active');
         if (btnAdminModal) btnAdminModal.classList.add('active');
-        if (btnOfficerPage) btnOfficerPage.classList.remove('active');
-        if (btnAdminPage) btnAdminPage.classList.add('active');
 
         if (usernameInput) usernameInput.value = 'admin@gem.gov.in';
         if (passwordInput) passwordInput.value = 'admin123';
@@ -2094,8 +2141,6 @@ function selectDemoRole(role) {
     } else {
         if (btnAdminModal) btnAdminModal.classList.remove('active');
         if (btnOfficerModal) btnOfficerModal.classList.add('active');
-        if (btnAdminPage) btnAdminPage.classList.remove('active');
-        if (btnOfficerPage) btnOfficerPage.classList.add('active');
 
         if (usernameInput) usernameInput.value = 'officer@gem.gov.in';
         if (passwordInput) passwordInput.value = 'officer123';
@@ -2139,8 +2184,12 @@ async function handleLoginSubmit(event) {
             closeLoginModal();
             showToast(`Welcome, ${currentUser.name}! Logged in as ${(currentUser.role || 'officer').toUpperCase()}`, 'success');
             
-            // Redirect to Home Page
-            navigateTo('#/');
+            // Redirect based on authenticated role
+            if (currentUser.role === 'admin') {
+                navigateTo('#/admin');
+            } else {
+                navigateTo('#/');
+            }
         } else {
             showToast(data.detail || 'Login failed', 'error');
         }
@@ -2149,10 +2198,12 @@ async function handleLoginSubmit(event) {
         const isAdminRole = role === 'admin' || username.includes('admin');
         currentUser = {
             username: username || 'user@gem.gov.in',
-            name: isAdminRole ? 'System Administrator' : 'Er. Rajesh Kumar',
+            name: isAdminRole ? 'Dr. K. Sharma (Admin)' : 'Er. Rajesh Kumar',
             role: isAdminRole ? 'admin' : 'officer',
-            department: isAdminRole ? 'IT & Standards Admin' : 'Procurement Cell, GeM',
-            avatar: isAdminRole ? '🛡️' : '👨‍💼'
+            department: isAdminRole ? 'BIS / GeM Standards Cell' : 'GeM / Central Procurement Cell',
+            designation: isAdminRole ? 'Chief Director & System Administrator' : 'Executive Engineer (Procurement)',
+            avatar: isAdminRole ? '🛡️' : '👨‍💼',
+            token: isAdminRole ? 'token_admin_99001' : 'token_officer_88412'
         };
         isLoggedIn = true;
         localStorage.setItem('standard_saarthi_logged_in', 'true');
@@ -2161,8 +2212,12 @@ async function handleLoginSubmit(event) {
         closeLoginModal();
         showToast(`Welcome, ${currentUser.name}! Logged in as ${currentUser.role.toUpperCase()}`, 'success');
         
-        // Redirect to Home Page
-        navigateTo('#/');
+        // Redirect based on authenticated role
+        if (currentUser.role === 'admin') {
+            navigateTo('#/admin');
+        } else {
+            navigateTo('#/');
+        }
     }
 }
 
@@ -2173,14 +2228,305 @@ function logoutUser() {
         username: 'officer@gem.gov.in',
         name: 'Er. Rajesh Kumar',
         role: 'officer',
-        department: 'Procurement Cell, GeM',
-        avatar: '👨‍💼'
+        department: 'GeM / Central Procurement Cell',
+        designation: 'Executive Engineer (Procurement)',
+        avatar: '👨‍💼',
+        token: 'token_officer_88412'
     };
     localStorage.setItem('standard_saarthi_user', JSON.stringify(currentUser));
     updateUserUI();
-    showToast('Logged out successfully. Switched back to Sign In page.', 'info');
-    navigateTo('#/login');
+    showToast('Logged out successfully. Switched back to Standard Procurement Officer.', 'info');
+    navigateTo('#/');
 }
+
+// ----------------------------------------------------
+// OFFICER & ADMIN DATA LOADERS
+// ----------------------------------------------------
+async function loadOfficerStats() {
+    try {
+        const resp = await fetch('/api/history', { headers: getAuthHeaders() });
+        const data = await resp.json();
+        const statAnalyses = document.getElementById('officer-stat-analyses');
+        if (statAnalyses && Array.isArray(data)) {
+            statAnalyses.textContent = data.length;
+        }
+    } catch(e) {
+        console.error('Failed to load officer stats:', e);
+    }
+}
+
+function loadUserProfile() {
+    const avatar = document.getElementById('profile-avatar');
+    const name = document.getElementById('profile-name');
+    const roleBadge = document.getElementById('profile-role-badge');
+    const desig = document.getElementById('profile-designation');
+    const email = document.getElementById('profile-email');
+    const dept = document.getElementById('profile-dept');
+
+    if (avatar) avatar.textContent = currentUser.avatar || (currentUser.role === 'admin' ? '🛡️' : '👨‍💼');
+    if (name) name.textContent = currentUser.name;
+    if (roleBadge) {
+        roleBadge.textContent = (currentUser.role || 'officer').toUpperCase();
+        roleBadge.className = currentUser.role === 'admin' ? 'badge-role-admin' : 'badge-role-officer';
+    }
+    if (desig) desig.textContent = currentUser.designation || (currentUser.role === 'admin' ? 'Chief Director & System Administrator' : 'Executive Engineer (Procurement)');
+    if (email) email.textContent = currentUser.username;
+    if (dept) dept.textContent = currentUser.department || (currentUser.role === 'admin' ? 'BIS / GeM Standards Cell' : 'GeM / Central Procurement Cell');
+}
+
+async function loadAdminDashboard() {
+    try {
+        const resp = await fetch('/api/admin/metrics', { headers: getAuthHeaders() });
+        if (resp.status === 403) {
+            showToast('Access Denied (403): System Administrator privileges required.', 'error');
+            navigateTo('#/');
+            return;
+        }
+        const data = await resp.json();
+        const usersEl = document.getElementById('adm-stat-users');
+        const stdsEl = document.getElementById('adm-stat-standards');
+        const healthEl = document.getElementById('adm-stat-health');
+        const analysesEl = document.getElementById('adm-stat-analyses');
+        const qcosEl = document.getElementById('adm-stat-qcos');
+
+        if (usersEl) usersEl.textContent = data.active_users_count || 2;
+        if (stdsEl) stdsEl.textContent = data.dataset_statistics?.total_verified_standards || 121;
+        if (healthEl) healthEl.textContent = data.system_status || 'Healthy';
+        if (analysesEl) analysesEl.textContent = data.total_history_analyses || 0;
+        if (qcosEl) qcosEl.textContent = 13;
+    } catch(e) {
+        console.error('Failed to load admin metrics:', e);
+    }
+}
+
+async function loadAdminUsers() {
+    const tbody = document.getElementById('admin-users-table-body');
+    if (!tbody) return;
+    try {
+        const resp = await fetch('/api/admin/users', { headers: getAuthHeaders() });
+        if (resp.status === 403) {
+            showToast('Access Denied (403): Administrator access required.', 'error');
+            navigateTo('#/');
+            return;
+        }
+        const users = await resp.json();
+        tbody.innerHTML = users.map(u => `
+            <tr>
+                <td><strong>${u.name}</strong></td>
+                <td>${u.username}</td>
+                <td><span class="${u.role === 'admin' ? 'badge-role-admin' : 'badge-role-officer'}">${u.role.toUpperCase()}</span></td>
+                <td>${u.designation}</td>
+                <td>${u.department}</td>
+                <td><span class="badge-status-active">${u.status}</span></td>
+                <td><button class="btn btn-sm btn-outline" onclick="showToast('User profile: ${u.name} (${u.role})', 'info')">View Details</button></td>
+            </tr>
+        `).join('');
+    } catch(e) {
+        console.error('Failed to load admin users:', e);
+    }
+}
+
+async function loadAdminStandards() {
+    const tbody = document.getElementById('admin-standards-table-body');
+    if (!tbody) return;
+    try {
+        const resp = await fetch('/api/admin/standards', { headers: getAuthHeaders() });
+        if (resp.status === 403) {
+            showToast('Access Denied (403): Administrator access required.', 'error');
+            navigateTo('#/');
+            return;
+        }
+        const data = await resp.json();
+        const stdTotal = document.getElementById('adm-std-total');
+        const stdActive = document.getElementById('adm-std-active');
+        const stdSuperseded = document.getElementById('adm-std-superseded');
+        const stdSectors = document.getElementById('adm-std-sectors');
+
+        if (stdTotal) stdTotal.textContent = data.total_verified_standards;
+        if (stdActive) stdActive.textContent = data.active_standards;
+        if (stdSuperseded) stdSuperseded.textContent = data.superseded_standards;
+        if (stdSectors) stdSectors.textContent = data.sectors_covered;
+
+        tbody.innerHTML = data.standards.map(s => `
+            <tr>
+                <td><strong>${s.is_code}</strong></td>
+                <td>${s.title}</td>
+                <td>${s.sector || 'General'}</td>
+                <td><span class="${s.status === 'ACTIVE' ? 'badge-status-active' : 'badge-abstain'}">${s.status || 'ACTIVE'}</span></td>
+                <td>${s.edition_year || 'Current'}</td>
+                <td><span class="badge-status-active">${s.qco_applicability || 'MANDATORY'}</span></td>
+            </tr>
+        `).join('');
+    } catch(e) {
+        console.error('Failed to load admin standards:', e);
+    }
+}
+
+async function loadAdminQCOs() {
+    const tbody = document.getElementById('admin-qcos-table-body');
+    if (!tbody) return;
+    try {
+        const resp = await fetch('/api/admin/qcos', { headers: getAuthHeaders() });
+        if (resp.status === 403) {
+            showToast('Access Denied (403): Administrator access required.', 'error');
+            navigateTo('#/');
+            return;
+        }
+        const data = await resp.json();
+        tbody.innerHTML = data.records.map(q => `
+            <tr>
+                <td><strong>${q.is_code}</strong></td>
+                <td>${q.title}</td>
+                <td>${q.product_category || 'Industrial / Consumer'}</td>
+                <td><span class="badge-status-active">${q.qco_applicability}</span></td>
+                <td>${q.certification_information || 'ISI Mark Mandatory Scheme'}</td>
+                <td><small style="color:#64748b;">${q.source_provenance || 'Ministry Gazette'}</small></td>
+            </tr>
+        `).join('');
+    } catch(e) {
+        console.error('Failed to load admin QCOs:', e);
+    }
+}
+
+async function loadAdminMonitoring() {
+    const container = document.getElementById('admin-monitoring-content');
+    if (!container) return;
+    try {
+        const resp = await fetch('/api/admin/monitoring', { headers: getAuthHeaders() });
+        if (resp.status === 403) {
+            showToast('Access Denied (403): Administrator access required.', 'error');
+            navigateTo('#/');
+            return;
+        }
+        const data = await resp.json();
+        container.innerHTML = `
+            <div class="admin-stat-grid">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" style="color:#16a34a;">${data.system_status}</div>
+                    <div class="admin-stat-label">Pipeline Status</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" style="color:#2563eb;">${data.api_latency_ms} ms</div>
+                    <div class="admin-stat-label">Average API Latency</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number">${data.vector_embeddings_loaded}</div>
+                    <div class="admin-stat-label">Vector Embeddings Active</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number">${data.knowledge_graph_edges}</div>
+                    <div class="admin-stat-label">Knowledge Graph Relationships</div>
+                </div>
+            </div>
+            <div class="card" style="margin-top:1rem; background:#f8fafc;">
+                <h4>Operational Daemon Information</h4>
+                <p><strong>Daemon:</strong> ${data.active_daemon}</p>
+                <p><strong>Memory Footprint:</strong> ${data.memory_usage}</p>
+                <p><strong>Vector Availability:</strong> ${data.pipeline_available ? 'Ready (FAISS Index loaded)' : 'Offline'}</p>
+            </div>
+        `;
+    } catch(e) {
+        console.error('Failed to load admin monitoring:', e);
+    }
+}
+
+async function loadAdminAuditLogs() {
+    const container = document.getElementById('admin-audit-container');
+    if (!container) return;
+    try {
+        const resp = await fetch('/api/admin/audit-logs', { headers: getAuthHeaders() });
+        if (resp.status === 403) {
+            showToast('Access Denied (403): Administrator access required.', 'error');
+            navigateTo('#/');
+            return;
+        }
+        const logs = await resp.json();
+        if (!logs || logs.length === 0) {
+            container.innerHTML = '<p class="text-muted">No audit trail determinations logged yet.</p>';
+            return;
+        }
+        container.innerHTML = `
+            <div class="audit-table-wrapper">
+                <table class="audit-table">
+                    <thead>
+                        <tr>
+                            <th>Audit ID</th>
+                            <th>Timestamp</th>
+                            <th>Reviewing Officer</th>
+                            <th>Department</th>
+                            <th>Requirement Query</th>
+                            <th>Action / Decision</th>
+                            <th>Final Standard</th>
+                            <th>Audit Justification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${logs.map(log => `
+                            <tr>
+                                <td><span class="audit-id-badge">${log.audit_id}</span></td>
+                                <td style="white-space:nowrap;">${log.timestamp}</td>
+                                <td><strong>${log.officer_name}</strong><br><small style="color:#64748b;">${log.officer_designation}</small></td>
+                                <td>${log.department}</td>
+                                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis;">${log.query}</td>
+                                <td>
+                                    <span class="${log.decision === 'ACCEPTED' ? 'badge-officer-accepted' : 'badge-officer-override'}">
+                                        ${log.decision}
+                                    </span>
+                                </td>
+                                <td><strong>${log.final_standard}</strong></td>
+                                <td style="max-width:240px; font-size:0.75rem;">${log.justification}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    } catch(e) {
+        console.error('Failed to load admin audit logs:', e);
+    }
+}
+
+async function loadAdminReports() {
+    const container = document.getElementById('admin-reports-content');
+    if (!container) return;
+    try {
+        const resp = await fetch('/api/admin/reports', { headers: getAuthHeaders() });
+        if (resp.status === 403) {
+            showToast('Access Denied (403): Administrator access required.', 'error');
+            navigateTo('#/');
+            return;
+        }
+        const data = await resp.json();
+        container.innerHTML = `
+            <div class="admin-stat-grid">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number">${data.total_analyses}</div>
+                    <div class="admin-stat-label">Total Procurement Searches</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number">${data.saved_projects}</div>
+                    <div class="admin-stat-label">Saved Tender Projects</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number">${data.audit_reviews}</div>
+                    <div class="admin-stat-label">Statutory Determinations</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" style="color:#16a34a;">${data.system_health}</div>
+                    <div class="admin-stat-label">Reporting Service</div>
+                </div>
+            </div>
+            <div class="card" style="margin-top:1rem;">
+                <h4>Generate System-Wide Export</h4>
+                <p>Export all officer search sessions and statutory audit determinations as a consolidated audit register.</p>
+                <button class="btn btn-primary" onclick="showToast('Consolidated audit export generated.', 'success')">Download Global Audit Register (CSV)</button>
+            </div>
+        `;
+    } catch(e) {
+        console.error('Failed to load admin reports:', e);
+    }
+}
+
 
 
 
