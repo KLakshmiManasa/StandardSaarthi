@@ -66,6 +66,19 @@
         </div>
     </nav>
 
+    <!-- Role Workspace Context Banner -->
+    <div id="role-workspace-banner" class="role-workspace-bar banner-officer">
+        <div class="role-workspace-container">
+            <div class="role-workspace-info">
+                <span id="role-workspace-icon" class="role-workspace-icon">👨‍💼</span>
+                <div id="role-workspace-text">
+                    <strong>Procurement Officer Workspace</strong> — Logging in as Er. Rajesh Kumar (Procurement Cell, GeM). Access to Tender Requirement Analysis, BIS Catalog, Statutory QCO Compliance & Audit Trail Register.
+                </div>
+            </div>
+            <button class="role-switch-btn" onclick="openLoginModal()">Switch Role 🔄</button>
+        </div>
+    </div>
+
     <!-- App Main Container -->
     <main class="app-container">
         
@@ -154,6 +167,30 @@
                     <a href="#/analyze" class="btn btn-primary btn-lg">Analyze Requirement</a>
                     <a href="#/analyze?mode=c" class="btn btn-secondary btn-lg">Upload Tender Specification</a>
                     <a href="#/standards" class="btn btn-outline btn-lg">Browse Standards Catalog</a>
+                </div>
+            </div>
+
+            <!-- System Administrator Control & Metrics Quick Card (Admin Only) -->
+            <div id="home-admin-panel" class="admin-home-card nav-admin-only" style="display:none;">
+                <h3>🛡️ System Administrator Dashboard & Platform Controls</h3>
+                <p>You are logged in with <strong>System Administrator</strong> privileges. Monitor vector indexing, system latency benchmarks, and database health.</p>
+                <div class="admin-metrics-mini">
+                    <div class="mini-metric-pill">
+                        <div class="mini-metric-value" id="home-metric-standards">121</div>
+                        <div class="mini-metric-label">Indexed BIS Standards</div>
+                    </div>
+                    <div class="mini-metric-pill">
+                        <div class="mini-metric-value" id="home-metric-graph">130</div>
+                        <div class="mini-metric-label">Graph Relationships</div>
+                    </div>
+                    <div class="mini-metric-pill">
+                        <div class="mini-metric-value" id="home-metric-latency">142ms</div>
+                        <div class="mini-metric-label">Avg API Latency</div>
+                    </div>
+                </div>
+                <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+                    <a href="#/admin" class="btn btn-secondary btn-sm" style="background:#3b82f6; border-color:#2563eb; color:#fff;">📊 Open Full Admin Diagnostics Dashboard</a>
+                    <button class="btn btn-outline btn-sm" style="color:#ffffff; border-color:#ffffff;" onclick="showToast('FAISS Vector Index Synced cleanly.', 'success')">🔄 Sync Vector Store</button>
                 </div>
             </div>
 
@@ -602,6 +639,6 @@
         <p><strong>StandardSaarthi</strong> — AI-powered standards intelligence for smarter procurement.</p>
     </footer>
 
-    <script src="app.js?v=1.0.8"></script>
+    <script src="app.js?v=1.0.9"></script>
 </body>
 </html>

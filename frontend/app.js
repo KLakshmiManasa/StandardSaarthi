@@ -54,6 +54,9 @@ function handleRoute() {
     // Deactivate nav links
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
 
+    // Update UI & Role Workspace Banner
+    updateUserUI();
+
     // RBAC Security Route Protection
     if (routeName === '/admin' && (!currentUser || currentUser.role !== 'admin')) {
         showToast('Access Restricted: System Administrator privileges required for Diagnostics.', 'error');
@@ -2024,19 +2027,49 @@ function updateUserUI() {
     const nameEl = document.getElementById('user-badge-name');
     const roleEl = document.getElementById('user-badge-role');
     const navAdminLink = document.getElementById('nav-admin-link');
+    const banner = document.getElementById('role-workspace-banner');
+    const bannerIcon = document.getElementById('role-workspace-icon');
+    const bannerText = document.getElementById('role-workspace-text');
 
     if (mainNav) {
         mainNav.style.display = 'block';
     }
 
-    if (avatarEl) avatarEl.textContent = currentUser.avatar || (currentUser.role === 'admin' ? '🛡️' : '👨‍💼');
+    const isAdmin = currentUser && currentUser.role === 'admin';
+
+    // Update Header Badge
+    if (avatarEl) avatarEl.textContent = currentUser.avatar || (isAdmin ? '🛡️' : '👨‍💼');
     if (nameEl) nameEl.textContent = currentUser.name || currentUser.username;
     if (roleEl) {
         roleEl.textContent = (currentUser.role || 'officer').toUpperCase();
-        roleEl.className = currentUser.role === 'admin' ? 'badge-role-admin' : 'badge-role-officer';
+        roleEl.className = isAdmin ? 'badge-role-admin' : 'badge-role-officer';
     }
-    if (navAdminLink) {
-        navAdminLink.style.display = currentUser.role === 'admin' ? 'inline-flex' : 'none';
+
+    // Toggle Admin-Only UI Elements
+    document.querySelectorAll('.nav-admin-only').forEach(el => {
+        if (el.tagName === 'A') {
+            el.style.display = isAdmin ? 'inline-flex' : 'none';
+        } else {
+            el.style.display = isAdmin ? 'block' : 'none';
+        }
+    });
+
+    // Update Role Workspace Context Banner
+    if (banner && bannerIcon && bannerText) {
+        if (window.location.hash === '#/login') {
+            banner.style.display = 'none';
+        } else {
+            banner.style.display = 'block';
+            if (isAdmin) {
+                banner.className = 'role-workspace-bar banner-admin';
+                bannerIcon.textContent = '🛡️';
+                bannerText.innerHTML = `<strong>System Administrator Workspace</strong> — Active User: <strong>${currentUser.name || 'System Administrator'}</strong> (${currentUser.department || 'BIS IT Admin'}). Full administrative privileges active: System Diagnostics, Vector Indexing, Audit Log Inspection & Latency Analytics.`;
+            } else {
+                banner.className = 'role-workspace-bar banner-officer';
+                bannerIcon.textContent = '👨‍💼';
+                bannerText.innerHTML = `<strong>Procurement Officer Workspace</strong> — Active User: <strong>${currentUser.name || 'Er. Rajesh Kumar'}</strong> (${currentUser.department || 'Procurement Cell, GeM'}). Access to Requirement Analysis workspace, BIS Catalog, Statutory QCO Compliance & Audit Register.`;
+            }
+        }
     }
 }
 

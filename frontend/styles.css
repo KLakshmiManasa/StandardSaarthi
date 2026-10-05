@@ -1290,6 +1290,120 @@ textarea:focus, input:focus, select:focus {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
+/* Role Workspace Context Banner */
+.role-workspace-bar {
+    padding: 0.55rem 1.25rem;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #cbd5e1;
+    transition: all 0.25s ease;
+}
+
+.role-workspace-bar.banner-officer {
+    background: #f0f9ff;
+    border-color: #bae6fd;
+    color: #0369a1;
+}
+
+.role-workspace-bar.banner-admin {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.role-workspace-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.role-workspace-info {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex: 1;
+}
+
+.role-workspace-icon {
+    font-size: 1.1rem;
+}
+
+.role-switch-btn {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.role-switch-btn:hover {
+    background: #f1f5f9;
+    border-color: #3b82f6;
+    color: #2563eb;
+}
+
+/* Home Page Admin Control Card */
+.admin-home-card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    border-left: 5px solid #ef4444;
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
+}
+
+.admin-home-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.15rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-home-card p {
+    color: #cbd5e1;
+    font-size: 0.88rem;
+    margin-bottom: 1rem;
+}
+
+.admin-metrics-mini {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.mini-metric-pill {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.mini-metric-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #60a5fa;
+}
+
+.mini-metric-label {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+}
+
+
 
 
 
