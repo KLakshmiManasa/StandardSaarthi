@@ -120,8 +120,8 @@ function handleRoute() {
         showView('view-admin');
         loadAdminDashboard();
     } else if (routeName === '/admin/users') {
-        showView('view-admin-users');
-        loadAdminUsers();
+        navigateTo('#/admin');
+        return;
     } else if (routeName === '/admin/standards') {
         showView('view-admin-standards');
         loadAdminStandards();

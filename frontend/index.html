@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StandardSaarthi | Indian Standards Intelligence</title>
-    <link rel="stylesheet" href="styles.css?v=2.0.1">
+    <link rel="stylesheet" href="styles.css?v=2.0.2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -68,7 +68,6 @@
             <!-- System Administrator Links -->
             <div id="nav-group-admin" style="display:none; gap:0.25rem;">
                 <a href="#/admin" class="nav-link" data-route="/admin">Admin Dashboard</a>
-                <a href="#/admin/users" class="nav-link" data-route="/admin/users">User Management</a>
                 <a href="#/admin/standards" class="nav-link" data-route="/admin/standards">Standards Management</a>
                 <a href="#/admin/qcos" class="nav-link" data-route="/admin/qcos">QCO Management</a>
                 <a href="#/admin/monitoring" class="nav-link" data-route="/admin/monitoring">System Monitoring</a>
@@ -465,10 +464,6 @@
             <!-- Admin Management Quick Shortcuts -->
             <h3 style="margin-bottom:0.75rem;">Platform Management & Controls</h3>
             <div class="admin-shortcuts-grid">
-                <a href="#/admin/users" class="admin-shortcut-card">
-                    <h4>👥 User Management</h4>
-                    <p>Manage user accounts, assign roles, view officer privileges and active sessions.</p>
-                </a>
                 <a href="#/admin/standards" class="admin-shortcut-card">
                     <h4>📚 Standards Management</h4>
                     <p>Inspect verified BIS dataset, lifecycle statuses, amendments, and indexing status.</p>
@@ -543,53 +538,7 @@
             </div>
         </section>
 
-        <!-- 11. ADMIN USER MANAGEMENT VIEW -->
-        <section id="view-admin-users" class="view-panel">
-            <div class="card">
-                <div class="card-header-row">
-                    <div>
-                        <h2>User Management</h2>
-                        <p class="subtitle">View system users, assign role privileges, and inspect user activity status.</p>
-                    </div>
-                    <button class="btn btn-sm btn-outline" onclick="loadAdminUsers()">Refresh Users</button>
-                </div>
-                <div class="admin-table-container">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email / Username</th>
-                                <th>Role</th>
-                                <th>Designation</th>
-                                <th>Department</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-users-table-body">
-                            <tr>
-                                <td><strong>Er. Rajesh Kumar</strong></td>
-                                <td>officer@gem.gov.in</td>
-                                <td><span class="badge-role-officer">OFFICER</span></td>
-                                <td>Executive Engineer (Procurement)</td>
-                                <td>GeM / Central Procurement Cell</td>
-                                <td><span class="badge-status-active">Active</span></td>
-                                <td><button class="btn btn-sm btn-outline" onclick="showToast('User profile: Er. Rajesh Kumar (Active Officer)', 'info')">View Details</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Dr. K. Sharma (Admin)</strong></td>
-                                <td>admin@gem.gov.in</td>
-                                <td><span class="badge-role-admin">ADMIN</span></td>
-                                <td>Chief Director & System Administrator</td>
-                                <td>BIS / GeM Standards Cell</td>
-                                <td><span class="badge-status-active">Active</span></td>
-                                <td><button class="btn btn-sm btn-outline" onclick="showToast('User profile: Dr. K. Sharma (System Administrator)', 'info')">View Details</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+
 
         <!-- 12. ADMIN STANDARDS MANAGEMENT VIEW -->
         <section id="view-admin-standards" class="view-panel">
@@ -899,6 +848,6 @@
         <p><strong>StandardSaarthi</strong> — AI-powered standards intelligence for smarter procurement.</p>
     </footer>
 
-    <script src="app.js?v=2.0.1"></script>
+    <script src="app.js?v=2.0.2"></script>
 </body>
 </html>
