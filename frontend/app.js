@@ -6,7 +6,7 @@ let recordedOfficerReviews = {};
 let currentActiveLanguage = 'en';
 
 // Current Authenticated User & RBAC State
-let isLoggedIn = localStorage.getItem('standard_saarthi_logged_in') === 'true';
+let isLoggedIn = localStorage.getItem('standard_saarthi_logged_in') !== 'false';
 let currentUser = JSON.parse(localStorage.getItem('standard_saarthi_user')) || {
     username: 'officer@gem.gov.in',
     name: 'Er. Rajesh Kumar',
@@ -43,12 +43,6 @@ function handleRoute() {
     let routeName = rawRoute.split('?')[0].replace(/\/$/, '') || '/';
     let param = null;
 
-    // Gate unauthenticated access: force login view on initial land or when not logged in
-    if (!isLoggedIn && routeName !== '/login') {
-        routeName = '/login';
-        window.history.replaceState(null, '', '#/login');
-    }
-
     if (rawRoute.startsWith('/standards/')) {
         routeName = '/standards/detail';
         param = decodeURIComponent(rawRoute.replace('/standards/', '').split('?')[0]);
@@ -59,13 +53,6 @@ function handleRoute() {
 
     // Deactivate nav links
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-
-    // If on login route
-    if (routeName === '/login') {
-        showView('view-login');
-        updateUserUI();
-        return;
-    }
 
     // RBAC Security Route Protection
     if (routeName === '/admin' && (!currentUser || currentUser.role !== 'admin')) {
@@ -80,7 +67,9 @@ function handleRoute() {
     if (activeNav) activeNav.classList.add('active');
 
     // Handle view rendering
-    if (routeName === '/' || routeName === '') {
+    if (routeName === '/login') {
+        showView('view-login');
+    } else if (routeName === '/' || routeName === '') {
         showView('view-home');
         loadHomeRecent();
     } else if (routeName === '/analyze') {
@@ -2035,32 +2024,19 @@ function updateUserUI() {
     const nameEl = document.getElementById('user-badge-name');
     const roleEl = document.getElementById('user-badge-role');
     const navAdminLink = document.getElementById('nav-admin-link');
-    const userBadge = document.getElementById('user-profile-badge');
-
-    const isLoginView = !isLoggedIn || window.location.hash === '#/login';
 
     if (mainNav) {
-        mainNav.style.display = isLoginView ? 'none' : 'block';
+        mainNav.style.display = 'block';
     }
 
-    if (isLoginView && !isLoggedIn) {
-        if (avatarEl) avatarEl.textContent = '🔒';
-        if (nameEl) nameEl.textContent = 'Sign In';
-        if (roleEl) {
-            roleEl.textContent = 'PORTAL';
-            roleEl.className = 'badge-role-officer';
-        }
-        if (navAdminLink) navAdminLink.style.display = 'none';
-    } else {
-        if (avatarEl) avatarEl.textContent = currentUser.avatar || (currentUser.role === 'admin' ? '🛡️' : '👨‍💼');
-        if (nameEl) nameEl.textContent = currentUser.name || currentUser.username;
-        if (roleEl) {
-            roleEl.textContent = (currentUser.role || 'officer').toUpperCase();
-            roleEl.className = currentUser.role === 'admin' ? 'badge-role-admin' : 'badge-role-officer';
-        }
-        if (navAdminLink) {
-            navAdminLink.style.display = currentUser.role === 'admin' ? 'inline-flex' : 'none';
-        }
+    if (avatarEl) avatarEl.textContent = currentUser.avatar || (currentUser.role === 'admin' ? '🛡️' : '👨‍💼');
+    if (nameEl) nameEl.textContent = currentUser.name || currentUser.username;
+    if (roleEl) {
+        roleEl.textContent = (currentUser.role || 'officer').toUpperCase();
+        roleEl.className = currentUser.role === 'admin' ? 'badge-role-admin' : 'badge-role-officer';
+    }
+    if (navAdminLink) {
+        navAdminLink.style.display = currentUser.role === 'admin' ? 'inline-flex' : 'none';
     }
 }
 
