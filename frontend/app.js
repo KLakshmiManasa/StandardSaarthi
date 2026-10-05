@@ -24,16 +24,16 @@ function initRouter() {
 
 function handleRoute() {
     const hash = window.location.hash || '#/';
-    let route = hash.replace('#', '');
-    if (!route) route = '/';
+    let rawRoute = hash.replace('#', '').trim();
+    if (!rawRoute) rawRoute = '/';
 
-    // Parse route parameters like /standards/IS%20694
-    let routeName = route;
+    // Extract base route name (e.g. /audit from /audit?foo=bar or /audit/)
+    let routeName = rawRoute.split('?')[0].replace(/\/$/, '') || '/';
     let param = null;
 
-    if (route.startsWith('/standards/')) {
+    if (rawRoute.startsWith('/standards/')) {
         routeName = '/standards/detail';
-        param = decodeURIComponent(route.replace('/standards/', ''));
+        param = decodeURIComponent(rawRoute.replace('/standards/', '').split('?')[0]);
     }
 
     // Hide all view panels
@@ -42,25 +42,23 @@ function handleRoute() {
     // Deactivate nav links
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('data-route') === route || link.getAttribute('data-route') === `/${routeName.split('/')[1]}`) {
+        const dataRoute = link.getAttribute('data-route');
+        if (dataRoute === routeName || dataRoute === `/${routeName.split('/')[1]}`) {
             link.classList.add('active');
         }
     });
 
     // Handle view rendering
-    if (routeName === '/') {
+    if (routeName === '/' || routeName === '') {
         showView('view-home');
         loadHomeRecent();
     } else if (routeName === '/analyze') {
         showView('view-analyze');
-        // Handle mode query param
         const urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
         const modeParam = urlParams.get('mode');
         if (modeParam === 'c') {
             switchMode('mode-c');
         }
-    } else if (routeName === '/tenders') {
-        showView('view-tenders');
     } else if (routeName === '/standards') {
         showView('view-standards');
         loadCatalog();
@@ -84,6 +82,7 @@ function handleRoute() {
         loadAdminMetrics();
     } else {
         showView('view-home');
+        loadHomeRecent();
     }
 }
 
