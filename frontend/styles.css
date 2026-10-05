@@ -1013,6 +1013,228 @@ textarea:focus, input:focus, select:focus {
     width: 100%;
 }
 
+/* User Profile Header Badge */
+.user-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    color: #1e293b;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.user-badge:hover {
+    border-color: #3b82f6;
+    background: #f8fafc;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.15);
+}
+
+#user-badge-avatar {
+    font-size: 1.1rem;
+}
+
+#user-badge-name {
+    font-weight: 600;
+    color: #0f172a;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.badge-role-officer {
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.badge-role-admin {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.btn-logout {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 0.2rem;
+    border-radius: 4px;
+    transition: transform 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-logout:hover {
+    transform: scale(1.15);
+}
+
+/* Login Modal & Role Switcher UI */
+.login-modal-dialog {
+    max-width: 540px !important;
+    border-radius: 12px !important;
+    border: 1px solid #94a3b8 !important;
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3) !important;
+}
+
+.login-modal-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    color: #ffffff;
+    padding: 1.5rem;
+    border-bottom: 1px solid #3b82f6;
+}
+
+.login-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.login-logo {
+    background: #ffffff;
+    color: #1e3a8a;
+    font-weight: 900;
+    font-size: 1.5rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.login-modal-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.login-modal-header p {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.78rem;
+    color: #93c5fd;
+}
+
+.login-modal-body {
+    padding: 1.5rem;
+    background: #ffffff;
+}
+
+.demo-login-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.demo-login-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.demo-btn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.btn-demo-role {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.85rem 0.75rem;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.btn-demo-role:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.btn-demo-role.active {
+    border-color: #2563eb;
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.btn-demo-role .role-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.btn-demo-role .role-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.btn-demo-role .role-info strong {
+    font-size: 0.88rem;
+    color: #0f172a;
+}
+
+.btn-demo-role .role-info small {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.role-privileges-card {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    color: #0369a1;
+    padding: 0.75rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin-top: 1rem;
+}
+
+.access-restricted-card {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+
 
 
 

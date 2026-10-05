@@ -40,6 +40,13 @@
                         <option value="or">Odia (ଓଡ଼ିଆ)</option>
                     </select>
                 </div>
+                <!-- Logged-in User Profile Badge -->
+                <div id="user-profile-badge" class="user-badge" onclick="openLoginModal()" title="Click to Switch User Role / Login">
+                    <span id="user-badge-avatar">👨‍💼</span>
+                    <span id="user-badge-name">Er. Rajesh Kumar</span>
+                    <span id="user-badge-role" class="badge-role-officer">OFFICER</span>
+                    <button class="btn-logout" onclick="event.stopPropagation(); logoutUser();" title="Logout">🚪</button>
+                </div>
                 <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">☰</button>
             </div>
         </div>
@@ -54,6 +61,7 @@
             <a href="#/regulatory" class="nav-link" data-route="/regulatory">Statutory QCOs</a>
             <a href="#/audit" class="nav-link" data-route="/audit">Officer Audit Trail</a>
             <a href="#/history" class="nav-link" data-route="/history">History</a>
+            <a href="#/admin" class="nav-link nav-admin-only" data-route="/admin" id="nav-admin-link" style="display:none;">Admin Diagnostics</a>
         </div>
     </nav>
 
@@ -441,15 +449,71 @@
         </div>
     </div>
 
-    <!-- Slide-Over Drawer Modal: "Why this standard?" -->
-    <div id="why-modal-overlay" class="drawer-overlay" onclick="closeWhyModal()">
-        <div class="drawer-content" onclick="event.stopPropagation()">
-            <div class="drawer-header">
-                <h3 id="why-title">Why Was This Recommended?</h3>
-                <button class="close-btn" onclick="closeWhyModal()">✕</button>
+    <!-- Login / Role-Based Authentication Overlay Modal -->
+    <div id="login-modal-overlay" class="drawer-overlay" onclick="closeLoginModal()" style="display:none;">
+        <div class="modal-dialog login-modal-dialog" onclick="event.stopPropagation()">
+            <div class="login-modal-header">
+                <div class="login-brand">
+                    <div class="login-logo">IS</div>
+                    <div>
+                        <h2>StandardSaarthi Portal Login</h2>
+                        <p>Government of India — Standards Intelligence & Procurement Support</p>
+                    </div>
+                </div>
             </div>
-            <div id="why-body" class="drawer-body">
-                <p>Loading recommendation match breakdown...</p>
+            <div class="login-modal-body">
+                
+                <!-- Quick Demo Role Selection -->
+                <div class="demo-login-box">
+                    <label class="demo-login-label">⚡ Select User Role for Quick Demo Login:</label>
+                    <div class="demo-btn-grid">
+                        <button type="button" class="btn-demo-role active" id="btn-role-officer" onclick="selectDemoRole('officer')">
+                            <span class="role-icon">👨‍💼</span>
+                            <div class="role-info">
+                                <strong>Procurement Officer</strong>
+                                <small>GeM / CPWD / Officer Cell</small>
+                            </div>
+                            <span class="badge-role-officer">OFFICER</span>
+                        </button>
+                        <button type="button" class="btn-demo-role" id="btn-role-admin" onclick="selectDemoRole('admin')">
+                            <span class="role-icon">🛡️</span>
+                            <div class="role-info">
+                                <strong>System Administrator</strong>
+                                <small>BIS Standards / IT Admin</small>
+                            </div>
+                            <span class="badge-role-admin">ADMIN</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" onsubmit="handleLoginSubmit(event)" style="margin-top:1.25rem;">
+                    <div class="form-group">
+                        <label for="login-username">Government Email / User ID:</label>
+                        <input type="text" id="login-username" value="officer@gem.gov.in" placeholder="e.g. officer@gem.gov.in" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password:</label>
+                        <input type="password" id="login-password" value="officer123" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-role-select">Privileges & Role Level:</label>
+                        <select id="login-role-select" onchange="syncRoleFromSelect(this.value)">
+                            <option value="officer">Procurement Officer (Standard Privileges)</option>
+                            <option value="admin">System Administrator (Full System & Diagnostics Privileges)</option>
+                        </select>
+                    </div>
+
+                    <div class="role-privileges-card" id="role-privileges-desc">
+                        📋 <strong>Procurement Officer Privileges:</strong> Access to Requirement Analysis workspace, BIS Catalog, QCO Notices, Statutory Audit Trail recording, and PDF Exports.
+                    </div>
+
+                    <div class="modal-actions" style="margin-top:1.5rem;">
+                        <button type="button" class="btn btn-outline" onclick="closeLoginModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary btn-lg" style="padding:0.75rem 2rem;">🔓 Sign In & Access Portal</button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -461,6 +525,6 @@
         <p><strong>StandardSaarthi</strong> — AI-powered standards intelligence for smarter procurement.</p>
     </footer>
 
-    <script src="app.js?v=1.0.5"></script>
+    <script src="app.js?v=1.0.6"></script>
 </body>
 </html>

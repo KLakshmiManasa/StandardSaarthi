@@ -55,6 +55,56 @@ def get_health():
     return check_health()
 
 # ==========================================================
+# AUTHENTICATION & ROLE-BASED ACCESS CONTROL (RBAC)
+# ==========================================================
+class LoginRequest(BaseModel):
+    username: str
+    password: Optional[str] = None
+    role: Optional[str] = "officer"
+
+DEMO_USERS = {
+    "officer@gem.gov.in": {
+        "username": "officer@gem.gov.in",
+        "name": "Er. Rajesh Kumar",
+        "designation": "Executive Engineer (Procurement)",
+        "department": "GeM / Central Procurement Cell",
+        "role": "officer",
+        "avatar": "👨‍💼",
+        "token": "token_officer_88412"
+    },
+    "admin@gem.gov.in": {
+        "username": "admin@gem.gov.in",
+        "name": "Dr. K. Sharma (Admin)",
+        "designation": "Chief Director & System Administrator",
+        "department": "BIS / GeM Standards Cell",
+        "role": "admin",
+        "avatar": "🛡️",
+        "token": "token_admin_99001"
+    }
+}
+
+@app.post("/api/auth/login")
+def login_user(req: LoginRequest):
+    """
+    Authenticates user and returns profile and role permissions.
+    """
+    uname = (req.username or "").strip().lower()
+    requested_role = (req.role or "officer").strip().lower()
+
+    if requested_role == "admin" or "admin" in uname:
+        user = dict(DEMO_USERS["admin@gem.gov.in"])
+        if uname and "@" in uname and uname != "admin@gem.gov.in":
+            user["username"] = uname
+            user["name"] = uname.split("@")[0].replace(".", " ").title() + " (Admin)"
+        return user
+    else:
+        user = dict(DEMO_USERS["officer@gem.gov.in"])
+        if uname and "@" in uname and uname != "officer@gem.gov.in":
+            user["username"] = uname
+            user["name"] = uname.split("@")[0].replace(".", " ").title()
+        return user
+
+# ==========================================================
 # LEGACY RECOMMENDATION ENDPOINT FOR COMPATIBILITY
 # ==========================================================
 @app.post("/api/recommend")
