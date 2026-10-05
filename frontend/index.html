@@ -61,103 +61,14 @@
             <a href="#/regulatory" class="nav-link" data-route="/regulatory">Statutory QCOs</a>
             <a href="#/audit" class="nav-link" data-route="/audit">Officer Audit Trail</a>
             <a href="#/history" class="nav-link" data-route="/history">History</a>
-            <a href="#/login" class="nav-link" data-route="/login">Sign In / Role Switch</a>
+            <a href="javascript:void(0)" onclick="openLoginModal()" class="nav-link" id="nav-login-link">Sign In / Role Switch</a>
             <a href="#/admin" class="nav-link nav-admin-only" data-route="/admin" id="nav-admin-link" style="display:none;">Admin Diagnostics</a>
         </div>
     </nav>
 
-    <!-- Role Workspace Context Banner -->
-    <div id="role-workspace-banner" class="role-workspace-bar banner-officer">
-        <div class="role-workspace-container">
-            <div class="role-workspace-info">
-                <span id="role-workspace-icon" class="role-workspace-icon">👨‍💼</span>
-                <div id="role-workspace-text">
-                    <strong>Procurement Officer Workspace</strong> — Logging in as Er. Rajesh Kumar (Procurement Cell, GeM). Access to Tender Requirement Analysis, BIS Catalog, Statutory QCO Compliance & Audit Trail Register.
-                </div>
-            </div>
-            <button class="role-switch-btn" onclick="openLoginModal()">Switch Role 🔄</button>
-        </div>
-    </div>
-
     <!-- App Main Container -->
     <main class="app-container">
         
-        <!-- 0. LOGIN VIEW (Initial Landing Page) -->
-        <section id="view-login" class="view-panel">
-            <div class="login-page-wrapper">
-                <div class="login-page-card">
-                    <div class="login-page-header">
-                        <div class="login-brand">
-                            <div class="login-logo">IS</div>
-                            <div>
-                                <h2>StandardSaarthi Portal Sign In</h2>
-                                <p>Government of India — Standards Intelligence & Statutory Procurement System</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="login-page-body">
-                        <!-- Quick Demo Role Selection -->
-                        <div class="demo-login-box">
-                            <label class="demo-login-label">⚡ Select User Role for Quick Demo Login:</label>
-                            <div class="demo-btn-grid">
-                                <button type="button" class="btn-demo-role active" id="btn-page-role-officer" onclick="selectDemoRole('officer')">
-                                    <span class="role-icon">👨‍💼</span>
-                                    <div class="role-info">
-                                        <strong>Procurement Officer</strong>
-                                        <small>GeM / CPWD / Officer Cell</small>
-                                    </div>
-                                    <span class="badge-role-officer">OFFICER</span>
-                                </button>
-                                <button type="button" class="btn-demo-role" id="btn-page-role-admin" onclick="selectDemoRole('admin')">
-                                    <span class="role-icon">🛡️</span>
-                                    <div class="role-info">
-                                        <strong>System Administrator</strong>
-                                        <small>BIS Standards / IT Admin</small>
-                                    </div>
-                                    <span class="badge-role-admin">ADMIN</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Login Form -->
-                        <form id="page-login-form" onsubmit="handleLoginSubmit(event)" style="margin-top:1.25rem;">
-                            <div class="form-group">
-                                <label for="login-username">Government Email / User ID:</label>
-                                <input type="text" id="login-username" value="officer@gem.gov.in" placeholder="e.g. officer@gem.gov.in" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="login-password">Password:</label>
-                                <input type="password" id="login-password" value="officer123" placeholder="••••••••" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="login-role-select">Privileges & Role Level:</label>
-                                <select id="login-role-select" onchange="syncRoleFromSelect(this.value)">
-                                    <option value="officer">Procurement Officer (Standard Privileges)</option>
-                                    <option value="admin">System Administrator (Full System & Diagnostics Privileges)</option>
-                                </select>
-                            </div>
-
-                            <div class="role-privileges-card" id="role-privileges-desc">
-                                📋 <strong>Procurement Officer Privileges:</strong> Access to Requirement Analysis workspace, BIS Catalog, QCO Notices, Statutory Audit Trail recording, and PDF Exports.
-                            </div>
-
-                            <div style="margin-top:1.5rem; text-align:center;">
-                                <button type="submit" class="btn btn-primary btn-lg" style="width:100%; padding:0.85rem; font-weight:700; font-size:1.05rem;">🔓 Sign In & Access Portal</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="login-page-footer">
-                        <div class="login-features-pills">
-                            <span>🛡️ Bureau of Indian Standards (BIS)</span>
-                            <span>⚡ AI Standards Matching</span>
-                            <span>📜 Mandatory QCO Compliance</span>
-                            <span>📑 Statutory Audit Register</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- 1. HOME VIEW -->
         <section id="view-home" class="view-panel">
             <div class="hero-section">
@@ -639,6 +550,6 @@
         <p><strong>StandardSaarthi</strong> — AI-powered standards intelligence for smarter procurement.</p>
     </footer>
 
-    <script src="app.js?v=1.0.9"></script>
+    <script src="app.js?v=1.1.0"></script>
 </body>
 </html>

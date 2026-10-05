@@ -71,7 +71,9 @@ function handleRoute() {
 
     // Handle view rendering
     if (routeName === '/login') {
-        showView('view-login');
+        openLoginModal();
+        showView('view-home');
+        loadHomeRecent();
     } else if (routeName === '/' || routeName === '') {
         showView('view-home');
         loadHomeRecent();
@@ -2027,9 +2029,6 @@ function updateUserUI() {
     const nameEl = document.getElementById('user-badge-name');
     const roleEl = document.getElementById('user-badge-role');
     const navAdminLink = document.getElementById('nav-admin-link');
-    const banner = document.getElementById('role-workspace-banner');
-    const bannerIcon = document.getElementById('role-workspace-icon');
-    const bannerText = document.getElementById('role-workspace-text');
 
     if (mainNav) {
         mainNav.style.display = 'block';
@@ -2053,31 +2052,9 @@ function updateUserUI() {
             el.style.display = isAdmin ? 'block' : 'none';
         }
     });
-
-    // Update Role Workspace Context Banner
-    if (banner && bannerIcon && bannerText) {
-        if (window.location.hash === '#/login') {
-            banner.style.display = 'none';
-        } else {
-            banner.style.display = 'block';
-            if (isAdmin) {
-                banner.className = 'role-workspace-bar banner-admin';
-                bannerIcon.textContent = '🛡️';
-                bannerText.innerHTML = `<strong>System Administrator Workspace</strong> — Active User: <strong>${currentUser.name || 'System Administrator'}</strong> (${currentUser.department || 'BIS IT Admin'}). Full administrative privileges active: System Diagnostics, Vector Indexing, Audit Log Inspection & Latency Analytics.`;
-            } else {
-                banner.className = 'role-workspace-bar banner-officer';
-                bannerIcon.textContent = '👨‍💼';
-                bannerText.innerHTML = `<strong>Procurement Officer Workspace</strong> — Active User: <strong>${currentUser.name || 'Er. Rajesh Kumar'}</strong> (${currentUser.department || 'Procurement Cell, GeM'}). Access to Requirement Analysis workspace, BIS Catalog, Statutory QCO Compliance & Audit Register.`;
-            }
-        }
-    }
 }
 
 function openLoginModal() {
-    if (!isLoggedIn || window.location.hash === '#/login') {
-        navigateTo('#/login');
-        return;
-    }
     const modal = document.getElementById('login-modal-overlay');
     if (modal) modal.style.display = 'flex';
     syncLoginFields(currentUser.role || 'officer');
