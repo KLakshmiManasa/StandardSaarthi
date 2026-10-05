@@ -2056,6 +2056,8 @@ window.updateUserUI = updateUserUI;
 window.openLoginModal = openLoginModal;
 window.closeLoginModal = closeLoginModal;
 window.selectDemoRole = selectDemoRole;
+window.loginAsDemoRole = loginAsDemoRole;
+window.executeLogin = executeLogin;
 window.syncRoleFromSelect = syncRoleFromSelect;
 window.handleLoginSubmit = handleLoginSubmit;
 window.logoutUser = logoutUser;
@@ -2154,6 +2156,14 @@ function selectDemoRole(role) {
     }
 }
 
+async function loginAsDemoRole(role) {
+    selectDemoRole(role);
+    const username = role === 'admin' ? 'admin@gem.gov.in' : 'officer@gem.gov.in';
+    const password = role === 'admin' ? 'admin123' : 'officer123';
+    showToast(`Signing in as ${role === 'admin' ? 'System Administrator' : 'Procurement Officer'}...`, 'info');
+    await executeLogin(username, password, role);
+}
+
 function syncRoleFromSelect(role) {
     selectDemoRole(role);
 }
@@ -2162,12 +2172,7 @@ function syncLoginFields(role) {
     selectDemoRole(role);
 }
 
-async function handleLoginSubmit(event) {
-    event.preventDefault();
-    const username = document.getElementById('login-username')?.value.trim();
-    const password = document.getElementById('login-password')?.value.trim();
-    const role = document.getElementById('login-role-select')?.value;
-
+async function executeLogin(username, password, role) {
     try {
         const response = await fetch('/api/auth/login', {
             method: 'POST',
@@ -2195,9 +2200,9 @@ async function handleLoginSubmit(event) {
         }
     } catch (err) {
         console.error('Login request failed, using local demo fallback:', err);
-        const isAdminRole = role === 'admin' || username.includes('admin');
+        const isAdminRole = role === 'admin' || (username && username.includes('admin'));
         currentUser = {
-            username: username || 'user@gem.gov.in',
+            username: username || (isAdminRole ? 'admin@gem.gov.in' : 'officer@gem.gov.in'),
             name: isAdminRole ? 'Dr. K. Sharma (Admin)' : 'Er. Rajesh Kumar',
             role: isAdminRole ? 'admin' : 'officer',
             department: isAdminRole ? 'BIS / GeM Standards Cell' : 'GeM / Central Procurement Cell',
@@ -2219,6 +2224,14 @@ async function handleLoginSubmit(event) {
             navigateTo('#/');
         }
     }
+}
+
+async function handleLoginSubmit(event) {
+    if (event) event.preventDefault();
+    const username = document.getElementById('login-username')?.value.trim();
+    const password = document.getElementById('login-password')?.value.trim();
+    const role = document.getElementById('login-role-select')?.value;
+    await executeLogin(username, password, role);
 }
 
 function logoutUser() {

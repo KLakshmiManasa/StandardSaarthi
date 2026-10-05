@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StandardSaarthi | Indian Standards Intelligence</title>
-    <link rel="stylesheet" href="styles.css?v=1.0.5">
+    <link rel="stylesheet" href="styles.css?v=2.0.1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -833,26 +833,27 @@
                         <p>Government of India — Standards Intelligence & Procurement Support</p>
                     </div>
                 </div>
+                <button type="button" class="close-btn" onclick="closeLoginModal()" style="color:#ffffff; font-size:1.4rem; background:none; border:none; cursor:pointer; padding:0.25rem 0.5rem; line-height:1;" title="Close modal">✕</button>
             </div>
             <div class="login-modal-body">
                 
                 <!-- Quick Demo Role Selection -->
                 <div class="demo-login-box">
-                    <label class="demo-login-label">⚡ Select User Role for Quick Demo Login:</label>
+                    <label class="demo-login-label">⚡ 1-Click Role Switch & Demo Login:</label>
                     <div class="demo-btn-grid">
-                        <button type="button" class="btn-demo-role active" id="btn-role-officer" onclick="selectDemoRole('officer')">
+                        <button type="button" class="btn-demo-role active" id="btn-role-officer" onclick="loginAsDemoRole('officer')" title="Click to log in as Procurement Officer">
                             <span class="role-icon">👨‍💼</span>
                             <div class="role-info">
                                 <strong>Procurement Officer</strong>
-                                <small>GeM / CPWD / Officer Cell</small>
+                                <small>GeM / CPWD • <strong>Click to Sign In ➔</strong></small>
                             </div>
                             <span class="badge-role-officer">OFFICER</span>
                         </button>
-                        <button type="button" class="btn-demo-role" id="btn-role-admin" onclick="selectDemoRole('admin')">
+                        <button type="button" class="btn-demo-role" id="btn-role-admin" onclick="loginAsDemoRole('admin')" title="Click to log in as System Administrator">
                             <span class="role-icon">🛡️</span>
                             <div class="role-info">
                                 <strong>System Administrator</strong>
-                                <small>BIS Standards / IT Admin</small>
+                                <small>BIS Admin • <strong>Click to Sign In ➔</strong></small>
                             </div>
                             <span class="badge-role-admin">ADMIN</span>
                         </button>
@@ -898,6 +899,6 @@
         <p><strong>StandardSaarthi</strong> — AI-powered standards intelligence for smarter procurement.</p>
     </footer>
 
-    <script src="app.js?v=2.0.0"></script>
+    <script src="app.js?v=2.0.1"></script>
 </body>
 </html>

@@ -1090,56 +1090,86 @@ textarea:focus, input:focus, select:focus {
 }
 
 /* Login Modal & Role Switcher UI */
+#login-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.65);
+    z-index: 1050;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
 .login-modal-dialog {
-    max-width: 540px !important;
+    max-width: 520px !important;
+    width: 100% !important;
+    max-height: 94vh !important;
+    margin: auto !important;
     border-radius: 12px !important;
     border: 1px solid #94a3b8 !important;
-    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3) !important;
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.4) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
 }
 
 .login-modal-header {
     background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
     color: #ffffff;
-    padding: 1.5rem;
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid #3b82f6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
 }
 
 .login-brand {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .login-logo {
     background: #ffffff;
     color: #1e3a8a;
     font-weight: 900;
-    font-size: 1.5rem;
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
+    font-size: 1.35rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .login-modal-header h2 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #ffffff;
 }
 
 .login-modal-header p {
-    margin: 0.25rem 0 0 0;
-    font-size: 0.78rem;
+    margin: 0.15rem 0 0 0;
+    font-size: 0.75rem;
     color: #93c5fd;
 }
 
 .login-modal-body {
-    padding: 1.5rem;
+    padding: 1.15rem 1.25rem;
     background: #ffffff;
+    overflow-y: auto;
+    max-height: calc(94vh - 75px);
 }
 
 .demo-login-box {
