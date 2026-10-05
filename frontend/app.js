@@ -1806,19 +1806,19 @@ async function loadAuditTrail() {
             html += `
                 <tr>
                     <td><span class="audit-id-badge">${log.audit_id}</span></td>
-                    <td style="white-space:nowrap; font-size:0.82rem; color:#64748b;">${log.timestamp}</td>
-                    <td style="max-width:240px; font-weight:500;">"${log.query}"</td>
-                    <td><strong>${log.recommended_standard}</strong></td>
+                    <td style="white-space:nowrap; font-size:0.75rem; color:#64748b;">${log.timestamp}</td>
+                    <td style="max-width:220px; font-weight:500; font-size:0.78rem;">"${log.query}"</td>
+                    <td style="font-size:0.78rem;"><strong>${log.recommended_standard}</strong></td>
                     <td><span class="${badgeClass}">${log.decision}</span></td>
-                    <td><strong style="color:${isAccept ? '#065f46' : '#1e40af'}">${log.final_standard}</strong></td>
+                    <td style="font-size:0.78rem;"><strong style="color:${isAccept ? '#065f46' : '#1e40af'}">${log.final_standard}</strong></td>
                     <td>
-                        <div style="font-weight:600; font-size:0.85rem;">${log.officer_name}</div>
-                        <div style="font-size:0.78rem; color:#2563eb; font-weight:500;">${log.officer_designation || ''}</div>
-                        <div style="font-size:0.75rem; color:#64748b;">${log.department}</div>
+                        <div style="font-weight:600; font-size:0.78rem;">${log.officer_name}</div>
+                        <div style="font-size:0.75rem; color:#2563eb; font-weight:500;">${log.officer_designation || ''}</div>
+                        <div style="font-size:0.72rem; color:#64748b;">${log.department}</div>
                     </td>
-                    <td style="max-width:240px; font-size:0.84rem; color:#475569;">${log.justification}</td>
+                    <td style="max-width:220px; font-size:0.78rem; color:#475569;">${log.justification}</td>
                     <td style="white-space:nowrap;">
-                        <button class="btn btn-sm btn-outline" onclick="inspectAndEditAuditRecord('${log.audit_id}', '${(log.recommended_standard || '').replace(/'/g, "\\'")}', '${(log.final_standard || '').replace(/'/g, "\\'")}', '${(log.query || '').replace(/'/g, "\\'")}', '${(log.justification || '').replace(/'/g, "\\'")}')">
+                        <button class="btn btn-sm btn-outline" style="font-size:0.75rem; padding:0.25rem 0.5rem;" onclick="inspectAndEditAuditRecord('${log.audit_id}', '${(log.recommended_standard || '').replace(/'/g, "\\'")}', '${(log.final_standard || '').replace(/'/g, "\\'")}', '${(log.query || '').replace(/'/g, "\\'")}', '${(log.justification || '').replace(/'/g, "\\'")}')">
                             ✏️ Edit Standard Number
                         </button>
                     </td>
