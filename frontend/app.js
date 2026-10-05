@@ -1782,19 +1782,19 @@ async function loadAuditTrail() {
         }
 
         let html = `
-            <div class="audit-table-wrapper">
-                <table class="audit-table">
+            <div class="audit-table-wrapper" style="overflow-x:auto; border:1.5px solid #64748b; border-radius:6px; background:#ffffff;">
+                <table class="audit-table" style="width:100%; border-collapse:collapse; border:1.5px solid #64748b; font-size:0.78rem; text-align:left;">
                     <thead>
-                        <tr>
-                            <th>Audit ID</th>
-                            <th>Date & Time</th>
-                            <th>Procurement Requirement</th>
-                            <th>System Citation</th>
-                            <th>Determination</th>
-                            <th>Final Standard</th>
-                            <th>Reviewing Official</th>
-                            <th>Statutory Justification</th>
-                            <th>Actions</th>
+                        <tr style="background:#e2e8f0; border-bottom:2px solid #64748b;">
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">Audit ID</th>
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">Date & Time</th>
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">Procurement Requirement</th>
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">System Citation</th>
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">Determination</th>
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">Final Standard</th>
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">Reviewing Official</th>
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">Statutory Justification</th>
+                            <th style="padding:0.5rem 0.65rem; border:1px solid #94a3b8; font-weight:700; color:#0f172a; white-space:nowrap;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1803,21 +1803,22 @@ async function loadAuditTrail() {
         logs.forEach(log => {
             const isAccept = log.decision === 'ACCEPTED';
             const badgeClass = isAccept ? 'badge-officer-accepted' : 'badge-officer-override';
+            const cellStyle = "padding:0.5rem 0.65rem; border:1px solid #cbd5e1; vertical-align:top; font-size:0.78rem;";
             html += `
-                <tr>
-                    <td><span class="audit-id-badge">${log.audit_id}</span></td>
-                    <td style="white-space:nowrap; font-size:0.75rem; color:#64748b;">${log.timestamp}</td>
-                    <td style="max-width:220px; font-weight:500; font-size:0.78rem;">"${log.query}"</td>
-                    <td style="font-size:0.78rem;"><strong>${log.recommended_standard}</strong></td>
-                    <td><span class="${badgeClass}">${log.decision}</span></td>
-                    <td style="font-size:0.78rem;"><strong style="color:${isAccept ? '#065f46' : '#1e40af'}">${log.final_standard}</strong></td>
-                    <td>
+                <tr style="border-bottom:1px solid #cbd5e1;">
+                    <td style="${cellStyle}"><span class="audit-id-badge" style="border:1px solid #cbd5e1;">${log.audit_id}</span></td>
+                    <td style="${cellStyle} white-space:nowrap; font-size:0.75rem; color:#64748b;">${log.timestamp}</td>
+                    <td style="${cellStyle} max-width:220px; font-weight:500;">"${log.query}"</td>
+                    <td style="${cellStyle}"><strong>${log.recommended_standard}</strong></td>
+                    <td style="${cellStyle}"><span class="${badgeClass}">${log.decision}</span></td>
+                    <td style="${cellStyle}"><strong style="color:${isAccept ? '#065f46' : '#1e40af'}">${log.final_standard}</strong></td>
+                    <td style="${cellStyle}">
                         <div style="font-weight:600; font-size:0.78rem;">${log.officer_name}</div>
                         <div style="font-size:0.75rem; color:#2563eb; font-weight:500;">${log.officer_designation || ''}</div>
                         <div style="font-size:0.72rem; color:#64748b;">${log.department}</div>
                     </td>
-                    <td style="max-width:220px; font-size:0.78rem; color:#475569;">${log.justification}</td>
-                    <td style="white-space:nowrap;">
+                    <td style="${cellStyle} max-width:220px; color:#475569;">${log.justification}</td>
+                    <td style="${cellStyle} white-space:nowrap;">
                         <button class="btn btn-sm btn-outline" style="font-size:0.75rem; padding:0.25rem 0.5rem;" onclick="inspectAndEditAuditRecord('${log.audit_id}', '${(log.recommended_standard || '').replace(/'/g, "\\'")}', '${(log.final_standard || '').replace(/'/g, "\\'")}', '${(log.query || '').replace(/'/g, "\\'")}', '${(log.justification || '').replace(/'/g, "\\'")}')">
                             ✏️ Edit Standard Number
                         </button>
